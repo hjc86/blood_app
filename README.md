@@ -1,15 +1,9 @@
 # Blood App
  Final Futureproof project
-Alt-H1
-======
-## Developer Notes
-Alt-H2
-------
-### Full install 
+### Developer Notes
+#### Full install 
  Clone the repository onto your machine.
-Alt-H2
-------
-#### Backend
+##### Backend
  1. Navigate to the "\backend" directory.
  2. Initialise virtualenv as venv.
  3. Pip install from requirements.txt.
@@ -30,6 +24,4 @@ Alt-H2
     export DATABASE_PORT=
  6. Navigate to the "\backend\main_app" directory.
  7. Run manage.py runserver using python.
-Alt-H2
-------
-#### Frontend
+##### Frontend
