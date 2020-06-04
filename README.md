@@ -1,14 +1,16 @@
 # Blood App
- Final Futureproof project
+Final Futureproof project.
 ### Developer Notes
-#### Full install 
- Clone the repository onto your machine.
-##### Backend
- 1. Navigate to the "\backend" directory.
- 2. Initialise virtualenv as venv.
- 3. Pip install from requirements.txt.
- 4. Navigate to the "\backend\main_app\main_app" directory.
- 5. Add a .env file with the following format.
+#### Full install instructions
+First, clone the repository onto your machine.
+#### Back-end install
+Prerequisites: python3, pip3, virtualenv.
+1. Navigate to the "\backend" directory.
+2. Initialise virtualenv as venv (e.g. PowerShell - "python3 -m virtualenv venv")
+3. Activate virtualenv (e.g. Powershell - ".\venv\Scripts\activate")
+4. Pip install from requirements.txt (e.g. Powershell - pip install -r requirements.txt)
+5. Navigate to the "\backend\main_app\main_app" directory.
+6. Add a .env file with the following format.
     ```
     ## Database configuration
     # Database engine (e.g. postgresql)
@@ -24,6 +26,8 @@
     # Database port (e.g. 5432)
     export DATABASE_PORT=
     ```
- 6. Navigate to the "\backend\main_app" directory.
- 7. Run manage.py runserver using python.
-##### Frontend
+7. Fill-in the template with values appropriate to your set-up.
+8. Navigate to the "\backend\main_app" directory.
+9. Run manage.py runserver using python.
+#### Front-end install
+Prerequisites: node.js, npm.
