@@ -31,3 +31,6 @@ Prerequisites: python3, pip3, virtualenv.
 9. Run manage.py runserver using python.
 #### Frontend install
 Prerequisites: node.js, npm.
+1. Navigate to the "\frontend" directory.
+2. Npm install to the local directory  (e.g. PowerShell - "npm install --save")
+3. Run the module using npm (e.g. PowerShell - "npm start")
