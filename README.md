@@ -28,7 +28,7 @@ Prerequisites: python3, pip3, virtualenv.
     ```
 7. Fill in the template with values appropriate for your set-up.
 8. Navigate to the "\backend\main_app" directory.
-9. Run manage.py runserver using python.
+9. Run "manage.py runserver" using python.
 #### Frontend install
 Prerequisites: node.js, npm.
 1. Navigate to the "\frontend" directory.
