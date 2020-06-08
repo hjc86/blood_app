@@ -5,13 +5,8 @@ class TimeslotCard extends React.Component {
     
     constructor(props) {
         super(props);
-        this.clickSomething = clickSomething.bind(this)
     }
     
-
-    clickSomething = () => {
-        console.log(this.props.timeslot)
-     } 
 
 
     render() {
@@ -32,8 +27,8 @@ class TimeslotCard extends React.Component {
                 <h3>{timeslot[0][0]}</h3>
                 </div> 
                 ))} */}
-
-                <button className='addButton btn btn-primary' type='submit' onclick={this.clickSomething}>Add</button>
+                { console.log(this.props.timeslots) }
+                <button className='addButton btn btn-primary' type='submit'>Add</button>
                 
             </div>
             
