@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 class Login extends React.Component {
    
@@ -25,20 +26,23 @@ class Login extends React.Component {
                             placeholder="eg. Passw0rd928">
                         </input>
                         </form>
+                        < br/>
                         <button className='loginUserButton btn btn-danger' type='submit' >Log In</button>
                     </div>
-
                     <div className="col">
                         <form>
                         <label>Create</label>
                         <p>A new free account</p>
                         <p>It's free to join and easy to use. Continue on to create your Red Cells account and be a part of saving lives through blood donation!</p>
+                        < br/>
+                        <label>Username:</label>
                         <input 
                             name="newUsername" 
                             type="text"
                             placeholder="Insert Username">
                         </input>
                         <br />
+                        <label>Password:</label>
                         <input 
                             name="password" 
                             type="password"
@@ -51,7 +55,9 @@ class Login extends React.Component {
                             <option value="clinic">Clinic</option>
                         </select>
                         </form>
-                        <button className='passwordButton btn btn-primary' type='submit'>Join Red Cells</button>
+                        < br/>
+                        <Link to={{pathname:'/donor-profile'}}><button className='passwordButton btn btn-primary' type='submit'>Donor</button></Link>
+                        <Link to={{pathname:'/clinic-profile'}}><button className='passwordButton btn btn-primary' type='submit'>Clinic</button></Link>
                     </div>
                 </div>
             </div>

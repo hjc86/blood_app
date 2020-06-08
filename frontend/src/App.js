@@ -1,18 +1,44 @@
 import React from 'react';
+import { Link, BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
-import NavBar from './components/navbar';
-import Login from './components/login';
-import Donor from './components/donor';
-import Clinic from './components/clinic';
+import Homepage from './containers/homepage';
+import Donor from './components/donor_profile';
+import Clinic from './components/clinic_profile';
 
-function App() {
+const App = () => {
     return (
-      <div>
-        < NavBar />
-        < Login />
-        < Donor />
-        < Clinic />
-      </div>
+      <div className="Home">
+            <Router>
+              <Switch>
+                  <Route 
+                      path='/'
+                      exact 
+                      component={Homepage}
+                  />
+                  <Route 
+                      path='/donor-profile'
+                      exact 
+                      component={Donor}
+
+                  />
+                  <Route
+                      path='/clinic-profile'
+                      exact 
+                      component={Clinic}
+                  />
+                  <Route
+                      path='/donor-dashboard'
+                      exact 
+                      component={Clinic}
+                  />
+                  <Route
+                      path='/clinic-dashboard'
+                      exact 
+                      component={Clinic}
+                  />
+               </Switch>
+            </Router>
+        </div>
     );
 }
 
