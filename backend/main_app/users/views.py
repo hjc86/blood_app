@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from .serializers import UserSerializer, DonorSerializer, ClinicSerializer
-from .models import User
+from .models import User, Donor, Clinic
 from django.http import Http404
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -37,12 +37,6 @@ class UserView(APIView):
         user.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
-    # def delete(self, request, pk, format=None):
-    #     event = self.get_object(pk)
-    #     event.delete()
-
-        # return Response(status=status.HTTP_204_NO_CONTENT)
-
 class UsersView(APIView):
     """
     create a new User with empty profile
@@ -61,17 +55,6 @@ class UsersView(APIView):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-
-# class ProfileView(APIView):
-#     """ create profile """
-#     def post(self, request, format=None):
-#         print("request data", request.data)
-        
-#         serializer = DonorSerializer(data=request.data)
-#         if serializer.is_valid():
-#             serializer.save()
-#             return Response(serializer.data, status=status.HTTP_201_CREATED)
-#         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class DonorView(APIView):
     """ create profile """
@@ -98,3 +81,37 @@ class HelloView(APIView):
     def get(self, request):
         content = {'message': 'Hello, World!'}
         return Response(content)
+
+
+class LoginView(APIView):
+    
+
+    pass  
+
+
+class LogoutView(APIView):
+    
+    #permission_classes = (IsAuthenticated,)
+    pass        
+
+
+# class FollowView(APIView):
+#     donor_1=User.objects.all()
+#     print(donor_1)
+
+
+#     #User.objects.all().filter(username=instance).values_list('is_clinic').first()
+    # donor_3=Donor.objects.get('user_id'==3).follows.add(donor_1)
+
+
+
+
+  #  print(donor_1.follows.all())
+#     >>> user_1 = User.objects.get(pk = 1) # <-- mark
+# >>> user_2 = User.objects.get(pk = 2) # <-- john
+
+# >>> user_1.get_profile().follows.add(user_2.get_profile())
+# >>> user_1.get_profile().follows.all()
+# [<UserProfile: john>]
+# >>> user_2.get_profile().follows.all()
+# [<UserProfile: mark>]
