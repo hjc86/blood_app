@@ -98,7 +98,7 @@ class Scheduler extends Component {
     const { loading } = this.state;
 
     return (
-      <div>
+      <div className="container-fluid">
         <h1>Appointment Picker</h1>
         <AppointmentPicker
           addAppointmentCallback={this.addAppointmentCallback}
