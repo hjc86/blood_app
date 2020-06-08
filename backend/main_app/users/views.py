@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from .serializers import UserSerializer, DonorSerializer, ClinicSerializer
+from .serializers import UserSerializer, DonorSerializer, ClinicSerializer, FollowingSerializer
 from .models import User, Donor, Clinic
 from django.http import Http404
 from rest_framework.views import APIView
@@ -91,8 +91,8 @@ class LogoutView(APIView):
     #permission_classes = (IsAuthenticated,)
     pass        
 
-
-class FollowView(APIView):
+import json
+class FollowingView(APIView):
     """
     follow a donor, unfollow a donor,get list of donors you follow, get list of donors who follow you
     """
@@ -111,16 +111,27 @@ class FollowView(APIView):
 
 
     
-    def get_object(self, pk):
+    def get_object(self, id):
         try:
-            return Donor.objects.get(user_id=pk)
+            return Donor.objects.get(user_id=id)
         except User.DoesNotExist:
             raise Http404
 
-    def get(self, request, pk, format=None):
-        following = self.following.all()
-        serializer = UserSerializer(following)
-        return Response(serializer.data)
+    def get(self, request, id, format=None):
+        following = self.get_object(id).following.all().values('user_id')
+        print(following)
+        serializer = FollowingSerializer(following, many=True)
+        return Response(following)
+    
+    def post(self, request, format=None):
+        pass#serializer = UserSerializer(data=request.data)
+
+
+
+        # if serializer.is_valid():
+        #     serializer.save()
+        #     return Response(serializer.data, status=status.HTTP_201_CREATED)
+        # return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
  
     # def put(self, request, pk, format=None):
@@ -155,3 +166,24 @@ class FollowView(APIView):
 # [<UserProfile: john>]
 # >>> user_2.get_profile().follows.all()
 # [<UserProfile: mark>]
+
+
+
+class FollowersView(APIView):
+      
+    def get_object(self, id):
+        try:
+            return Donor.objects.get(user_id=id)
+        except User.DoesNotExist:
+            raise Http404
+
+
+    def get(self, request, id, format=None):
+        followers = self.get_object(id).followers.all().values('user_id')
+        print(followers)
+        serializer = FollowingSerializer(followers, many=True)
+        return Response(followers)
+    
+    # def post(self, request, format=None):
+    #     pass#serializer = UserSerializer(data=request.data)
+

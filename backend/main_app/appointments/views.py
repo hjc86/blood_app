@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from appointments.serializers import  AppointmentSerializer
+from appointments.serializers import AppointmentSerializer
 from appointments.models import Appointment
 
 from users.serializers import UserSerializer, DonorSerializer, ClinicSerializer

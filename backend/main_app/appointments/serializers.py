@@ -16,7 +16,7 @@ class AppointmentSerializer(serializers.ModelSerializer):
             clinic_id=validated_data['clinic_id'],
         )
         appointment.save()
-        return appoinment
+        return appointment
 
     def update(self, instance, validated_data):
 

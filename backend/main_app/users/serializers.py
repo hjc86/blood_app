@@ -63,5 +63,27 @@ class ClinicSerializer(serializers.ModelSerializer):
         clinic.save()
         return clinic
 
-class FollowSerializer(serializers.ModelSerializer):
-    pass
+class FollowingSerializer(serializers.Serializer):
+    following = serializers.IntegerField()
+
+    class Meta:
+       fields=['following']
+    #pass
+    # class Meta:
+    #     model = Follow
+    #     fields = ['user_id','name','geolocation','address','requirements','opening_times']
+
+    # return following
+
+
+class FollowersView(serializers.Serializer):
+    followers = serializers.IntegerField()
+
+    class Meta:
+        fields=['followers']
+    #pass
+    # class Meta:
+    #     model = Follow
+    #     fields = ['user_id','name','geolocation','address','requirements','opening_times']
+
+    # return following   
