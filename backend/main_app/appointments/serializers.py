@@ -10,7 +10,6 @@ class AppointmentSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
 
-
         appointment = Appointment(
             donor_id=validated_data['donor_id'],
             clinic_id=validated_data['clinic_id'],

@@ -1,5 +1,6 @@
 from .models import User , Donor, Clinic
 from rest_framework import serializers
+from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -42,6 +43,16 @@ class DonorSerializer(serializers.ModelSerializer):
         donor.save()
         return donor
 
+
+    def update(self, instance, validated_data):
+        
+        instance.first_name = validated_data.get('first_name', instance.first_name)
+        instance.last_name = validated_data.get('last_name', instance.last_name)
+        instance.date_of_birth = validated_data.get('date_of_birth', instance.date_of_birth)
+        instance.save()
+
+        return instance   
+
 class ClinicSerializer(serializers.ModelSerializer):
 
     class Meta:
@@ -49,8 +60,7 @@ class ClinicSerializer(serializers.ModelSerializer):
         fields = ['user_id','name','geolocation','address','requirements','opening_times']
 
     def create(self, validated_data):
-        # user = User.objects.get(pk=1)
-        # print(user)
+
         clinic = Clinic(
             name=validated_data['name'],
             geolocation=validated_data['geolocation'],
@@ -59,7 +69,7 @@ class ClinicSerializer(serializers.ModelSerializer):
             opening_times= validated_data['opening_times'],
         )
 
-        # user.set_password(validated_data['password'])
+       
         clinic.save()
         return clinic
 
@@ -68,12 +78,6 @@ class FollowingSerializer(serializers.Serializer):
 
     class Meta:
        fields=['following']
-    #pass
-    # class Meta:
-    #     model = Follow
-    #     fields = ['user_id','name','geolocation','address','requirements','opening_times']
-
-    # return following
 
 
 class FollowersView(serializers.Serializer):
@@ -81,9 +85,13 @@ class FollowersView(serializers.Serializer):
 
     class Meta:
         fields=['followers']
-    #pass
-    # class Meta:
-    #     model = Follow
-    #     fields = ['user_id','name','geolocation','address','requirements','opening_times']
 
-    # return following   
+class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
+    def validate(self, attrs):
+        # The default result (access/refresh tokens)
+        data = super(CustomTokenObtainPairSerializer, self).validate(attrs)
+        # Custom data you want to include
+        # data.update({'user': self.user.username})
+        data.update({'id': self.user.id})
+        # and everything else you want to send in the response
+        return data

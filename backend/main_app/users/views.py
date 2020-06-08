@@ -6,27 +6,41 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
+from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
+from rest_framework_simplejwt.views import TokenObtainPairView
+from .serializers import CustomTokenObtainPairSerializer 
 
-class UserView(APIView):
+class UsersChange(APIView):
     """
     Retrieve, update or delete a user instance.
     """
+    
+    # there is mixing of logic here it feels like bad design
+    def get_object(self, pk, data):
 
-    def get_object(self, pk):
+        func_kwargs = {'data': data} if data else {}
         try:
-            return User.objects.get(pk=pk)
+            is_clinic = getattr(User.objects.get(pk=pk), 'is_clinic')
+            if is_clinic:
+                clinic = Clinic.objects.get(user_id=pk)
+                serializer = ClinicSerializer(clinic, **func_kwargs)
+            else:
+                donor = Donor.objects.get(user_id=pk)     
+                serializer = DonorSerializer(donor, **func_kwargs)
+
+            return serializer
+
         except User.DoesNotExist:
             raise Http404
 
     def get(self, request, pk, format=None):
-        user = self.get_object(pk)
-        serializer = UserSerializer(user)
+        serializer=self.get_object(pk,data=None)
+        
         return Response(serializer.data)
-
- 
+  
     def put(self, request, pk, format=None):
-        user = self.get_object(pk)
-        serializer = UserSerializer(user, data=request.data)
+        serializer = self.get_object(pk, request.data)
+        
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)
@@ -37,15 +51,18 @@ class UserView(APIView):
         user.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
-class UsersView(APIView):
+
+
+
+class UserCreate(APIView):
     """
     create a new User with empty profile
     """
 
-    def get(self, request, format=None):
-        users = User.objects.all()
-        serializer = UserSerializer(users, many=True)
-        return Response(serializer.data)
+    # def get(self, request, format=None):
+    #     users = User.objects.all()
+    #     serializer = UserSerializer(users, many=True)
+    #     return Response(serializer.data)
 
     def post(self, request, format=None):
         serializer = UserSerializer(data=request.data)
@@ -96,20 +113,6 @@ class FollowingView(APIView):
     """
     follow a donor, unfollow a donor,get list of donors you follow, get list of donors who follow you
     """
-
-
-    # def get(self, request):
-    #     user1= Donor.objects.get(user_id=1)
-    #     user2=Donor.objects.get(user_id=2)
-    #     user3=Donor.objects.get(user_id=3)
-
-    #     user1.following.add(user3)
-    #     #User1.following.all()
-    #     print(user1.following.all())
-    #     content = {'message': 'Hello, World!'}
-    #     return Response(content)
-
-
     
     def get_object(self, id):
         try:
@@ -123,50 +126,11 @@ class FollowingView(APIView):
         serializer = FollowingSerializer(following, many=True)
         return Response(following)
     
+    def delete(self, request, id, fromat=None):
+        pass
+
     def post(self, request, format=None):
-        pass#serializer = UserSerializer(data=request.data)
-
-
-
-        # if serializer.is_valid():
-        #     serializer.save()
-        #     return Response(serializer.data, status=status.HTTP_201_CREATED)
-        # return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
- 
-    # def put(self, request, pk, format=None):
-    #     user = self.get_object(pk)
-    #     serializer = UserSerializer(user, data=request.data)
-    #     if serializer.is_valid():
-    #         serializer.save()
-    #         return Response(serializer.data)
-    #     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-    # def delete(self, request, pk, format=None):
-    #     user = self.get_object(pk)
-    #     user.delete()
-    #     return Response(status=status.HTTP_204_NO_CONTENT)
-
-
-
-    # donor_1=User.objects.all()
-    # print(donor_1)
-
-
-    # #User.objects.all().filter(username=instance).values_list('is_clinic').first()
-    # donor_3=Donor.objects.get('user_id'==3).follows.add(donor_1)
-
-
-  #  print(donor_1.follows.all())
-#     >>> user_1 = User.objects.get(pk = 1) # <-- mark
-# >>> user_2 = User.objects.get(pk = 2) # <-- john
-
-# >>> user_1.get_profile().follows.add(user_2.get_profile())
-# >>> user_1.get_profile().follows.all()
-# [<UserProfile: john>]
-# >>> user_2.get_profile().follows.all()
-# [<UserProfile: mark>]
-
+        pass
 
 
 class FollowersView(APIView):
@@ -183,7 +147,11 @@ class FollowersView(APIView):
         print(followers)
         serializer = FollowingSerializer(followers, many=True)
         return Response(followers)
-    
-    # def post(self, request, format=None):
-    #     pass#serializer = UserSerializer(data=request.data)
 
+from .serializers import CustomTokenObtainPairSerializer
+
+
+
+class CustomTokenObtainPairView(TokenObtainPairView):
+    # Replace the serializer with your custom
+    serializer_class = CustomTokenObtainPairSerializer
