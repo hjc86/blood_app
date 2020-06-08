@@ -2,8 +2,10 @@ import React from 'react';
 import { Link, BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
 import Homepage from './containers/homepage';
-import Donor from './components/donor_profile';
-import Clinic from './components/clinic_profile';
+import DonorProfile from './components/donor_profile';
+import ClinicProfile from './components/clinic_profile';
+import ClinicDashboard from './components/clinic_dashboard';
+import DonorDashboard from './components/donor_dashboard';
 
 const App = () => {
     return (
@@ -18,23 +20,23 @@ const App = () => {
                   <Route 
                       path='/donor-profile'
                       exact 
-                      component={Donor}
+                      component={DonorProfile}
 
                   />
                   <Route
                       path='/clinic-profile'
                       exact 
-                      component={Clinic}
+                      component={ClinicProfile}
                   />
                   <Route
                       path='/donor-dashboard'
                       exact 
-                      component={Clinic}
+                      component={DonorDashboard}
                   />
                   <Route
                       path='/clinic-dashboard'
                       exact 
-                      component={Clinic}
+                      component={ClinicDashboard}
                   />
                </Switch>
             </Router>

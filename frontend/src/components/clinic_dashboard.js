@@ -3,9 +3,11 @@ import React from 'react';
 class ClinicDashboard extends React.Component {
 
     render() {
-        return {
-            
-        }
+        return (
+   
+            <h1>Hello im ClinicDashboard</h1>
+
+        )
     }
 }
 

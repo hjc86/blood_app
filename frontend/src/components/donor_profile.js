@@ -1,10 +1,14 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
+import NavBar from './navbar_home';
 class Donor extends React.Component {
    
     render() {
         return (
-            <div className="container-fluid">
+            <div>
+                <NavBar />
+                <div className="container-fluid">
                 <form>
                     <label>Donor Profile</label>
                     <p>By creating this account......</p>
@@ -36,7 +40,8 @@ class Donor extends React.Component {
                         placeholder="eg. CR3 6LD">
                     </input>
                     </form>
-                    <button className='passwordButton btn btn-primary' type='submit'>Create</button>
+                    <Link to={{pathname:'/donor-dashboard'}}><button className='passwordButton btn btn-primary' type='submit'>Create</button></Link>
+                </div>
                 </div>
         
         )
