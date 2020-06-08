@@ -18,8 +18,9 @@ class Timeslot extends React.Component {
     render() {
         return (
             <div>
-                {Object.keys(this.state.placeholder).map(day => 
-                (< TimeslotCard day={day} timeslots ={this.state.placeholder.day}/>) )}
+                {Object.keys(this.state.placeholder).map((item,index) =>
+                (< TimeslotCard key={index} day={item} timeslots={this.state.placeholder[item]}/>)
+                )}
             </div>
             
         )
