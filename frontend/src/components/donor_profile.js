@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-import NavBar from './navbar_home';
+import NavBar from './navbar_dashboard';
 class Donor extends React.Component {
    
     render() {
@@ -29,8 +29,7 @@ class Donor extends React.Component {
                     <input 
                         name="dateOfBirth" 
                         type="date"
-                        placeholder="eg Date/Month/Year"
-                        >
+                        placeholder="eg Date/Month/Year">
                     </input>
                     <br />
                     <label>Postcode:</label>
@@ -42,8 +41,7 @@ class Donor extends React.Component {
                     </form>
                     <Link to={{pathname:'/donor-dashboard'}}><button className='passwordButton btn btn-primary' type='submit'>Create</button></Link>
                 </div>
-                </div>
-        
+            </div>
         )
     }
 }

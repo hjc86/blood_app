@@ -1,7 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-import NavBar from './navbar_home';
+import NavBar from './navbar_dashboard';
+import Timeslot from './timeslots';
 
 class Clinic extends React.Component {
    
@@ -58,6 +59,9 @@ class Clinic extends React.Component {
                         </textarea>
                         <br />
                         </form>
+                        <div>
+                        < Timeslot />
+                        </div>
                         <Link to={{pathname:'/clinic-dashboard'}}><button className='passwordButton btn btn-primary' type='submit'>Submit</button></Link>
                     </div>
         </div>
