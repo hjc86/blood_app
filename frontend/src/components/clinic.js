@@ -53,7 +53,7 @@ class Clinic extends React.Component {
                     </textarea>
                     <br />
                     </form>
-                    <button className='passwordButton' type='submit'>Submit</button>
+                    <button className='passwordButton btn btn-primary' type='submit'>Submit</button>
                 </div>
         
         )

@@ -36,7 +36,7 @@ class Donor extends React.Component {
                         placeholder="eg. CR3 6LD">
                     </input>
                     </form>
-                    <button className='passwordButton' type='submit'>Create</button>
+                    <button className='passwordButton btn btn-primary' type='submit'>Create</button>
                 </div>
         
         )

@@ -24,7 +24,7 @@ class Login extends React.Component {
                         placeholder="eg. Passw0rd928">
                     </input>
                     </form>
-                    <button className='loginUserButton' type='submit'>Log In</button>
+                    <button className='loginUserButton btn btn-danger' type='submit' >Log In</button>
                 </div>
 
                 <div>
@@ -45,12 +45,12 @@ class Login extends React.Component {
                     </input>
                     <br />
                     <label>Account type:</label>
-                    <select name="option">
+                    <select name="option" className="">
                         <option value="donor">Donor</option>
                         <option value="clinic">Clinic</option>
                     </select>
                     </form>
-                    <button className='passwordButton' type='submit'>Join Red Cells</button>
+                    <button className='passwordButton btn btn-primary' type='submit'>Join Red Cells</button>
                 </div>
             </div>
         
