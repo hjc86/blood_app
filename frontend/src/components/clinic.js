@@ -4,7 +4,7 @@ class Clinic extends React.Component {
    
     render() {
         return (
-            <div>
+            <div className="container-fluid">
                 <form>
                     <label>Clinic Profile</label>
                     <p>Hello Clinic......</p>

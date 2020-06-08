@@ -4,7 +4,7 @@ class Donor extends React.Component {
    
     render() {
         return (
-            <div>
+            <div className="container-fluid">
                 <form>
                     <label>Donor Profile</label>
                     <p>By creating this account......</p>
