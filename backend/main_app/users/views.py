@@ -84,26 +84,66 @@ class HelloView(APIView):
 
 
 class LoginView(APIView):
-    
-
     pass  
 
 
 class LogoutView(APIView):
-    
     #permission_classes = (IsAuthenticated,)
     pass        
 
 
-# class FollowView(APIView):
-#     donor_1=User.objects.all()
-#     print(donor_1)
+class FollowView(APIView):
+    """
+    follow a donor, unfollow a donor,get list of donors you follow, get list of donors who follow you
+    """
 
 
-#     #User.objects.all().filter(username=instance).values_list('is_clinic').first()
+    # def get(self, request):
+    #     user1= Donor.objects.get(user_id=1)
+    #     user2=Donor.objects.get(user_id=2)
+    #     user3=Donor.objects.get(user_id=3)
+
+    #     user1.following.add(user3)
+    #     #User1.following.all()
+    #     print(user1.following.all())
+    #     content = {'message': 'Hello, World!'}
+    #     return Response(content)
+
+
+    
+    def get_object(self, pk):
+        try:
+            return Donor.objects.get(user_id=pk)
+        except User.DoesNotExist:
+            raise Http404
+
+    def get(self, request, pk, format=None):
+        following = self.following.all()
+        serializer = UserSerializer(following)
+        return Response(serializer.data)
+
+ 
+    # def put(self, request, pk, format=None):
+    #     user = self.get_object(pk)
+    #     serializer = UserSerializer(user, data=request.data)
+    #     if serializer.is_valid():
+    #         serializer.save()
+    #         return Response(serializer.data)
+    #     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    # def delete(self, request, pk, format=None):
+    #     user = self.get_object(pk)
+    #     user.delete()
+    #     return Response(status=status.HTTP_204_NO_CONTENT)
+
+
+
+    # donor_1=User.objects.all()
+    # print(donor_1)
+
+
+    # #User.objects.all().filter(username=instance).values_list('is_clinic').first()
     # donor_3=Donor.objects.get('user_id'==3).follows.add(donor_1)
-
-
 
 
   #  print(donor_1.follows.all())

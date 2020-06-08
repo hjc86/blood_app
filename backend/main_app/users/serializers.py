@@ -63,7 +63,5 @@ class ClinicSerializer(serializers.ModelSerializer):
         clinic.save()
         return clinic
 
-# class FollowSerializer(serializers.ModelSerializer):
-#     pass
-
-
+class FollowSerializer(serializers.ModelSerializer):
+    pass

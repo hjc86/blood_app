@@ -13,6 +13,7 @@ class Donor(models.Model):
     last_name = models.CharField(max_length=50,null=True, blank=True)
     date_of_birth = models.DateField(null=True, blank=True)
     postcode =  models.CharField(max_length=50, null=True, blank=True)
+    following = models.ManyToManyField('self', related_name='followers', symmetrical=False)
     #follows = models.ManyToManyField("self", related_name = 'follows')
     #follows = models.ManyToManyField('self', related_name='follower', symmetrical=False)
     # def __str__(self):
@@ -40,10 +41,10 @@ def create_user_profile( sender, instance, created, **kwargs ):
     else:
         Clinic.objects.create(user=instance)
 
-class Follow(models.Model):
-      following = models.ForeignKey(User, related_name="who_follows", on_delete=models.CASCADE)
-      follower = models.ForeignKey(User, related_name="who_is_followed", on_delete=models.CASCADE)
-      follow_time = models.DateTimeField(auto_now=True)
+# class Follow(models.Model):
+#       following = models.ForeignKey(User, related_name="who_follows", on_delete=models.CASCADE)
+#       follower = models.ForeignKey(User, related_name="who_is_followed", on_delete=models.CASCADE)
+#       follow_time = models.DateTimeField(auto_now=True)
 
 
 

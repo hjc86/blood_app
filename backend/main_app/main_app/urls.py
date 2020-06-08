@@ -50,8 +50,8 @@ urlpatterns = [
     # donor gets his/her appointmes
     # clinic gets all donors who have or will have appoinments
 
-    #   FollowView test
-    #path('follow/', users_views.FollowView.as_view(), name='follow'), 
+    # FollowView test
+    path('follow/', users_views.FollowView.as_view(), name='follow'), 
     
     
     
