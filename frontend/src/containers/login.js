@@ -4,6 +4,55 @@ import { Link } from 'react-router-dom';
 import NavBar from '../components/navbar_home';
 
 class Login extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            create : {username: null, password: null, passwordTwo: null, isClinic : null},
+            signIn : {username: null, password: null}
+        }
+    }
+
+    changeHandler = (event) =>  {
+        let state = this.state 
+
+        switch (event.target.name) {
+            case "signInUsername": 
+              state.signIn.username = event.target.value
+              this.setState = state;
+              console.log(state)
+              break;
+            case "signInPassword":
+                state.signIn.password = event.target.value
+                this.setState = state;
+                console.log(state)
+                break;
+            case "createUsername":
+                    state.create.username = event.target.value
+                    this.setState = state;
+                    console.log(state)
+                    break;
+            case "createPassword":
+                    state.create.password = event.target.value
+                    this.setState = state;
+                    console.log(state)
+                    break;
+            case "createPasswordTwo":
+                    state.create.passwordTwo = event.target.value
+                    this.setState = state;
+                    console.log(state)
+                    break;
+            case "createOption":
+                if (event.target.value = "donor"  ) {
+                state.create.isClinic = false  
+                } else {
+                state.create.isClinic = true
+                }
+                this.setState = state
+                    console.log(state)
+                    break;
+
+    }
+}
    
     render() {
         return (
@@ -19,7 +68,8 @@ class Login extends React.Component {
                         <label>Username:</label>
                         <input
                             className="form-control"
-                            name="existingUsername" 
+                            name="signInUsername" 
+                            onChange={this.changeHandler}
                             type="text"
                             placeholder="eg. Us3rname248">
                         </input>
@@ -27,7 +77,8 @@ class Login extends React.Component {
                         <label>Password:</label>
                         <input 
                             className="form-control"
-                            name="password" 
+                            name="signInPassword"
+                            onChange={this.changeHandler} 
                             type="password"
                             placeholder="eg. Passw0rd928">
                         </input>
@@ -46,24 +97,36 @@ class Login extends React.Component {
                                 <label>Username:</label>
                                 <input 
                                     className="form-control"
-                                    name="newUsername" 
+                                    name="createUsername" 
                                     type="text"
+                                    onChange={this.changeHandler}
                                     placeholder="Insert Username">
                                 </input>
                                 <br />
                                 <label>Password:</label>
                                 <input
                                     className="form-control" 
-                                    name="password" 
+                                    name="createPassword"
+                                    onChange={this.changeHandler} 
                                     type="password"
                                     placeholder="Insert Password">
+                                </input>
+                                <input
+                                    className="form-control" 
+                                    name="createPasswordTwo"
+                                    onChange={this.changeHandler} 
+                                    type="password"
+                                    placeholder="Confirm Password">
                                 </input>
                         </div>
                         </div>
                         <div className="form-group">
                             <div className="col-xs-2">
                             <label>Account type:</label>
-                            <select name="option" className="form-control col-xs-2">
+                            <select name="createOption"
+                            value={this.state.create.isClinic}
+                            onChange={this.changeHandler} 
+                            className="form-control col-xs-2">
                                 <option value="choose">Please Select</option>
                                 <option value="donor">Donor</option>
                                 <option value="clinic">Clinic</option>
