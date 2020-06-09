@@ -56,6 +56,17 @@ class Login extends React.Component {
 }
    
     render() {
+        let createButton
+        if (this.state.create.isClinic === false) {
+            createButton =
+            <Link to={{pathname:'/donor-profile'}}><button className='passwordButton btn btn-primary' type='submit'>Create</button></Link>
+
+        } else if (this.state.create.isClinic === true) {
+            createButton =
+            <Link to={{pathname:'/clinic-profile'}}><button className='passwordButton btn btn-primary' type='submit'>Create</button></Link>
+
+        }
+
         return (
             <div>
             < NavBar />
@@ -135,8 +146,9 @@ class Login extends React.Component {
                         </div>
                         </form>
                         < br/>
-                        <Link to={{pathname:'/donor-profile'}}><button className='passwordButton btn btn-primary' type='submit'>Donor</button></Link>
-                        <Link to={{pathname:'/clinic-profile'}}><button className='passwordButton btn btn-primary' type='submit'>Clinic</button></Link>
+                        { createButton }
+                        {/* <Link to={{pathname:'/donor-profile'}}><button className='passwordButton btn btn-primary' type='submit'>Create</button></Link>:
+                        <Link to={{pathname:'/clinic-profile'}}><button className='passwordButton btn btn-primary' type='submit'>Create</button></Link>} */}
                     </div>
                 </div>
             </div>
