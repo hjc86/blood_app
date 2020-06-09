@@ -65,11 +65,11 @@ urlpatterns = [
     path('user/', users_views.UserCreate.as_view(), name='user_create'),
     path('user/<str:pk>', users_views.UsersChange.as_view(), name='user_change'),
 
-    # path('appointment/',users_views.AppointmentCreate.as_view(), name='app_create'),
-    # path('appointment/<str:appointment_id>',users_views.ApopintmentCreate.as_view(), name='app_create'),
+    path('appointment/',appointments_views.AppointmentCreate.as_view(), name='app_create'),
+    path('appointment/<str:pk>',appointments_views.AppointmentsChange.as_view(), name='app_create'),
 
-    # path('follow/', users_views.FollowCreate.as_view(), name='follow_create'), 
-    # path('follow/<str:id', users_views.FollowChange.as_view(), name='follow_delete'), 
+    path('follow/', users_views.FollowCreate.as_view(), name='follow_create'), 
+    path('follow/<str:id', users_views.FollowChange.as_view(), name='follow_delete'), 
 
 ]
 

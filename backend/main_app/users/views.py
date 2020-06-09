@@ -109,7 +109,7 @@ class LogoutView(APIView):
     pass        
 
 import json
-class FollowingView(APIView):
+class FollowCreate(APIView):
     """
     follow a donor, unfollow a donor,get list of donors you follow, get list of donors who follow you
     """
@@ -120,6 +120,7 @@ class FollowingView(APIView):
         except User.DoesNotExist:
             raise Http404
 
+
     def get(self, request, id, format=None):
         following = self.get_object(id).following.all().values('user_id')
         print(following)
@@ -129,8 +130,9 @@ class FollowingView(APIView):
     def delete(self, request, id, fromat=None):
         pass
 
+    
     def post(self, request, format=None):
-        pass
+        
 
 
 class FollowersView(APIView):

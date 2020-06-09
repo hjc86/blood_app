@@ -8,7 +8,7 @@ class User(AbstractUser):
     is_clinic = models.BooleanField(default=False)
 
 class Donor(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
+    user = models.OneToOneField(User,on_delete=models.CASCADE, primary_key=True)
     first_name = models.CharField(max_length=50,null=True, blank=True)
     last_name = models.CharField(max_length=50,null=True, blank=True)
     date_of_birth = models.DateField(null=True, blank=True)

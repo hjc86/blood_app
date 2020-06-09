@@ -13,22 +13,22 @@ from rest_framework.permissions import IsAuthenticated
 
 # Create your views here.
 
-class AppointmentView(APIView):
+class AppointmentsChange(APIView):
     """
-    make, retrieve, update or cancel appoinment
+    retrieve, update or cancel appoinment
     """
 
-    permission_classes = (IsAuthenticated,)
+    #permission_classes = (IsAuthenticated,)
     
     def get_object(self, pk):
         try:
             return Appointment.objects.get(pk=pk)
-        except User.DoesNotExist:
+        except Appointment.DoesNotExist:
             raise Http404
 
     def get(self, request, pk, format=None):
-        user = self.get_object(pk)
-        serializer = UserSerializer(user)
+        appointment = self.get_object(pk)
+        serializer = AppointmentSerializer(appointment)
         return Response(serializer.data)
 
     def put(self, request, pk, format=None):
@@ -45,15 +45,18 @@ class AppointmentView(APIView):
         return Response(status=status.HTTP_204_NO_CONTENT)
 
 
-class AppointmentsView(APIView):
+class AppointmentCreate(APIView):
     """
     create a new User with empty profile
     """
 
-    def get(self, request, format=None):
-        appointments = Appointment.objects.all()
-        serializer = AppointmentSerializer(appointments, many=True)
-        return Response(serializer.data)
+    #permission_classes = (IsAuthenticated,)
+    
+
+    # def get(self, request, format=None):
+    #     appointments = Appointment.objects.all()
+    #     serializer = AppointmentSerializer(appointments, many=True)
+    #     return Response(serializer.data)
 
     def post(self, request, format=None):
         serializer = AppointmentSerializer(data=request.data)
