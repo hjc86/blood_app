@@ -5,9 +5,9 @@ class Login extends React.Component {
    
     render() {
         return (
-            <div className="container-fluid">
-                <div className="row">
-                    <div className="col">
+            <div className="container-fluid pt-5">
+                <div className="row justify-content-center">
+                    <div className="col-3">
                         <form>
                         <label>Sign In</label>
                         <p>To an existing account</p>
@@ -29,31 +29,39 @@ class Login extends React.Component {
                         < br/>
                         <button className='loginUserButton btn btn-danger' type='submit' >Log In</button>
                     </div>
-                    <div className="col">
+
+                    <div className="col-3">
                         <form>
                         <label>Create</label>
                         <p>A new free account</p>
                         <p>It's free to join and easy to use. Continue on to create your Red Cells account and be a part of saving lives through blood donation!</p>
-                        < br/>
-                        <label>Username:</label>
-                        <input 
-                            name="newUsername" 
-                            type="text"
-                            placeholder="Insert Username">
-                        </input>
-                        <br />
-                        <label>Password:</label>
-                        <input 
-                            name="password" 
-                            type="password"
-                            placeholder="Insert Password">
-                        </input>
-                        <br />
-                        <label>Account type:</label>
-                        <select name="option" className="">
-                            <option value="donor">Donor</option>
-                            <option value="clinic">Clinic</option>
-                        </select>
+                        <div className="form-group">
+                            <div>
+                                <label>Username:</label>
+                                <input 
+                                    name="newUsername" 
+                                    type="text"
+                                    placeholder="Insert Username">
+                                </input>
+                                <br />
+                                <label>Password:</label>
+                                <input 
+                                    name="password" 
+                                    type="password"
+                                    placeholder="Insert Password">
+                                </input>
+                        </div>
+                        </div>
+                        <div className="form-group">
+                            <div className="col-xs-2">
+                            <label>Account type:</label>
+                            <select name="option" className="form-control col-xs-2">
+                                <option value="choose">Please Select</option>
+                                <option value="donor">Donor</option>
+                                <option value="clinic">Clinic</option>
+                            </select>
+                            </div>
+                        </div>
                         </form>
                         < br/>
                         <Link to={{pathname:'/donor-profile'}}><button className='passwordButton btn btn-primary' type='submit'>Donor</button></Link>
