@@ -1,7 +1,15 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-
+import { connect } from 'react-redux';
 import NavBar from '../components/navbar_home';
+import { simpleAction } from '../action-creators/simpleAction';
+
+const mapStateToProps = state => ({
+    ...state
+})
+const mapDispatchToProps = dispatch => ({
+    simpleAction: () => dispatch(simpleAction())
+})
 
 class Login extends React.Component {
     constructor(props) {
@@ -11,6 +19,11 @@ class Login extends React.Component {
             "signIn" : {"username": null, "password": null}
         }
         this.changeHandler = this.changeHandler.bind(this);
+    }
+
+    simpleAction = (event) => {
+        this.props.simpleAction();
+        console.log(this.props);
     }
 
     changeHandler = (event) =>  {
@@ -154,5 +167,4 @@ class Login extends React.Component {
     }
 }
 
-
-export default Login;
+export default connect(mapStateToProps, mapDispatchToProps) (Login);

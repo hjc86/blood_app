@@ -1,6 +1,7 @@
 import React from 'react';
 import NavBar from '../components/navbar_dashboard';
 import Scheduler from '../components/scheduler';
+import { connect } from 'react-redux';
 
 class DonorDashboard extends React.Component {
 
@@ -20,4 +21,4 @@ class DonorDashboard extends React.Component {
     }
 }
 
-export default DonorDashboard;
+export default connect() (DonorDashboard);

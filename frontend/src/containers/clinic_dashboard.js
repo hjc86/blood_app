@@ -1,5 +1,6 @@
 import React from 'react';
 import NavBar from '../components/navbar_dashboard';
+import { connect } from 'react-redux';
 
 class ClinicDashboard extends React.Component {
 
@@ -18,4 +19,4 @@ class ClinicDashboard extends React.Component {
     }
 }
 
-export default ClinicDashboard;
+export default connect() (ClinicDashboard);
