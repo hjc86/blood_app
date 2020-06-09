@@ -141,6 +141,8 @@ STATIC_URL = '/static/'
 
 ################ custom settings ###############
 
-
+ORS_ORIGIN_WHITELIST = (
+    'http://localhost:3000',
+)
 
 AUTH_USER_MODEL = 'users.User'
