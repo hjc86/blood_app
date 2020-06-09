@@ -16,11 +16,11 @@ class Clinic extends React.Component {
                 "postcode": "PA75 5TB"
             },
             "requirements": "I need some stuff in here.",
-            "timeslots": {"monday": [["10:00","13:00"],["14:00","17:00"]],
-                        "tuesday": [["09:00","13:00"],["14:00","17:00"]], 
-                        "wednesday": [["09:00","13:00"],["14:00","17:00"]], 
-                        "thursday": [["09:00","13:00"],["14:00","17:00"]], 
-                        "friday": [["09:00","13:00"],["14:00","17:00"]]}
+            "timeslots": {"Monday": [["10:00","13:00"],["14:00","17:00"]],
+                        "Tuesday": [["09:00","13:00"],["14:00","17:00"]], 
+                        "Wednesday": [["09:00","13:00"],["14:00","17:00"]], 
+                        "Thursday": [["09:00","13:00"],["14:00","17:00"]], 
+                        "Friday": [["09:00","13:00"],["14:00","17:00"]]}
         };
         this.changeHandler = this.changeHandler.bind(this);
     };
@@ -35,6 +35,14 @@ class Clinic extends React.Component {
                 console.log(param1, param2)
                 break;
             case "addTimeSlot":
+                // Check times are not null
+                if (param2[0]===null || param2[1]===null) {
+                    break;
+                }
+                // Check times make sense
+                if (parseInt(param2[0].split(":")[0])*60+parseInt(param2[0].split(":")[1]) >= parseInt(param2[1].split(":")[0])*60+parseInt(param2[1].split(":")[1])) {
+                    break;
+                }
                 state.timeslots[param1].push(param2);
                 this.setState(state);
                 console.log(param1, param2)
@@ -77,13 +85,15 @@ class Clinic extends React.Component {
             <div>
                 <NavBar />
                 <div className="container-fluid">
-                    <form>
-                        <label>Clinic Profile</label>
-                        <p>Hello Clinic......</p>
-                        <br />
+                    <div className="justify-content-around row mt-5">  
+                        <div className="justify-content-center col-xs-4 mt-5">
+                        <form>
+                            <label className="display-4 text-center">Clinic Profile</label>
+                            <p className= "text-center">Hello Clinic......</p>
                         <label>Address line 1:</label>
                         <input 
                             name="address1"
+                            className="form-control"
                             value={this.state.address.address_line_1}
                             onChange={this.changeHandler}
                             type="text"
@@ -93,6 +103,7 @@ class Clinic extends React.Component {
                         <label>Address line 2:</label>
                         <input 
                             name="address2"
+                            className="form-control"
                             value={this.state.address.address_line_2}
                             onChange={this.changeHandler} 
                             type="text"
@@ -102,6 +113,7 @@ class Clinic extends React.Component {
                         <label>Town/City:</label>
                         <input 
                             name="city"
+                            className="form-control"
                             value={this.state.address.city}
                             onChange={this.changeHandler} 
                             type="text"
@@ -111,6 +123,7 @@ class Clinic extends React.Component {
                         <label>County:</label>
                         <input 
                             name="county"
+                            className="form-control"
                             value={this.state.address.county}
                             onChange={this.changeHandler} 
                             type="text"
@@ -120,6 +133,7 @@ class Clinic extends React.Component {
                         <label>Postcode:</label>
                         <input 
                             name="postcode" 
+                            className="form-control"
                             value={this.state.address.postcode}
                             onChange={this.changeHandler}
                             type="text"
@@ -130,6 +144,7 @@ class Clinic extends React.Component {
                         <p>Brief instructions for donors</p>
                         <textarea 
                             name="requirements" 
+                            className="form-control"
                             value={this.state.requirements}
                             onChange={this.changeHandler}
                             type="text"
@@ -137,11 +152,14 @@ class Clinic extends React.Component {
                         </textarea>
                         <br />
                         </form>
+                        </div>
+                        
                         <div>
                         < Timeslot changeHandler={this.changeHandler} timeslots={this.state.timeslots}/>
                         </div>
                         <Link to={{pathname:'/clinic-dashboard'}}><button className='passwordButton btn btn-primary' type='submit'>Submit</button></Link>
                     </div>
+                    </div>  
         </div>
         )
     }
