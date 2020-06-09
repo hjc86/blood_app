@@ -14,6 +14,7 @@ class Login extends React.Component {
                         <br />
                         <label>Username:</label>
                         <input
+                            className="form-control"
                             name="existingUsername" 
                             type="text"
                             placeholder="eg. Us3rname248">
@@ -21,6 +22,7 @@ class Login extends React.Component {
                         <br />
                         <label>Password:</label>
                         <input 
+                            className="form-control"
                             name="password" 
                             type="password"
                             placeholder="eg. Passw0rd928">
@@ -39,13 +41,15 @@ class Login extends React.Component {
                             <div>
                                 <label>Username:</label>
                                 <input 
+                                    className="form-control"
                                     name="newUsername" 
                                     type="text"
                                     placeholder="Insert Username">
                                 </input>
                                 <br />
                                 <label>Password:</label>
-                                <input 
+                                <input
+                                    className="form-control" 
                                     name="password" 
                                     type="password"
                                     placeholder="Insert Password">
