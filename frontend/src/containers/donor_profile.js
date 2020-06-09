@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-import NavBar from './navbar_dashboard';
+import NavBar from '../components/navbar_dashboard';
 class Donor extends React.Component {
    
     render() {

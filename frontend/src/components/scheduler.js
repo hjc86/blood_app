@@ -105,7 +105,7 @@ class Scheduler extends Component {
           initialDay={new Date("2020-06-08")}
           days={days}
           maxReservableAppointments={1}
-          alpha
+          // alpha
           visible
           selectedByDefault
          />

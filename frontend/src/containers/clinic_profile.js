@@ -1,8 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-import NavBar from './navbar_dashboard';
-import Timeslot from './timeslots';
+import NavBar from '../components/navbar_dashboard';
+import Timeslot from '../components/timeslots';
 
 class Clinic extends React.Component {
    

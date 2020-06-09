@@ -1,11 +1,11 @@
 import React from 'react';
 import { Link, BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
-import Homepage from './containers/homepage';
-import DonorProfile from './components/donor_profile';
-import ClinicProfile from './components/clinic_profile';
-import ClinicDashboard from './components/clinic_dashboard';
-import DonorDashboard from './components/donor_dashboard';
+import Login from './containers/login';
+import DonorProfile from './containers/donor_profile';
+import ClinicProfile from './containers/clinic_profile';
+import ClinicDashboard from './containers/clinic_dashboard';
+import DonorDashboard from './containers/donor_dashboard';
 
 const App = () => {
     return (
@@ -15,7 +15,7 @@ const App = () => {
                   <Route 
                       path='/'
                       exact 
-                      component={Homepage}
+                      component={Login}
                   />
                   <Route 
                       path='/donor-profile'

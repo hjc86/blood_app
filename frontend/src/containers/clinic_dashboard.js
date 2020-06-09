@@ -1,5 +1,5 @@
 import React from 'react';
-import NavBar from './navbar_dashboard';
+import NavBar from '../components/navbar_dashboard';
 
 class ClinicDashboard extends React.Component {
 

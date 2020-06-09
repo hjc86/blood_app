@@ -1,6 +1,6 @@
 import React from 'react';
-import NavBar from './navbar_dashboard';
-import Scheduler from './scheduler';
+import NavBar from '../components/navbar_dashboard';
+import Scheduler from '../components/scheduler';
 
 class DonorDashboard extends React.Component {
 

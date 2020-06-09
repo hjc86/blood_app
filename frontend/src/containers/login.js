@@ -1,10 +1,14 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
+import NavBar from '../components/navbar_home';
+
 class Login extends React.Component {
    
     render() {
         return (
+            <div>
+            < NavBar />
             <div className="container-fluid pt-5">
                 <div className="row justify-content-center">
                     <div className="col-3">
@@ -72,6 +76,7 @@ class Login extends React.Component {
                         <Link to={{pathname:'/clinic-profile'}}><button className='passwordButton btn btn-primary' type='submit'>Clinic</button></Link>
                     </div>
                 </div>
+            </div>
             </div>
         
         )
