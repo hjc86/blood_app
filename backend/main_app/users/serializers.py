@@ -1,4 +1,5 @@
 from .models import User , Donor, Clinic
+from appointments.models import Appointment
 from rest_framework import serializers
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 
@@ -28,8 +29,10 @@ class UserSerializer(serializers.ModelSerializer):
 
 class DonorSerializer(serializers.ModelSerializer):
     
+    #followee_id =serializers.CharField(read_only=True, source="user.id").values()
     followee_name = serializers.CharField(read_only=True, source="user.username")
     
+
     class Meta:
         model = Donor
         fields = ['user_id','first_name','last_name','date_of_birth','postcode','followee_name']
@@ -73,7 +76,6 @@ class ClinicSerializer(serializers.ModelSerializer):
             opening_times= validated_data['opening_times'],
         )
 
-       
         clinic.save()
         return clinic
 

@@ -66,7 +66,8 @@ urlpatterns = [
     path('user/<str:pk>', users_views.UsersChange.as_view(), name='user_change'),
 
     path('appointment/',appointments_views.AppointmentCreate.as_view(), name='app_create'),
-    path('appointment/<str:pk>',appointments_views.AppointmentsChange.as_view(), name='app_create'),
+    path('appointment/<str:pk>',appointments_views.AppointmentsChange.as_view(), name='app_change'),
+    path('user_appointments/<str:pk>', appointments_views.AppointmentList.as_view(), name='app_list'),
 
     path('follow/', users_views.FollowCreate.as_view(), name='follow_create'), 
     path('follow/<str:id>', users_views.FollowChange.as_view(), name='follow_Change'), 
