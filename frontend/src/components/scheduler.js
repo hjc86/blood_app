@@ -7,7 +7,7 @@ class Scheduler extends Component {
     loading: false
   };
 
-  addAppointmentCallback = ({ day, number, time, id }, addCb) => {
+  addAppointment = ({ day, number, time, id }, addCb) => {
     this.setState(
       {
         loading: true
@@ -23,7 +23,7 @@ class Scheduler extends Component {
     );
   };
 
-  removeAppointmentCallback = ({ day, number, time, id }, removeCb) => {
+  removeAppointment = ({ day, number, time, id }, removeCb) => {
     this.setState(
       {
         loading: true
@@ -98,10 +98,10 @@ class Scheduler extends Component {
 
     return (
       <div className="container-fluid">
-        <h1>Appointment Picker</h1>
+        <h1>Booking</h1>
         <AppointmentPicker
-          addAppointmentCallback={this.addAppointmentCallback}
-          removeAppointmentCallback={this.removeAppointmentCallback}
+          addAppointment={this.addAppointment}
+          removeAppointment={this.removeAppointment}
           initialDay={new Date("2020-06-08")}
           days={days}
           maxReservableAppointments={1}
