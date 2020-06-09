@@ -10,6 +10,7 @@ class Login extends React.Component {
             create : {username: null, password: null, passwordTwo: null, isClinic : null},
             signIn : {username: null, password: null}
         }
+        this.changeHandler = this.changeHandler.bind(this);
     }
 
     changeHandler = (event) =>  {
@@ -17,39 +18,39 @@ class Login extends React.Component {
 
         switch (event.target.name) {
             case "signInUsername": 
-              state.signIn.username = event.target.value
-              this.setState = state;
-              console.log(state)
-              break;
+                state.signIn.username = event.target.value
+                this.setState(state);
+                console.log(state)
+                break;
             case "signInPassword":
                 state.signIn.password = event.target.value
-                this.setState = state;
+                this.setState(state);
                 console.log(state)
                 break;
             case "createUsername":
-                    state.create.username = event.target.value
-                    this.setState = state;
-                    console.log(state)
-                    break;
+                state.create.username = event.target.value
+                this.setState(state);
+                console.log(state)
+                break;
             case "createPassword":
-                    state.create.password = event.target.value
-                    this.setState = state;
-                    console.log(state)
-                    break;
+                state.create.password = event.target.value
+                this.setState(state);
+                console.log(state)
+                break;
             case "createPasswordTwo":
-                    state.create.passwordTwo = event.target.value
-                    this.setState = state;
-                    console.log(state)
-                    break;
+                state.create.passwordTwo = event.target.value
+                this.setState(state);
+                console.log(state)
+                break;
             case "createOption":
-                if (event.target.value = "donor"  ) {
-                state.create.isClinic = false  
-                } else {
-                state.create.isClinic = true
+                if (event.target.value === "donor") {
+                    state.create.isClinic = false  
+                } else if (event.target.value === "clinic") {
+                    state.create.isClinic = true
                 }
-                this.setState = state
-                    console.log(state)
-                    break;
+                this.setState(state);
+                console.log(state)
+                break;
 
     }
 }
@@ -124,7 +125,6 @@ class Login extends React.Component {
                             <div className="col-xs-2">
                             <label>Account type:</label>
                             <select name="createOption"
-                            value={this.state.create.isClinic}
                             onChange={this.changeHandler} 
                             className="form-control col-xs-2">
                                 <option value="choose">Please Select</option>
