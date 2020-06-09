@@ -24,10 +24,10 @@ class TimeslotCard extends React.Component {
                 <button className='addButton btn btn-primary' type='submit'>Add</button>
                 {this.props.timeslots.map((item,index) => 
                     (
-                    <div key={item}>
+                    <div key={index}>
                         <input type="time" value={item[0]} readOnly />
                         <input type="time" value={item[1]} readOnly />
-                        <input value="✖" type="button" />
+                        <input value="✖" name="removeTimeSlot" onClick={(e) => this.props.changeHandler(e, this.props.day, index)} type="button" />
                     </div>
                     )
                 )}

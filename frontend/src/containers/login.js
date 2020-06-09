@@ -7,8 +7,8 @@ class Login extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            create : {username: null, password: null, passwordTwo: null, isClinic : null},
-            signIn : {username: null, password: null}
+            "create" : {"username": null, "password": null, "passwordTwo": null, "isClinic" : null},
+            "signIn" : {"username": null, "password": null}
         }
         this.changeHandler = this.changeHandler.bind(this);
     }
@@ -51,10 +51,9 @@ class Login extends React.Component {
                 this.setState(state);
                 console.log(state)
                 break;
-
+        }
     }
-}
-   
+
     render() {
         let createButton
         if (this.state.create.isClinic === false) {
@@ -145,10 +144,7 @@ class Login extends React.Component {
                             </div>
                         </div>
                         </form>
-                        < br/>
-                        { createButton }
-                        {/* <Link to={{pathname:'/donor-profile'}}><button className='passwordButton btn btn-primary' type='submit'>Create</button></Link>:
-                        <Link to={{pathname:'/clinic-profile'}}><button className='passwordButton btn btn-primary' type='submit'>Create</button></Link>} */}
+                        {createButton}
                     </div>
                 </div>
             </div>

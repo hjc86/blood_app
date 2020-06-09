@@ -3,6 +3,15 @@ import { Link } from 'react-router-dom';
 
 import NavBar from '../components/navbar_dashboard';
 class Donor extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            "firstName": "Steven",
+            "surname": "Berrisford",
+            "dateOfBirth": "1996-10-28",
+            "postcode": "CR3 6LD"
+        }
+    }
    
     render() {
         return (
