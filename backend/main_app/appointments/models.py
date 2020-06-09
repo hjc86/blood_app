@@ -19,7 +19,7 @@ class Appointment(models.Model):
     clinic_id = models.IntegerField(null=True)
     appointment_time = models.DateTimeField(null=True)
     attended = models.BooleanField(default=False)
-
+    
 
 
 # a clinic can have many appointments

@@ -9,12 +9,12 @@ class User(AbstractUser):
 
 class Donor(models.Model):
     user = models.OneToOneField(User,on_delete=models.CASCADE, primary_key=True)
+    #username = models.ForeignKey(User,on_delete=models.CASCADE, primary_key=True)
     first_name = models.CharField(max_length=50,null=True, blank=True)
     last_name = models.CharField(max_length=50,null=True, blank=True)
     date_of_birth = models.DateField(null=True, blank=True)
     postcode =  models.CharField(max_length=50, null=True, blank=True)
     following = models.ManyToManyField('self', related_name='followers', symmetrical=False)
-
 
 class Clinic(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)  

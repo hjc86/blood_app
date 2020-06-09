@@ -27,13 +27,17 @@ class UserSerializer(serializers.ModelSerializer):
         return instance   
 
 class DonorSerializer(serializers.ModelSerializer):
+    
+    followee_name = serializers.CharField(read_only=True, source="user.username")
+    
     class Meta:
         model = Donor
-        fields = ['user_id','first_name','last_name','date_of_birth','postcode']
-
+        fields = ['user_id','first_name','last_name','date_of_birth','postcode','followee_name']
+        
     def create(self, validated_data):
 
         donor = Donor(
+            # username =  validated_data['username'],
             first_name = validated_data['first_name'],
             last_name=validated_data['last_name'],
             date_of_birth='2002-02-12',
@@ -73,13 +77,17 @@ class ClinicSerializer(serializers.ModelSerializer):
         clinic.save()
         return clinic
 
-class FollowingSerializer(serializers.Serializer):
-    following = serializers.IntegerField()
-
+class FollowSerializer(serializers.Serializer):
+    follower = serializers.IntegerField()
+    followee = serializers.IntegerField()
+    followee_name = serializers.CharField(read_only=True, source="user.username")
+    
     class Meta:
-       fields=['following']
-
-
+        fields=['follower','followee','followee_name']
+    
+    # def create   
+    
+    
 class FollowersView(serializers.Serializer):
     followers = serializers.IntegerField()
 

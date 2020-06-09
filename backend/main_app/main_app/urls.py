@@ -69,7 +69,7 @@ urlpatterns = [
     path('appointment/<str:pk>',appointments_views.AppointmentsChange.as_view(), name='app_create'),
 
     path('follow/', users_views.FollowCreate.as_view(), name='follow_create'), 
-    path('follow/<str:id', users_views.FollowChange.as_view(), name='follow_delete'), 
+    path('follow/<str:id>', users_views.FollowChange.as_view(), name='follow_Change'), 
 
 ]
 
