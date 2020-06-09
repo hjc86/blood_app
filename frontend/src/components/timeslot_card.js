@@ -34,7 +34,7 @@ class TimeslotCard extends React.Component {
         return (
             <div className="container-fluid">
                 <div className="card m-2">
-                <div className="justify-content-around w-75 m-3">
+                <div className="justify-content-center m-3">
                     <form>
                         <label htmlFor={this.props.day}>{this.props.day}</label>
                         <br />
