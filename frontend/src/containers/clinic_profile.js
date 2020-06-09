@@ -34,6 +34,11 @@ class Clinic extends React.Component {
                 this.setState(state);
                 console.log(param1, param2)
                 break;
+            case "addTimeSlot":
+                state.timeslots[param1].push(param2);
+                this.setState(state);
+                console.log(param1, param2)
+                break;    
             case "address1": 
                 state.address.address_line_1 = event.target.value
                 this.setState(state);
