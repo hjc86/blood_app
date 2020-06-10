@@ -3,7 +3,8 @@ import NavBar from '../components/navbar_dashboard';
 import Scheduler from '../components/scheduler';
 import { connect } from 'react-redux';
 
-import DonorCard from '../components/donor_card';
+import DonorCard from '../components/followers';
+
 
 class DonorDashboard extends React.Component {
 
