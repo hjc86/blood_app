@@ -5,9 +5,7 @@ export const createAccount = (create) => dispatch => {
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify(create)
     }).
-    then(res => res.json()).
     then(res =>{
-      console.log(res)
       dispatch({
         type: 'CREATE_ACCOUNT',
         payload: res

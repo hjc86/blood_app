@@ -7,7 +7,7 @@ import { createAccount } from '../action-creators/createAccount';
 import { login } from '../action-creators/login';
 
 const mapStateToProps = state => ({
-    ...state
+    test: state.createAccount.result
 })
 const mapDispatchToProps = dispatch => ({
     simpleAction: () => dispatch(simpleAction()),
@@ -20,7 +20,8 @@ class Login extends React.Component {
         super(props);
         this.state = {
             "create" : {"username": null, "password": null, "passwordTwo": null, "is_clinic" : null},
-            "signIn" : {"username": null, "password": null}
+            "signIn" : {"username": null, "password": null},
+            "props": this.props || null
         }
         this.changeHandler = this.changeHandler.bind(this);
     }
@@ -97,11 +98,15 @@ class Login extends React.Component {
         }
     }
 
+    checkProfile = (profile)=>{
+        console.log(profile)
+    }
+
     render() {
         let createButton
         if (this.state.create.is_clinic === false) {
             createButton = <button className='passwordButton btn btn-primary' type='submit' onClick={this.createHandler}>Create</button>
-
+            
             // createButton =
             // <Link to={{pathname:'/donor-profile'}}><button className='passwordButton btn btn-primary' type='submit'>Create</button></Link>
 
@@ -189,6 +194,7 @@ class Login extends React.Component {
                             </div>
                         </div>
                         </form>
+                        {(this.props.test === undefined)? "not props yet": `${this.props.test.status}`}
                         {createButton}
                     </div>
                 </div>

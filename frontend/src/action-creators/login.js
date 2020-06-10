@@ -19,10 +19,8 @@ export const login = (credentials) => dispatch => {
       //Authorization: `Bearer ${res.access}`,
       headers: {
         'Authorization':`Bearer ${res.access}`,
-        'Content-Type':'application/json',
-       
+        'Content-Type':'application/json', 
     },
-     
     })).
     then(res =>res.json()).
     then(res => {
