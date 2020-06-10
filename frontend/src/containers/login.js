@@ -6,28 +6,13 @@ import { simpleAction } from '../action-creators/simpleAction';
 import { createAccount } from '../action-creators/createAccount';
 import { login } from '../action-creators/login';
 
-const mapStateToProps = state => {
-    const object = {};
-    try {
-        object.createAccountResponse = state.createAccount
-    } catch {
-        // Something
-    };
-    try {
-        object.loginResponse = {
-            token: state.loginResponse.token,
-            profile: state.loginResponse.profile
-        }
-    } catch {
-        // Something
-    };
-    // createAccountResponse: state.createAccount,
-    // loginResponse: {
-    //     token: state.loginResponse.token,
-    //     profile: state.loginResponse.profile
-    // }
-    return {details: object}
-}
+const mapStateToProps = state => ({
+
+    createAccountResponse: state.createAccount,
+    loginResponse: state.login
+
+})
+
 const mapDispatchToProps = dispatch => ({
     simpleAction: () => dispatch(simpleAction()),
     createAccount: (create) => dispatch(createAccount(create)),
@@ -55,13 +40,27 @@ class Login extends React.Component {
         }
     }
 
-    loginHandler = (event) => {
+    loginHandler = async (event) => {
         if ((this.state.signIn.username && this.state.signIn.password) === (null || "")) {
             return null
         } else { 
-            console.log("===>",this.state.signIn)
-            this.props.login(this.state.signIn)
-        
+   
+            await this.props.login(this.state.signIn)
+         
+
+            
+            console.log(this.props.loginResponse.token.profileData)//#.login.token.profileData)
+            let profile=this.props.loginResponse.token.profileData//.login.token.profileData
+    
+            if (Object.values(profile).includes(null)){//
+                console.log("we have nulls in the profile send to page to update")
+                
+            }
+            else{
+                console.log("profile complete send to dashboard")
+                // to dashboard
+            }
+            
         }
     }
 
@@ -109,29 +108,13 @@ class Login extends React.Component {
                 }
                 this.setState(state);
                 console.log(state)
+
                 break;
         }
     }
 
-    checkProfile =()=>{
-        
-        console.log(this.props.loginResponse.profile)
-        let profile=this.props.loginResponse.profile
-        
-        if (Object.values(profile).includes(null)){//
-            console.log("we have nulls in the profile send to page to update")
-            // to profile
-        }
-        else{
-            console.log("profile complete send to dashboard")
-            // to dashboard
-        }
-        
-        // this.props.history.push('');
-        
 
 
-    }
 
     render() {
         let createButton
@@ -236,8 +219,7 @@ class Login extends React.Component {
                         </form>
                         {createButton}<br/>
                         {status}
-                        {this.props.details === undefined ? "no dice":"dice" }
-                    </div>
+                        </div>
                 </div>
             </div>
             </div>
