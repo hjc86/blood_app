@@ -100,11 +100,11 @@ class AppointmentList(APIView):
         return Response(serializer.data)
 
 
-class AppointmentsOpen(APIview):
-    def get(self, request, pk, format=None):
-        #x.difference_update(y) 
-        base = datetime.datetime.today()
-        date_list = [base - datetime.timedelta(days=x) for x in range(numdays)]
+class AppointmentsOpen(APIView):
+    # def get(self, request, pk, format=None):
+    #     #x.difference_update(y) 
+    #     base = datetime.datetime.today()
+    #     date_list = [base - datetime.timedelta(days=x) for x in range(numdays)]
 
 
         # send appointment slots for clinic

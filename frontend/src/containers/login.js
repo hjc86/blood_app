@@ -3,22 +3,50 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import NavBar from '../components/navbar_home';
 import { simpleAction } from '../action-creators/simpleAction';
+import { createAccount } from '../action-creators/createAccount';
+import { login } from '../action-creators/login';
 
 const mapStateToProps = state => ({
     ...state
 })
 const mapDispatchToProps = dispatch => ({
-    simpleAction: () => dispatch(simpleAction())
+    simpleAction: () => dispatch(simpleAction()),
+    createAccount: (create) => dispatch(createAccount(create)),
+    login: (credentials) => dispatch(login(credentials))
 })
 
 class Login extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            "create" : {"username": null, "password": null, "passwordTwo": null, "isClinic" : null},
+            "create" : {"username": null, "password": null, "passwordTwo": null, "is_clinic" : null},
             "signIn" : {"username": null, "password": null}
         }
         this.changeHandler = this.changeHandler.bind(this);
+    }
+
+    
+    createHandler = (event) => {
+        if ((this.state.create.username && this.state.create.password && this.state.create.passwordTwo && this.state.create.is_clinic) === (null || "")) {
+            return null
+        } else if (this.state.create.password !== this.state.create.passwordTwo) {
+            return null
+        } else { 
+            delete this.state.create['passwordTwo']
+            this.props.createAccount(this.state.create)
+        }
+    }
+
+    loginHandler = (event) => {
+        if ((this.state.signIn.username && this.state.signIn.password) === (null || "")) {
+            return null
+        } else { 
+          
+            console.log("===>",this.state.signIn)
+            this.props.login(this.state.signIn)
+        
+        }
+
     }
 
     simpleAction = (event) => {
@@ -57,11 +85,11 @@ class Login extends React.Component {
                 break;
             case "createOption":
                 if (event.target.value === "donor") {
-                    state.create.isClinic = false  
+                    state.create.is_clinic = false  
                 } else if (event.target.value === "clinic") {
-                    state.create.isClinic = true
+                    state.create.is_clinic = true
                 } else if (event.target.value === "choose") {
-                    state.create.isClinic = null
+                    state.create.is_clinic = null
                 }
                 this.setState(state);
                 console.log(state)
@@ -71,13 +99,15 @@ class Login extends React.Component {
 
     render() {
         let createButton
-        if (this.state.create.isClinic === false) {
-            createButton =
-            <Link to={{pathname:'/donor-profile'}}><button className='passwordButton btn btn-primary' type='submit'>Create</button></Link>
+        if (this.state.create.is_clinic === false) {
+            createButton = <button className='passwordButton btn btn-primary' type='submit' onClick={this.createHandler}>Create</button>
 
-        } else if (this.state.create.isClinic === true) {
-            createButton =
-            <Link to={{pathname:'/clinic-profile'}}><button className='passwordButton btn btn-primary' type='submit'>Create</button></Link>
+            // createButton =
+            // <Link to={{pathname:'/donor-profile'}}><button className='passwordButton btn btn-primary' type='submit'>Create</button></Link>
+
+        } else if (this.state.create.is_clinic === true) {
+            // createButton =
+            // <Link to={{pathname:'/clinic-profile'}}><button className='passwordButton btn btn-primary' type='submit'>Create</button></Link>
 
         }
 
@@ -110,7 +140,7 @@ class Login extends React.Component {
                         </input>
                         </form>
                         < br/>
-                        <button className='loginUserButton btn btn-danger' type='submit' >Log In</button>
+                        <button className='loginUserButton btn btn-danger' type='submit' onClick={this.loginHandler} >Log In</button>
                     </div>
 
                     <div className="col-3">

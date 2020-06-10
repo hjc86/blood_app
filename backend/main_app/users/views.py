@@ -15,6 +15,9 @@ import io
 
 
 class UsersChange(APIView):
+
+    
+    permission_classes = (IsAuthenticated,)
     """
     Retrieve, update or delete a user instance.
     """
