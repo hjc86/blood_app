@@ -48,8 +48,9 @@ class DonorCard extends React.Component {
     render() {
         return (
             <div className="container-fluid ">
-                <div className="col-6  m-5 justify-content-center">
-                    <div className="m-3 justify-content-center text-center">
+                <div className="col m-2 justify-content-center">
+                    <div className="m-5 justify-content-center text-center row">
+                        <div className="col  m-5 p-5 justify-content-center">
                         <img src={image} alt="profile picture" style={{width: "90px"}}/>
                         <br/>
                         <label className="display-4">UserName</label>
@@ -57,13 +58,12 @@ class DonorCard extends React.Component {
                         <label className="display-5">Likes ❤️ : {this.state.like}</label>
                         <p>I like being a vampire</p>
                         <p>Last time Donated</p>
-                    
-
-                <div className="col ml-2 mt-5 justify-content-center  ">
-                    <div className="m-3 text-center">
+                        </div>
+                    <div className="col-5  m-5 p-5 justify-content-center">
+                        <div className="m-3 text-center col justify-content-center">
                         <h2>Followers</h2>
-                        <p>like them!</p>
-                    </div>
+                        <p>Send them some love!</p>
+                        </div>
                     <div className="row mt-3 justify-content-center">
                         <form>
                         <input
@@ -76,8 +76,9 @@ class DonorCard extends React.Component {
                         <button className='followerButton btn btn-primary m-3' name='followerbutton' type='submit' onClick={this.addFollow}>Follow</button>
                         </form>
                     </div>
+
                     <div className="row mt-3 justify-content-center">
-                        <div className="card col-7 mt-3 ">
+                        <div className="card col-7 m-3 p-2">
                         <p>{this.state.followers} <button 
                         className="btn"
                         value="❤️" 
