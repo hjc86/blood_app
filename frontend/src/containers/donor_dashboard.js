@@ -14,9 +14,7 @@ class DonorDashboard extends React.Component {
             <NavBar />
             <DonorCard />
             <Scheduler />
-                <h2>Friends / nudge</h2>
-                <h2>Map</h2>
-                </div>
+            </div>
         )
     }
 }

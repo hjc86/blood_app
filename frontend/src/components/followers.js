@@ -46,8 +46,8 @@ class DonorCard extends React.Component {
     render() {
         return (
             <div className="container-fluid">
-                <div className="justify-content-center">
-                    <div className="text-center">
+                <div className="justify-content-center row">
+                    <div className="text-center col">
                         <img src={image} alt="profile picture" style={{width: "90px"}}/>
                         <br/>
                         <label className="display-4">UserName</label>
@@ -56,7 +56,6 @@ class DonorCard extends React.Component {
                         <p>I like being a vampire</p>
                         <p>Last time Donated</p>
                     </div>
-                </div>
 
                 <div className="col-4">
                     <div className="text-center ">
@@ -73,10 +72,8 @@ class DonorCard extends React.Component {
                         />
                         <button className='followerButton btn btn-primary' name='followerbutton' type='submit' onClick={this.addFollow}>Follow</button>
                         </form>
-                    </div>
-
-                    <div className="card m-2">
-                        <div className="col-2">
+                        <div className="card m-2">
+                        <div className="container">
                         <p>{this.state.followers}</p>
                        
                         <input 
@@ -85,6 +82,8 @@ class DonorCard extends React.Component {
                         type="button"
                         onClick={this.likeMe} 
                         />
+                        </div>
+                        </div>
                         </div>
                     </div>
             </div>
