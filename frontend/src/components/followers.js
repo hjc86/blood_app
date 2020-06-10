@@ -31,7 +31,7 @@ class DonorCard extends React.Component {
         // adds the user on the list followers
         let newFollow = this.state.followerUsername
         this.setState({followers : newFollow})
-        newFollow.push(newFollow)
+        console.log(this.state.followers)
     }
 
     likeMe = () => {
