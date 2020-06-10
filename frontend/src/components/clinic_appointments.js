@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import clinic from "../img/hospital.png";
+import image from "../img/user.png";
 
 
 
@@ -16,37 +17,74 @@ class ClinicAppointments extends React.Component {
                 "county": "Aantofield",
                 "postcode": "PA75 5TB"
             },
+            // "isValidated": false,
             "requirements": "No parking available",
-            "timeslots": {"Monday": [["10:00","13:00"],["14:00","17:00"]],
-                        "Tuesday": [["09:00","13:00"],["14:00","17:00"]], 
-                        "Wednesday": [["09:00","13:00"],["14:00","17:00"]], 
-                        "Thursday": [["09:00","13:00"],["14:00","17:00"]], 
-                        "Friday": [["09:00","13:00"],["14:00","17:00"]]},
             "Donors": [{
-                "id": "0",
+                "id": 0,
                 "firstname": "Jimbo",
                 "surname": "Fish",
                 "dateOfBirth": "1836-10-28",
                 "postcode": "PA75 5TB",
-                "appointment": {"Monday": [["10:00"],["11:00"]]}
+                "appointment": {"Monday": [["10:00"],["11:00"]]},
+                "isValidated": false
                 },
                 {
-                "id": "1",
+                "id": 1,
                 "firstname": "Susan",
                 "surname": "Tofu",
                 "dateOfBirth": "1889-10-23",
-                "postcode": "PA75 5TB",
-                "appointment": {"Tuesday": [["11:00"],["12:00"]]}
-                }]
-            
+                "postcode": "PJ8 K89",
+                "appointment": {"Tuesday": [["11:00"],["12:00"]]},
+                "isValidated": false
+                },
+                {
+                "id": 2,
+                "firstname": "Steven",
+                "surname": "Beef",
+                "dateOfBirth": "1500-80-28",
+                "postcode": "BT5 7HH",
+                "appointment": {"Wednesday": [["12:00"],["13:00"]]},
+                "isValidated": false
+                },
+                {
+                "id": 3,
+                "firstname": "Helder",
+                "surname": "Chicken",
+                "dateOfBirth": "2302-07-28",
+                "postcode": "DS8 5LB",
+                "appointment": {"Friday": [["14:00"],["15:00"]]},
+                "isValidated": false
+                },]
         };
+        
     };
+
+    changeHandler = () => {
+    let donorval = {...this.state.Donors}
+    donorval.isValidated = true;
+    this.setState({donorval})
+    console.log(donorval)
+    }
+
+    // changeHandler = () => {
+    //     this.setState({isValidated: !this.state.isValidated})
+    //     console.log(this.state)
+    //   } 
+
+    //   changeHandler = () => {
+    //     let state = this.state.Donors
+    //     state.isValidated = true
+    //     this.setState({
+    //     isValidated: state
+    //     })
+    //     console.log(state)
+    //   } 
 
 
     render() {
         return (
-            <div>
-            <div className="m-3 justify-content-center text-center">
+            <div className="container-fluid">
+            <div className="m-3 mt-3 justify-content-center text-center">
                     <img src={clinic} alt="profile picture" style={{width: "90px"}}/>
                     <br/>
                     <label className="display-4">Clinic Name</label>
@@ -58,22 +96,21 @@ class ClinicAppointments extends React.Component {
                     < br/>
                     <p>Status : {this.state.requirements}</p>
             </div>
-            <div>
-                <h2>Appointments Table</h2>
-                <p>Get timeslots from database to be displayed as table</p>
-
-                {this.state.Donors.map((info) => {
-            return <div> 
-            <p>Donor ID: {info.id}</p> 
-            <p>Donor: {info.firstname} {info.surname}</p> 
-            <p>Date of Birth: {info.dateOfBirth}</p> 
-            <p>Postcode:{info.postcode}</p> 
-                <p>Appointment:{info.appointment[0]}</p> </div>
+            <div className="m-3 justify-content-center text-center mt-5">
+                <h2>Appointments</h2>
+            <div className="container-fluid row">
+            {this.state.Donors.map((info) => {
+            return <div className="col-3 mt-5">
+                <img src={image} alt="profile picture" style={{width: "40px"}}/>
+                <p>Donor ID: {info.id}</p> 
+                <p>Donor: {info.firstname} {info.surname}</p> 
+                <p>Date of Birth: {info.dateOfBirth}</p> 
+                <p>Postcode:{info.postcode}</p> 
+                <p>Appointment:{info.appointment[0]}</p>
+                <button className="btn btn-primary m-3" name="validate" onClick={this.changeHandler}>Check In</button>
+                </div>
             })}
-        
-                <p> get/receive booked appointments data from database
-                    extract the donor's data from that appointment slot
-                </p>
+            </div>
             </div>
             </div>
         )
