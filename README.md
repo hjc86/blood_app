@@ -8,7 +8,7 @@ Prerequisites: python3, pip3, virtualenv.
 1. Navigate to the "\backend" directory.
 2. Initialise virtualenv as venv (e.g. PowerShell - "python3 -m virtualenv venv").
 3. Activate virtualenv (e.g. Powershell - ".\venv\Scripts\activate").
-4. Pip install from requirements.txt (e.g. Powershell - "pip install -r requirements.txt").
+4. Pip install from requirements.txt (e.g. Powershell - "pip3 install -r requirements.txt").
 5. Navigate to the "\backend\main_app\main_app" directory.
 6. Add a .env file with the following format.
     ```

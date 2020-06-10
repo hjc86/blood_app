@@ -1,7 +1,16 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-
+import { connect } from 'react-redux';
 import NavBar from '../components/navbar_dashboard';
+import { simpleAction } from '../action-creators/simpleAction';
+
+const mapStateToProps = state => ({
+    ...state
+})
+const mapDispatchToProps = dispatch => ({
+    simpleAction: () => dispatch(simpleAction())
+})
+
 class Donor extends React.Component {
     constructor(props) {
         super(props);
@@ -96,4 +105,4 @@ class Donor extends React.Component {
 }
 
 
-export default Donor;
+export default connect(mapStateToProps, mapDispatchToProps) (Donor);

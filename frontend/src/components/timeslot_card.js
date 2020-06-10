@@ -32,11 +32,11 @@ class TimeslotCard extends React.Component {
 
         
         return (
-            <div className="container-fluid">
+            <div className="container-fluid col-3 m-1 p-1" style={{backgroundColor: "#dfe6e9"}}>
                 <div className="card m-2">
-                <div className="justify-content-center m-3 row">
-                    <form>
-                        <label htmlFor={this.props.day}>{this.props.day}</label>
+                <div className="justify-content-center m-3">
+                    <form className="justify-content-center m-3">
+                        <h3 htmlFor={this.props.day}>{this.props.day}</h3>
                         <br />
                         <label htmlFor="timeStart">Timeslot start:</label>
                         <input type="time" id="timeStart" name="timeStart" onChange={(e) => this.changeHandler(e)} required />

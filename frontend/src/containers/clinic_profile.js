@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-
+import { connect } from 'react-redux';
 import NavBar from '../components/navbar_dashboard';
 import Timeslot from '../components/timeslots';
 
@@ -36,7 +36,7 @@ class Clinic extends React.Component {
                 break;
             case "addTimeSlot":
                 // Check times are not null
-                if (param2[0]===null || param2[1]===null) {
+                if (param2[0]===null || param2[1]===null || param2[1]==="" || param2[1]==="") {
                     break;
                 }
                 // Check times make sense
@@ -156,8 +156,13 @@ class Clinic extends React.Component {
                         
                         <div>
                         < Timeslot changeHandler={this.changeHandler} timeslots={this.state.timeslots}/>
+                        <div className="container text-center p-5 m-2">
+                            <Link to={{pathname:'/clinic-dashboard'}}>
+                                <button className="passwordButton btn btn-primary btn-block" type='submit'>Submit</button>
+                            </Link>
                         </div>
-                        <Link to={{pathname:'/clinic-dashboard'}}><button className='passwordButton btn btn-primary' type='submit'>Submit</button></Link>
+                        </div>
+                        
                     </div>
                     </div>  
         </div>
@@ -166,4 +171,4 @@ class Clinic extends React.Component {
 }
 
 
-export default Clinic;
+export default connect() (Clinic);
