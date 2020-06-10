@@ -21,10 +21,26 @@ class ClinicAppointments extends React.Component {
                         "Tuesday": [["09:00","13:00"],["14:00","17:00"]], 
                         "Wednesday": [["09:00","13:00"],["14:00","17:00"]], 
                         "Thursday": [["09:00","13:00"],["14:00","17:00"]], 
-                        "Friday": [["09:00","13:00"],["14:00","17:00"]]}
+                        "Friday": [["09:00","13:00"],["14:00","17:00"]]},
+            "Donors": [{
+                "id": "0",
+                "firstname": "Jimbo",
+                "surname": "Fish",
+                "dateOfBirth": "1836-10-28",
+                "postcode": "PA75 5TB",
+                "appointment": {"Monday": [["10:00"],["11:00"]]}
+                },
+                {
+                "id": "1",
+                "firstname": "Susan",
+                "surname": "Tofu",
+                "dateOfBirth": "1889-10-23",
+                "postcode": "PA75 5TB",
+                "appointment": {"Tuesday": [["11:00"],["12:00"]]}
+                }]
+            
         };
     };
-
 
 
     render() {
@@ -45,6 +61,19 @@ class ClinicAppointments extends React.Component {
             <div>
                 <h2>Appointments Table</h2>
                 <p>Get timeslots from database to be displayed as table</p>
+
+                {this.state.Donors.map((info) => {
+            return <div> 
+            <p>Donor ID: {info.id}</p> 
+            <p>Donor: {info.firstname} {info.surname}</p> 
+            <p>Date of Birth: {info.dateOfBirth}</p> 
+            <p>Postcode:{info.postcode}</p> 
+                <p>Appointment:{info.appointment[0]}</p> </div>
+            })}
+        
+                <p> get/receive booked appointments data from database
+                    extract the donor's data from that appointment slot
+                </p>
             </div>
             </div>
         )
