@@ -95,17 +95,17 @@ class ClinicAppointments extends React.Component {
     //     console.log(state)
     //   } 
 
-    //   changeHandler = () => {
-    //     // let position = this.state.Donors.length  
-    //     let state = this.state.Donors[0]
-    //     state.isValidated = true
-    //     this.setState({
-    //     isValidated: state
-    //     })
-    //     alert('Is validated, hell!')
-    //     // console.log(position)
-    //     console.log(state)
-    //   } 
+      changeHandler = () => {
+        //Need to find a way to display the correct array number.
+        let state = this.state.Donors[0]
+        state.isValidated = true
+        this.setState({
+        isValidated: state
+        })
+        alert('Is validated!!! Not really.. :(')
+        // console.log(position)
+        // console.log(state)
+      } 
 
 
     render() {

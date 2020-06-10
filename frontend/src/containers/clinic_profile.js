@@ -156,8 +156,13 @@ class Clinic extends React.Component {
                         
                         <div>
                         < Timeslot changeHandler={this.changeHandler} timeslots={this.state.timeslots}/>
+                        <div className="container text-center p-5 m-2">
+                            <Link to={{pathname:'/clinic-dashboard'}}>
+                                <button className="passwordButton btn btn-primary btn-block" type='submit'>Submit</button>
+                            </Link>
                         </div>
-                        <Link to={{pathname:'/clinic-dashboard'}}><button className='passwordButton btn btn-primary' type='submit'>Submit</button></Link>
+                        </div>
+                        
                     </div>
                     </div>  
         </div>

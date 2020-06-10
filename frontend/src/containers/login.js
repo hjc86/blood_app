@@ -4,6 +4,8 @@ import { connect } from 'react-redux';
 import NavBar from '../components/navbar_home';
 import { simpleAction } from '../action-creators/simpleAction';
 
+import logo from '../img/red-blood-cells.png';
+
 const mapStateToProps = state => ({
     ...state
 })
@@ -85,10 +87,13 @@ class Login extends React.Component {
             <div>
             < NavBar />
             <div className="container-fluid pt-5">
+            <div classname="justify-content-center">   
+            <img className="mt-5" src={logo} alt="profile picture" style={{width: "90px"}}/>
+            </div>
                 <div className="row justify-content-center">
-                    <div className="col-3">
+                    <div className="col-3 p-2 m-2">
                         <form>
-                        <label>Sign In</label>
+                        <h2>Sign In</h2>
                         <p>To an existing account</p>
                         <br />
                         <label>Username:</label>
@@ -115,7 +120,7 @@ class Login extends React.Component {
 
                     <div className="col-3">
                         <form>
-                        <label>Create</label>
+                        <h2>Create</h2>
                         <p>A new free account</p>
                         <p>It's free to join and easy to use. Continue on to create your Red Cells account and be a part of saving lives through blood donation!</p>
                         <div className="form-group">
