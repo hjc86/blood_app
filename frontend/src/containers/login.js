@@ -236,7 +236,7 @@ class Login extends React.Component {
                         </form>
                         {createButton}<br/>
                         {status}
-                        {this.props.details.loginResponse === undefined ? "no token":this.props.details.loginResponse.token }
+                        {this.props.details === undefined ? "no dice":"dice" }
                     </div>
                 </div>
             </div>
