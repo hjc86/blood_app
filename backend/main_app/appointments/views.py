@@ -98,3 +98,25 @@ class AppointmentList(APIView):
         ##serializer = AppointmentSerializer(appointments)
         print(serializer.data)
         return Response(serializer.data)
+
+
+class AppointmentsOpen(APIview):
+    def get(self, request, pk, format=None):
+        #x.difference_update(y) 
+        base = datetime.datetime.today()
+        date_list = [base - datetime.timedelta(days=x) for x in range(numdays)]
+
+
+        # send appointment slots for clinic
+
+        # - create an object with slots for next 2 weeks base on what is sent
+        # - find all slots in table for the clinic==> make it a set
+        # - remove any slots from object ==> make it a set
+        # - 
+        # - send back to clinic
+
+
+
+
+    
+        pass
