@@ -72,16 +72,14 @@ class DonorCard extends React.Component {
                         />
                         <button className='followerButton btn btn-primary mt-3' name='followerbutton' type='submit' onClick={this.addFollow}>Follow</button>
                         </form>
-                        <div className="card mt-3 col">
-                        <div className="container">
-                        <p>{this.state.followers}</p>
-                       
-                        <input 
+                        <div className="row mt-3 justify-content-center">
+                        <div className="card col-7 mt-3 ">
+                        <p>{this.state.followers} <button 
+                        className="btn col-2"
                         value="❤️" 
                         name="like" 
                         type="button"
-                        onClick={this.likeMe} 
-                        />
+                        onClick={this.likeMe}>❤️</button></p>
                         </div>
                         </div>
                         </div>
