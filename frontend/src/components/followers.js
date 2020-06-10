@@ -29,11 +29,13 @@ class DonorCard extends React.Component {
         event.preventDefault()
         // alert("This username doesnt exist")
         // adds the user on the list followers
-        let newFollow = this.state.followerUsername
+        let currentFollow = this.state.followerUsername
+        let newFollow = currentFollow.concat(this.state.followers);
         this.setState({followers : newFollow})
         console.log(this.state.followers)
+        
     }
-
+    
     likeMe = () => {
         let newlike = this.state.like + 1
         this.setState({
@@ -45,9 +47,9 @@ class DonorCard extends React.Component {
 
     render() {
         return (
-            <div className="container-fluid">
-                <div className="justify-content-center row mt-3">
-                    <div className="text-center col mt-3">
+            <div className="container-fluid ">
+                <div className="col-6  m-5 justify-content-center">
+                    <div className="m-3 justify-content-center text-center">
                         <img src={image} alt="profile picture" style={{width: "90px"}}/>
                         <br/>
                         <label className="display-4">UserName</label>
@@ -55,36 +57,40 @@ class DonorCard extends React.Component {
                         <label className="display-5">Likes ❤️ : {this.state.like}</label>
                         <p>I like being a vampire</p>
                         <p>Last time Donated</p>
-                    </div>
+                    
 
-                <div className="col-6 mt-3 mr-4 justify-content-center">
-                    <div className="text-center ">
+                <div className="col ml-2 mt-5 justify-content-center  ">
+                    <div className="m-3 text-center">
                         <h2>Followers</h2>
                         <p>like them!</p>
                     </div>
+                    <div className="row mt-3 justify-content-center">
                         <form>
                         <input
-                            className="form-control col mt-3"
+                            className="m-3 col-xs-4"
                             name="followerUsername" 
                             onChange={this.changeHandler}
                             type="text"
                             placeholder="eg. SusanMiss"
                         />
-                        <button className='followerButton btn btn-primary mt-3' name='followerbutton' type='submit' onClick={this.addFollow}>Follow</button>
+                        <button className='followerButton btn btn-primary m-3' name='followerbutton' type='submit' onClick={this.addFollow}>Follow</button>
                         </form>
-                        <div className="row mt-3 justify-content-center">
+                    </div>
+                    <div className="row mt-3 justify-content-center">
                         <div className="card col-7 mt-3 ">
                         <p>{this.state.followers} <button 
-                        className="btn col-2"
+                        className="btn"
                         value="❤️" 
                         name="like" 
                         type="button"
                         onClick={this.likeMe}>❤️</button></p>
                         </div>
                         </div>
-                        </div>
                     </div>
+                    
+                </div>
             </div>
+        </div>
         )
     }
 }
