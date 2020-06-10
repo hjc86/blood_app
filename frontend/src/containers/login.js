@@ -60,6 +60,8 @@ class Login extends React.Component {
                     state.create.isClinic = false  
                 } else if (event.target.value === "clinic") {
                     state.create.isClinic = true
+                } else if (event.target.value === "choose") {
+                    state.create.isClinic = null
                 }
                 this.setState(state);
                 console.log(state)
