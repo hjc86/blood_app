@@ -12,11 +12,13 @@ from rest_framework_simplejwt.views import TokenObtainPairView
 from .serializers import CustomTokenObtainPairSerializer 
 from rest_framework.parsers import JSONParser
 import io
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework.permissions import IsAuthenticated
 
 
 class UsersChange(APIView):
 
-    
     permission_classes = (IsAuthenticated,)
     """
     Retrieve, update or delete a user instance.

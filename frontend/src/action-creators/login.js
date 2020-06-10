@@ -14,10 +14,15 @@ export const login = (credentials) => dispatch => {
     })
     return res
   }).
-  then(token=> fetch(`http://localhost:8000/user/${token.id}`,{
+  then(res=> fetch(`http://localhost:8000/user/${res.id}`,{
       method: 'get',
-      Authorization: `Bearer ${token.access}`, 
-      headers: {'Content-Type': 'application/json'}
+      //Authorization: `Bearer ${res.access}`,
+      headers: {
+        'Authorization':`Bearer ${res.access}`,
+        'Content-Type':'application/json',
+       
+    },
+     
     })).
     then(res =>res.json()).
     then(res => {
