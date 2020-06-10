@@ -31,11 +31,11 @@ class DonorSerializer(serializers.ModelSerializer):
     
     #followee_id =serializers.CharField(read_only=True, source="user.id").values()
     followee_name = serializers.CharField(read_only=True, source="user.username")
-    
+    is_clinic = serializers.CharField(read_only=True, source="user.is_clinic")
 
     class Meta:
         model = Donor
-        fields = ['user_id','first_name','last_name','date_of_birth','postcode','followee_name']
+        fields = ['user_id','first_name','last_name','date_of_birth','postcode','followee_name','is_clinic']
         
     def create(self, validated_data):
 
@@ -61,10 +61,11 @@ class DonorSerializer(serializers.ModelSerializer):
         return instance   
 
 class ClinicSerializer(serializers.ModelSerializer):
+    is_clinic = serializers.CharField(read_only=True, source="user.is_clinic")
 
     class Meta:
         model = Clinic
-        fields = ['user_id','name','geolocation','address','requirements','opening_times']
+        fields = ['user_id','name','geolocation','address','requirements','opening_times','is_clinic']
 
     def create(self, validated_data):
 
@@ -102,6 +103,6 @@ class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
         data = super(CustomTokenObtainPairSerializer, self).validate(attrs)
         # Custom data you want to include
         # data.update({'user': self.user.username})
-        data.update({'id': self.user.id})
+        data.update({'id': self.user.id})#, 'is_clinic': self.user.is_clinic})
         # and everything else you want to send in the response
         return data

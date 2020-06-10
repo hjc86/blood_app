@@ -6,9 +6,28 @@ import { simpleAction } from '../action-creators/simpleAction';
 import { createAccount } from '../action-creators/createAccount';
 import { login } from '../action-creators/login';
 
-const mapStateToProps = state => ({
-    test: state.createAccount.result
-})
+const mapStateToProps = state => {
+    const object = {};
+    try {
+        object.createAccountResponse = state.createAccount
+    } catch {
+        // Something
+    };
+    try {
+        object.loginResponse = {
+            token: state.loginResponse.token,
+            profile: state.loginResponse.profile
+        }
+    } catch {
+        // Something
+    };
+    // createAccountResponse: state.createAccount,
+    // loginResponse: {
+    //     token: state.loginResponse.token,
+    //     profile: state.loginResponse.profile
+    // }
+    return {details: object}
+}
 const mapDispatchToProps = dispatch => ({
     simpleAction: () => dispatch(simpleAction()),
     createAccount: (create) => dispatch(createAccount(create)),
@@ -20,12 +39,10 @@ class Login extends React.Component {
         super(props);
         this.state = {
             "create" : {"username": null, "password": null, "passwordTwo": null, "is_clinic" : null},
-            "signIn" : {"username": null, "password": null},
-            "props": this.props || null
+            "signIn" : {"username": null, "password": null}
         }
         this.changeHandler = this.changeHandler.bind(this);
     }
-
     
     createHandler = (event) => {
         if ((this.state.create.username && this.state.create.password && this.state.create.passwordTwo && this.state.create.is_clinic) === (null || "")) {
@@ -42,12 +59,10 @@ class Login extends React.Component {
         if ((this.state.signIn.username && this.state.signIn.password) === (null || "")) {
             return null
         } else { 
-          
             console.log("===>",this.state.signIn)
             this.props.login(this.state.signIn)
         
         }
-
     }
 
     simpleAction = (event) => {
@@ -98,8 +113,24 @@ class Login extends React.Component {
         }
     }
 
-    checkProfile = (profile)=>{
-        console.log(profile)
+    checkProfile =()=>{
+        
+        console.log(this.props.loginResponse.profile)
+        let profile=this.props.loginResponse.profile
+        
+        if (Object.values(profile).includes(null)){//
+            console.log("we have nulls in the profile send to page to update")
+            // to profile
+        }
+        else{
+            console.log("profile complete send to dashboard")
+            // to dashboard
+        }
+        
+        // this.props.history.push('');
+        
+
+
     }
 
     render() {
@@ -115,6 +146,15 @@ class Login extends React.Component {
             // <Link to={{pathname:'/clinic-profile'}}><button className='passwordButton btn btn-primary' type='submit'>Create</button></Link>
 
         }
+        let status
+        if (this.props.createAccountResponse === undefined) {
+            status = <p></p>
+        } else if (this.props.createAccountResponse.status === 201) {
+            status = <p>{"Account created successfully"}</p>
+        } else {
+            status = <p>{"Creation failed"}</p>
+        }
+        
 
         return (
             <div>
@@ -194,8 +234,9 @@ class Login extends React.Component {
                             </div>
                         </div>
                         </form>
-                        {(this.props.test === undefined)? "not props yet": `${this.props.test.status}`}
-                        {createButton}
+                        {createButton}<br/>
+                        {status}
+                        {this.props.details.loginResponse === undefined ? "no token":this.props.details.loginResponse.token }
                     </div>
                 </div>
             </div>
