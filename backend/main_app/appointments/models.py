@@ -12,7 +12,7 @@ from users.models import User, Clinic, Donor
 
 
 class Appointment(models.Model):
-    # donor = models.ForeignKey(Donor, on_delete=models.CASCADE)
+    # donor = models.ForeignKey(Donor,on_delete=models.CASCADE)
     # clinic = models.ForeignKey(Clinic,on_delete=models.CASCADE)
 
     donor_id = models.IntegerField(null=True)
