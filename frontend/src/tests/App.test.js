@@ -20,7 +20,6 @@ describe('App', () => {
   });
 
   test('contains 5 Routes', () => {
-    console.log(wrapper.debug());
     expect((wrapper.find('Route').length)).toEqual(5);
   });
 
@@ -57,5 +56,4 @@ describe('App', () => {
     expect(route).toBeTruthy();
   });
 
-    
 });

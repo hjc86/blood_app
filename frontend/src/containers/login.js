@@ -82,7 +82,7 @@ class Login extends React.Component {
         return (
             <div>
             < NavBar />
-            <div className="container-fluid pt-5">
+            <div className="container-fluid pt-5 loginDiv">
                 <div className="row justify-content-center">
                     <div className="col-3">
                         <form>
