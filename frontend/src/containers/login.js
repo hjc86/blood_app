@@ -3,16 +3,13 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import NavBar from '../components/navbar_home';
 import { simpleAction } from '../action-creators/simpleAction';
-
 import logo from '../img/red-blood-cells.png';
-
 const mapStateToProps = state => ({
     ...state
 })
 const mapDispatchToProps = dispatch => ({
     simpleAction: () => dispatch(simpleAction())
 })
-
 class Login extends React.Component {
     constructor(props) {
         super(props);
@@ -22,15 +19,12 @@ class Login extends React.Component {
         }
         this.changeHandler = this.changeHandler.bind(this);
     }
-
     simpleAction = (event) => {
         this.props.simpleAction();
         console.log(this.props);
     }
-
     changeHandler = (event) =>  {
         let state = this.state 
-
         switch (event.target.name) {
             case "signInUsername": 
                 state.signIn.username = event.target.value
@@ -70,28 +64,25 @@ class Login extends React.Component {
                 break;
         }
     }
-
     render() {
         let createButton
         if (this.state.create.isClinic === false) {
             createButton =
             <Link to={{pathname:'/donor-profile'}}><button className='passwordButton btn btn-primary' type='submit'>Create</button></Link>
-
         } else if (this.state.create.isClinic === true) {
             createButton =
             <Link to={{pathname:'/clinic-profile'}}><button className='passwordButton btn btn-primary' type='submit'>Create</button></Link>
-
         }
-
         return (
             <div>
             < NavBar />
-            <div className="container-fluid pt-5">
-            <div classname="justify-content-center">   
-            <img className="mt-5" src={logo} alt="profile picture" style={{width: "90px"}}/>
+            <div className="container-fluid pt-3">
+            <div className="text-center mb-5 justify-content-center" >   
+            <h1 className="display-1">BE A D<img className="mb-3 justify-content-center" src={logo} alt="profile picture" style={{width: "70px"}}/>NOR</h1>
             </div>
                 <div className="row justify-content-center">
-                    <div className="col-3 p-2 m-2">
+                    <div className="col-5 p-2 m-2 ">
+                        <div className="container mr-4 p-3" style={{backgroundColor: "#dfe6e9"}}>
                         <form>
                         <h2>Sign In</h2>
                         <p>To an existing account</p>
@@ -114,10 +105,10 @@ class Login extends React.Component {
                             placeholder="eg. Passw0rd928">
                         </input>
                         </form>
+                        </div>
                         < br/>
                         <button className='loginUserButton btn btn-danger' type='submit' >Log In</button>
                     </div>
-
                     <div className="col-3">
                         <form>
                         <h2>Create</h2>
@@ -169,9 +160,7 @@ class Login extends React.Component {
                 </div>
             </div>
             </div>
-        
         )
     }
 }
-
 export default connect(mapStateToProps, mapDispatchToProps) (Login);
