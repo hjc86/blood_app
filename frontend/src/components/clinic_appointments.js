@@ -25,7 +25,7 @@ class ClinicAppointments extends React.Component {
                 "surname": "Fish",
                 "dateOfBirth": "1836-10-28",
                 "postcode": "PA75 5TB",
-                "appointment": {"Monday": [["10:00"],["11:00"]]},
+                "appointment": "Monday 10:00",
                 "isValidated": false
                 },
                 {
@@ -34,7 +34,7 @@ class ClinicAppointments extends React.Component {
                 "surname": "Tofu",
                 "dateOfBirth": "1889-10-23",
                 "postcode": "PJ8 K89",
-                "appointment": {"Tuesday": [["11:00"],["12:00"]]},
+                "appointment": "Tuesday 14:00",
                 "isValidated": false
                 },
                 {
@@ -43,7 +43,7 @@ class ClinicAppointments extends React.Component {
                 "surname": "Beef",
                 "dateOfBirth": "1500-80-28",
                 "postcode": "BT5 7HH",
-                "appointment": {"Wednesday": [["12:00"],["13:00"]]},
+                "appointment": "Wednesday 15:00",
                 "isValidated": false
                 },
                 {
@@ -52,26 +52,17 @@ class ClinicAppointments extends React.Component {
                 "surname": "Chicken",
                 "dateOfBirth": "2302-07-28",
                 "postcode": "DS8 5LB",
-                "appointment": {"Friday": [["14:00"],["15:00"]]},
+                "appointment": "Thursday 11:00",
                 "isValidated": false
                 },{
-                    "id": 3,
-                    "firstname": "Helder",
-                    "surname": "Chicken",
-                    "dateOfBirth": "2302-07-28",
-                    "postcode": "DS8 5LB",
-                    "appointment": {"Friday": [["14:00"],["15:00"]]},
+                    "id": 4,
+                    "firstname": "John",
+                    "surname": "Doe",
+                    "dateOfBirth": "1963-03-03",
+                    "postcode": "SW17 9TK",
+                    "appointment": "Monday 12:01",
                     "isValidated": false
-                    },
-                    {
-                        "id": 3,
-                        "firstname": "Helder",
-                        "surname": "Chicken",
-                        "dateOfBirth": "2302-07-28",
-                        "postcode": "DS8 5LB",
-                        "appointment": {"Friday": [["14:00"],["15:00"]]},
-                        "isValidated": false
-                        }]
+                    }]
         };
         
     };
@@ -97,7 +88,7 @@ class ClinicAppointments extends React.Component {
 
       changeHandler = () => {
         //Need to find a way to display the correct array number.
-        let state = this.state.Donors[0]
+        let state = this.state.Donors
         state.isValidated = true
         this.setState({
         isValidated: state
@@ -114,14 +105,17 @@ class ClinicAppointments extends React.Component {
             <div className="m-3 mt-3 justify-content-center text-center">
                     <img className="mt-5" src={clinic} alt="profile picture" style={{width: "90px"}}/>
                     <br/>
-                    <label className="display-4">Clinic Name</label>
+                    <label className="display-4">St.Earl_clinic</label>
                     <br />
-                    <p>{this.state.address.address_line_1}</p>
+                    {/* <p>{this.state.address.address_line_1}</p>
                     <p>{this.state.address.address_line_2}</p>
                     <p>{this.state.address.city} , {this.state.address.county}</p>
-                    <p>{this.state.address.postcode}</p>
+                    <p>{this.state.address.postcode}</p> */}
+                    <p>14 Trampath</p>
+                    <p>Balham, Devon</p>
+                    <p>EX16 8AA</p>
                     < br/>
-                    <p>Status : {this.state.requirements}</p>
+                    <p>Status : No parking spaces available</p>
             </div>
             <div className="m-3 justify-content-center text-center mt-5 p-3" style={{backgroundColor: "#dfe6e9"}}>
                 <h2>Appointments</h2>
@@ -133,7 +127,7 @@ class ClinicAppointments extends React.Component {
                 <p>Donor: {info.firstname} {info.surname}</p> 
                 <p>Date of Birth: {info.dateOfBirth}</p> 
                 <p>Postcode:{info.postcode}</p> 
-                <p>Appointment:{info.appointment[0]}</p>
+                <p>Appointment: {info.appointment}</p>
                 <button className="btn btn-primary m-3" name="validate" onClick={this.changeHandler}>Check In</button>
                 </div>
             })}

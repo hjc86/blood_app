@@ -9,7 +9,7 @@ class NavBarDashboard extends React.Component {
                 <div className="collapse navbar-collapse" id="navbarColor01">
                     <ul className="navbar-nav ml-auto ">
                         <li className="nav-item ">
-                        <a className="nav-link " href="#">Logout</a>
+                        <a className="nav-link " href="/">Logout</a>
                         </li>
                     </ul>
                 </div>

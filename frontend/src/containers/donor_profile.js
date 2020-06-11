@@ -63,7 +63,7 @@ class Donor extends React.Component {
                         className="form-control"
                         name="firstName"
                         onChange={this.changeHandler}
-                        value={this.state.firstName} 
+                        // value={this.state.firstName} 
                         type="text"
                         placeholder="Insert First Name">
                     </input>
@@ -71,7 +71,7 @@ class Donor extends React.Component {
                         className="form-control"
                         name="surname"
                         onChange={this.changeHandler}
-                        value={this.state.surname}  
+                        // value={this.state.surname}  
                         type="text"
                         placeholder="Insert Surname">
                     </input>
@@ -81,7 +81,7 @@ class Donor extends React.Component {
                         className="form-control"
                         name="dateOfBirth"
                         onChange={this.changeHandler} 
-                        value={this.state.dateOfBirth}
+                        // value={this.state.dateOfBirth}
                         type="date"
                         placeholder="eg Date/Month/Year">
                     </input>
@@ -91,7 +91,7 @@ class Donor extends React.Component {
                         className="form-control"
                         name="postcode"
                         onChange={this.changeHandler}
-                        value={this.state.postcode} 
+                        // value={this.state.postcode} 
                         type="text"
                         placeholder="eg. CR3 6LD">
                     </input>

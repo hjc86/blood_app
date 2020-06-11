@@ -10,7 +10,7 @@ class DonorCard extends React.Component {
         this.state = {
             "followerUsername": null,
             "followers": [],
-            "like" : 0
+            "like" : 400
         }
     }
 
@@ -53,11 +53,11 @@ class DonorCard extends React.Component {
                         <div className="col  m-5 p-5 justify-content-center">
                         <img src={image} alt="profile picture" style={{width: "90px"}}/>
                         <br/>
-                        <label className="display-4">UserName</label>
+                        <label className="display-4">kimK12</label>
                         <br />
                         <label className="display-5">Likes ❤️ : {this.state.like}</label>
-                        <p>I like being a vampire</p>
-                        <p>Last time Donated</p>
+                        <p>"I'm a blood donor and I love it!"</p>
+                        <p>Last time Donated : 03-01-2020</p>
                         </div>
                     <div className="col-5  m-5 p-5 justify-content-center">
                         <div className="m-3 text-center col justify-content-center">
