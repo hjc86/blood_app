@@ -71,7 +71,7 @@ urlpatterns = [
     # path('available_apointments/', appointments_views.AppointemntsOpen.as_view(), name='app_list'),
 
     path('follow/', users_views.FollowCreate.as_view(), name='follow_create'), 
-    path('follow/<str:id>', users_views.FollowChange.as_view(), name='follow_Change'), 
-
+    path('follow/<str:id>/', users_views.FollowChange.as_view(), name='follow_Change'), 
+    path('follow/<str:id>/<str:id_followee>/', users_views.FollowDelete.as_view(), name='follow_Delete'), 
 ]
 

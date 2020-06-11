@@ -32,8 +32,8 @@ class AppointmentsChange(APIView):
         return Response(serializer.data)
 
     def put(self, request, pk, format=None):
-        user = self.get_object(pk)
-        serializer = UserSerializer(user, data=request.data)
+        appointment = self.get_object(pk)
+        serializer = AppointmentSerializer(appointment, data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)

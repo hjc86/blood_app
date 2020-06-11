@@ -24,8 +24,9 @@ class AppointmentSerializer(serializers.ModelSerializer):
 
     def update(self, instance, validated_data):
 
-        instance.donor_id = validated_data.get('donor_id', instance.username)
-        instance.clinic_id = validated_data.get('clinic_id', instance.is_clinic)
+        instance.donor_id = validated_data.get('donor_id', instance.donor_id)
+        instance.clinic_id = validated_data.get('clinic_id', instance.clinic_id)
+        instance.appointment_time = validated_data.get('appointment_time', instance.appointment_time)
         instance.save()
 
         return instance   
