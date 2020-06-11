@@ -5,6 +5,8 @@ import NavBar from '../components/navbar_home';
 import { simpleAction } from '../action-creators/simpleAction';
 import { createAccount } from '../action-creators/createAccount';
 import { login } from '../action-creators/login';
+import { Redirect } from 'react-router-dom'
+import { createBrowserHistory } from 'history';
 
 const mapStateToProps = state => ({
 
@@ -46,21 +48,7 @@ class Login extends React.Component {
         } else { 
    
             await this.props.login(this.state.signIn)
-         
-
-            
-            console.log(this.props.loginResponse.token.profileData)//#.login.token.profileData)
-            let profile=this.props.loginResponse.token.profileData//.login.token.profileData
-    
-            if (Object.values(profile).includes(null)){//
-                console.log("we have nulls in the profile send to page to update")
-                
-            }
-            else{
-                console.log("profile complete send to dashboard")
-                // to dashboard
-            }
-            
+        
         }
     }
 
@@ -116,6 +104,7 @@ class Login extends React.Component {
 
 
 
+
     render() {
         let createButton
         if (this.state.create.is_clinic === false) {
@@ -129,6 +118,7 @@ class Login extends React.Component {
             // <Link to={{pathname:'/clinic-profile'}}><button className='passwordButton btn btn-primary' type='submit'>Create</button></Link>
 
         }
+
         let status
         if (this.props.createAccountResponse === undefined) {
             status = <p></p>
@@ -138,8 +128,24 @@ class Login extends React.Component {
             status = <p>{"Creation failed"}</p>
         }
         
+        //let profile
+        if(this.props.loginResponse.token===undefined){
+            console.log("undefined")
+        }
+        else if(Object.values(this.props.loginResponse.token.profileData).includes(null) && (this.props.loginResponse.token.profileData.is_clinic==="False")){
+            console.log("--->",this.props.loginResponse.token.profileData.is_clinic)
+            
+            return <Redirect to='/donor-profile'/>
+        }    
+        else{
+            console.log("--->",this.props.loginResponse.token.profileData.is_clinic)
+            return <Redirect to='/donor-dashboard'/>
+        }
+            
 
         return (
+
+
             <div>
             < NavBar />
             <div className="container-fluid pt-5">

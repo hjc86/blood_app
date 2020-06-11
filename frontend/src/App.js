@@ -7,7 +7,6 @@ import ClinicProfile from './containers/clinic_profile';
 import ClinicDashboard from './containers/clinic_dashboard';
 import DonorDashboard from './containers/donor_dashboard';
 
-
 const App = () => {
     return (
         <Router>
@@ -17,16 +16,20 @@ const App = () => {
                     exact 
                     component={Login}
                 />
-                <Route 
+                <Route
+                    
                     path='/donor-profile'
                     exact 
                     component={DonorProfile}
                 />
+
                 <Route
                     path='/clinic-profile'
                     exact 
                     component={ClinicProfile}
                 />
+
+
                 <Route
                     path='/donor-dashboard'
                     exact 

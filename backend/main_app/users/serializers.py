@@ -56,6 +56,8 @@ class DonorSerializer(serializers.ModelSerializer):
         instance.first_name = validated_data.get('first_name', instance.first_name)
         instance.last_name = validated_data.get('last_name', instance.last_name)
         instance.date_of_birth = validated_data.get('date_of_birth', instance.date_of_birth)
+        instance.postcode = validated_data.get('postcode', instance.postcode)
+        
         instance.save()
 
         return instance   
@@ -72,7 +74,7 @@ class ClinicSerializer(serializers.ModelSerializer):
         clinic = Clinic(
             name=validated_data['name'],
             geolocation=validated_data['geolocation'],
-            address=validated_data['is_clinic'],
+            address=validated_data['address'],
             requirements = validated_data['requirements'],
             opening_times= validated_data['opening_times'],
         )

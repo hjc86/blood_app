@@ -8,13 +8,13 @@ class DonorDashboard extends React.Component {
     render() {
         return (
             <div>
-            <NavBar />
+                <NavBar />
                 <div>
-                <h1>Hello im Donor Dashboard</h1>
-                <h2>Donor Profile</h2>
-            < Scheduler />
-                <h2>Friends / nudge</h2>
-                <h2>Map</h2>
+                    <h1>Hello im Donor Dashboard</h1>
+                    <h2>Donor Profile</h2>
+                    <Scheduler />
+                    <h2>Friends / nudge</h2>
+                    <h2>Map</h2>
                 </div>
             </div>
         )

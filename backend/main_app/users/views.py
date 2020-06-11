@@ -81,7 +81,6 @@ class DonorView(APIView):
     """ create profile """
     def post(self, request, format=None):
         serializer = DonorSerializer(data=request.data)
-
         
         if serializer.is_valid():
             serializer.save()
