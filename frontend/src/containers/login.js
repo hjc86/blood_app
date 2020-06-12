@@ -49,9 +49,6 @@ class Login extends React.Component {
             case "createPasswordTwo":
                 state.create.passwordTwo = event.target.value
                 this.setState(state);
-                if (this.state.passwordTwo !== this.state.password){
-                    alert('wront')
-                } 
                 console.log(state)
                 break;
             case "createOption":
@@ -69,27 +66,23 @@ class Login extends React.Component {
     }
     render() {
         let createButton
-        if ((this.state.create.isClinic === false) && (this.state.create.passwordTwo === this.state.create.password)) {
+        if (this.state.create.isClinic === false) {
             createButton =
             <Link to={{pathname:'/donor-profile'}}><button className='passwordButton btn btn-primary' type='submit'>Create</button></Link>
-        }else if ((this.state.create.isClinic === false) && (this.state.create.passwordTwo !== this.state.create.password)){
-        //    alert('Password did not match. Please try again.')
-        document.getElementById('info1').innerHTML = "Password did not match. Please try again."
-        }else if ((this.state.create.isClinic === true) && (this.state.create.passwordTwo === this.state.create.password)) {
-        createButton =
-        <Link to={{pathname:'/clinic-profile'}}><button className='passwordButton btn btn-primary' type='submit'>Create</button></Link>
-        }else if ((this.state.create.isClinic === true) && (this.state.create.passwordTwo !== this.state.create.password)){
-            document.getElementById('info1').innerHTML = "Password did not match. Please try again." 
-         }
+        } else if (this.state.create.isClinic === true) {
+            createButton =
+            <Link to={{pathname:'/clinic-profile'}}><button className='passwordButton btn btn-primary' type='submit'>Create</button></Link>
+        }
         return (
             <div>
             < NavBar />
             <div className="container-fluid pt-3">
-            <div className="text-center mb-5">   
-            <img className="mt-5" src={logo} alt="profile picture" style={{width: "90px"}}/>
+            <div className="text-center mb-5 justify-content-center" >   
+            <h1 className="display-1">BE A D<img className="mb-3 justify-content-center" src={logo} alt="profile picture" style={{width: "70px"}}/>NOR</h1>
             </div>
                 <div className="row justify-content-center">
-                    <div className="col-3 p-2 m-2">
+                    <div className="col-5 p-2 m-2 ">
+                        <div className="container mr-4 p-3" style={{backgroundColor: "#dfe6e9"}}>
                         <form>
                         <h2>Sign In</h2>
                         <p>To an existing account</p>
@@ -112,6 +105,7 @@ class Login extends React.Component {
                             placeholder="eg. Passw0rd928">
                         </input>
                         </form>
+                        </div>
                         < br/>
                         <button className='loginUserButton btn btn-danger' type='submit' >Log In</button>
                     </div>
@@ -162,7 +156,6 @@ class Login extends React.Component {
                         </div>
                         </form>
                         {createButton}
-                        <p id="info1" className="text-danger"></p>
                     </div>
                 </div>
             </div>
@@ -170,4 +163,5 @@ class Login extends React.Component {
         )
     }
 }
-export default connect(mapStateToProps, mapDispatchToProps) (Login);
+// export default connect(mapStateToProps, mapDispatchToProps) (Login);
+export default Login;

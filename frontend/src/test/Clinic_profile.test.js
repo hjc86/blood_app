@@ -19,7 +19,7 @@ describe('<Clinic/>', () => {
   })
 
   it('should render a <div />', () => {
-      expect(wrapper.find('div').length).toEqual(5);
+      expect(wrapper.find('div').length).toEqual(6);
   });
 
   it('should render a <form />', () => {

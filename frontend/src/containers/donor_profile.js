@@ -105,4 +105,5 @@ class Donor extends React.Component {
 }
 
 
-export default connect(mapStateToProps, mapDispatchToProps) (Donor);
+// export default connect(mapStateToProps, mapDispatchToProps) (Donor);
+export default Donor;

@@ -6,11 +6,11 @@ import Donor from '../containers/donor_profile'
 
 describe('<Donor/>', () => {
     
-//   it('mounts to DOM', () => {
-//       const div = document.createElement('div');
-//       ReactDOM.render(<Donor />, div);
-//       ReactDOM.unmountComponentAtNode(div);
-//   });
+  it('mounts to DOM', () => {
+      const div = document.createElement('div');
+      ReactDOM.render(<Donor />, div);
+      ReactDOM.unmountComponentAtNode(div);
+  });
 
   let wrapper;
   beforeEach(() => wrapper = shallow(<Donor />));

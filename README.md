@@ -1,5 +1,10 @@
-# Blood App
+# Red Cells App
 Final Futureproof project.
+
+### Project Brief
+
+### User Stories
+
 ### Developer Notes
 #### Full install instructions
 First, clone the repository onto your machine.

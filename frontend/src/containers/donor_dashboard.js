@@ -22,4 +22,5 @@ class DonorDashboard extends React.Component {
     }
 }
 
-export default connect() (DonorDashboard);
+// export default connect() (DonorDashboard);
+export default DonorDashboard;

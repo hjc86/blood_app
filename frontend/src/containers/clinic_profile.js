@@ -171,4 +171,5 @@ class Clinic extends React.Component {
 }
 
 
-export default connect() (Clinic);
+// export default connect() (Clinic);
+export default Clinic;

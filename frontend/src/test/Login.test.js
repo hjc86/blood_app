@@ -19,7 +19,7 @@ describe('<Login/>', () => {
   })
 
   it('should render a <div />', () => {
-      expect(wrapper.find('div').length).toEqual(9);
+      expect(wrapper.find('div').length).toEqual(11);
   });
 
   it('should render a <form />', () => {
@@ -31,7 +31,7 @@ describe('<Login/>', () => {
     });
 
     it('should render a <label />', () => {
-        expect(wrapper.find('label').length).toEqual(7);
+        expect(wrapper.find('label').length).toEqual(5);
     });
 
     it('should render select Component', () =>{

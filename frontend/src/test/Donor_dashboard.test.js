@@ -19,7 +19,7 @@ describe('<DonorDashboard/>', () => {
   })
 
   it('should render a <div />', () => {
-      expect(wrapper.find('div').length).toEqual(2);
+      expect(wrapper.find('div').length).toEqual(1);
   });
 
 
