@@ -19,4 +19,5 @@ class ClinicDashboard extends React.Component {
     }
 }
 
-export default connect() (ClinicDashboard);
+// export default connect() (ClinicDashboard);
+export default Clinic
