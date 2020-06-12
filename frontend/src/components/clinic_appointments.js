@@ -138,4 +138,6 @@ class ClinicAppointments extends React.Component {
     }
 }
 
-export default connect() (ClinicAppointments);
+// export default connect() (ClinicAppointments);
+
+export default ClinicAppointments

@@ -96,4 +96,7 @@ class DonorCard extends React.Component {
     }
 }
 
-export default connect() (DonorCard);
+// export default connect() (DonorCard);
+
+
+export default DonorCard

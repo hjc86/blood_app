@@ -40,4 +40,5 @@ class BloodInfo extends React.Component {
 }
 
 
-export default connect() (BloodInfo);
+// export default connect() (BloodInfo);
+export default BloodInfo;
