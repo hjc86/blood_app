@@ -140,7 +140,7 @@ class FollowCreate(APIView):
             print(serializer.data)
             following = self.get_object(serializer.data['follower']).following.add(serializer.data['followee'])
             #serializer.save()
-            return Response({"msg": "sucess"}, status=status.HTTP_201_CREATED)
+            return Response({"msg": "success"}, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     # def delete(self, request, format=None):
