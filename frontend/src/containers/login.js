@@ -120,9 +120,9 @@ class Login extends React.Component {
         }
 
         let status
-        if (this.props.createAccountResponse === undefined) {
+        if (this.props.createAccountResponse.createAccount === undefined) {
             status = <p></p>
-        } else if (this.props.createAccountResponse.status === 201) {
+        } else if (this.props.createAccountResponse.createAccount.status === 201) {
             status = <p>{"Account created successfully"}</p>
         } else {
             status = <p>{"Creation failed"}</p>
@@ -155,22 +155,25 @@ class Login extends React.Component {
                         <label>Sign In</label>
                         <p>To an existing account</p>
                         <br />
-                        <label>Username:</label>
+                        {/* <label>Username:</label> */}
                         <input
                             className="form-control"
                             name="signInUsername" 
                             onChange={this.changeHandler}
                             type="text"
-                            placeholder="eg. Us3rname248">
+                            placeholder="eg. Us3rname248"
+                            required>
+
                         </input>
                         <br />
-                        <label>Password:</label>
+                        {/* <label>Password:</label> */}
                         <input 
                             className="form-control"
                             name="signInPassword"
                             onChange={this.changeHandler} 
                             type="password"
-                            placeholder="eg. Passw0rd928">
+                            placeholder="eg. Passw0rd928"
+                            required>
                         </input>
                         </form>
                         < br/>
@@ -184,7 +187,7 @@ class Login extends React.Component {
                         <p>It's free to join and easy to use. Continue on to create your Red Cells account and be a part of saving lives through blood donation!</p>
                         <div className="form-group">
                             <div>
-                                <label>Username:</label>
+                                {/* <label>Username:</label> */}
                                 <input 
                                     className="form-control"
                                     name="createUsername" 
@@ -193,7 +196,7 @@ class Login extends React.Component {
                                     placeholder="Insert Username">
                                 </input>
                                 <br />
-                                <label>Password:</label>
+                                {/* <label>Password:</label> */}
                                 <input
                                     className="form-control" 
                                     name="createPassword"
