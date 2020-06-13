@@ -31,7 +31,8 @@ urlpatterns = [
     path('login/', users_views.CustomTokenObtainPairView.as_view(), name='token_obtain_pair'),
     
     # path('logout/',users_views.LogoutView.as_view(),name='logout'),
-
+    
+    path('user-details/<str:pk>',users_views.UserDetails.as_view(), name='user_details'),
     path('user/', users_views.UserCreate.as_view(), name='user_create'),
     path('user/<str:pk>', users_views.UsersChange.as_view(), name='user_change'),
 

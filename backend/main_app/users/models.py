@@ -15,6 +15,7 @@ class Donor(models.Model):
     date_of_birth = models.DateField(null=True, blank=True)
     postcode =  models.CharField(max_length=50, null=True, blank=True)
     following = models.ManyToManyField('self', related_name='followers', symmetrical=False)
+    # appointment_with = models.ManyToManyField('Clinic', related_name='appointments', symmetrical=False)
 
 class Clinic(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)  

@@ -156,8 +156,6 @@ class FollowCreate(APIView):
     #     # return Response(status=status.HTTP_204_NO_CONTENT)
 
 
-
-
 class FollowChange(APIView):
     """
     create a new User with empty profile
@@ -224,3 +222,27 @@ class FollowDelete(APIView):
 class CustomTokenObtainPairView(TokenObtainPairView):
     # Replace the serializer with your custom
     serializer_class = CustomTokenObtainPairSerializer
+
+class UserDetails(APIView):
+    pass
+
+    # def get_object(self, request):
+    #     try:
+    #         return Donor.objects.get(user_id=request)
+    #     except Donor.DoesNotExist:
+    #         raise Http404
+
+
+    # def get(self, request, id, format=None):
+    #     following = self.get_object(id).following.all().values_list('user_id')
+        
+        
+        
+    #     flat_list = [item for sublist in following for item in sublist]
+      
+    #     following= User.objects.in_bulk(flat_list)
+ 
+    #     dict_variable = {key:getattr(value, 'username') for (key,value) in following.items()}
+    #     print(dict_variable)
+
+    #     return Response(dict_variable)
