@@ -97,18 +97,20 @@ class Scheduler extends Component {
     const { loading } = this.state;
 
     return (
-      <div className="container-fluid">
+      <div className="container-fluid text-center">
         <h1>Booking</h1>
+        <div className="container mr-5 col-8 p-3 mb-4">
         <AppointmentPicker
           addAppointment={this.addAppointment}
           removeAppointment={this.removeAppointment}
-          initialDay={new Date("2020-06-08")}
+          // initialDay={new Date("2020-06-01")}
           days={days}
           maxReservableAppointments={1}
           // alpha
           visible
           selectedByDefault
          />
+         </div>
       </div>
     );
   }

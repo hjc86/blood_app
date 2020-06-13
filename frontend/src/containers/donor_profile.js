@@ -112,7 +112,11 @@ class Donor extends React.Component {
                         className="form-control"
                         name="firstName"
                         onChange={this.changeHandler}
+
+                        // value={this.state.firstName} 
+
                         value={this.state.profile.first_name} 
+
                         type="text"
                         placeholder="Insert First Name"
                         required>
@@ -121,7 +125,11 @@ class Donor extends React.Component {
                         className="form-control"
                         name="surname"
                         onChange={this.changeHandler}
+
+                        // value={this.state.surname}  
+
                         value={this.state.profile.last_name}  
+
                         type="text"
                         placeholder="Insert Surname"
                         required>
@@ -132,7 +140,11 @@ class Donor extends React.Component {
                         className="form-control"
                         name="dateOfBirth"
                         onChange={this.changeHandler} 
+
+                        // value={this.state.dateOfBirth}
+
                         value={this.state.profile.date_of_birth}
+
                         type="date"
                         placeholder="eg Date/Month/Year"
                         required>
@@ -143,7 +155,11 @@ class Donor extends React.Component {
                         className="form-control"
                         name="postcode"
                         onChange={this.changeHandler}
+
+                        // value={this.state.postcode} 
+
                         value={this.state.profile.postcode} 
+
                         type="text"
                         placeholder="eg. CR3 6LD"
                         required>
@@ -159,4 +175,5 @@ class Donor extends React.Component {
 }
 
 
-export default connect(mapStateToProps, mapDispatchToProps) (Donor);
+// export default connect(mapStateToProps, mapDispatchToProps) (Donor);
+export default Donor;

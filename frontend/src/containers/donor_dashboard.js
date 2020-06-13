@@ -3,22 +3,25 @@ import NavBar from '../components/navbar_dashboard';
 import Scheduler from '../components/scheduler';
 import { connect } from 'react-redux';
 
+import DonorCard from '../components/followers';
+import BloodInfo from '../components/blood_info'
+
+
 class DonorDashboard extends React.Component {
 
     render() {
         return (
             <div>
-                <NavBar />
-                <div>
-                    <h1>Hello im Donor Dashboard</h1>
-                    <h2>Donor Profile</h2>
-                    <Scheduler />
-                    <h2>Friends / nudge</h2>
-                    <h2>Map</h2>
-                </div>
+            <NavBar />
+            <DonorCard />
+            <BloodInfo />
+            <Scheduler />
+
             </div>
+
         )
     }
 }
 
-export default connect() (DonorDashboard);
+// export default connect() (DonorDashboard);
+export default DonorDashboard;

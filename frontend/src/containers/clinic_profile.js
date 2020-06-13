@@ -86,15 +86,15 @@ class Clinic extends React.Component {
                 <NavBar />
                 <div className="container-fluid">
                     <div className="justify-content-around row mt-5">  
-                        <div className="justify-content-center col-xs-4 mt-5">
+                        <div className="justify-content-center col-4 mt-5">
                         <form>
                             <label className="display-4 text-center">Clinic Profile</label>
-                            <p className= "text-center">Hello Clinic......</p>
+                            <p className= "text-center">St.Earl_clinic</p>
                         <label>Address line 1:</label>
                         <input 
                             name="address1"
                             className="form-control"
-                            value={this.state.address.address_line_1}
+                            // value={this.state.address.address_line_1}
                             onChange={this.changeHandler}
                             type="text"
                             placeholder="eg. 32 Gladstone">
@@ -104,7 +104,7 @@ class Clinic extends React.Component {
                         <input 
                             name="address2"
                             className="form-control"
-                            value={this.state.address.address_line_2}
+                            // value={this.state.address.address_line_2}
                             onChange={this.changeHandler} 
                             type="text"
                             placeholder="eg. Potter Road">
@@ -114,7 +114,7 @@ class Clinic extends React.Component {
                         <input 
                             name="city"
                             className="form-control"
-                            value={this.state.address.city}
+                            // value={this.state.address.city}
                             onChange={this.changeHandler} 
                             type="text"
                             placeholder="Enfield">
@@ -124,7 +124,7 @@ class Clinic extends React.Component {
                         <input 
                             name="county"
                             className="form-control"
-                            value={this.state.address.county}
+                            // value={this.state.address.county}
                             onChange={this.changeHandler} 
                             type="text"
                             placeholder="Middlesex">
@@ -134,7 +134,7 @@ class Clinic extends React.Component {
                         <input 
                             name="postcode" 
                             className="form-control"
-                            value={this.state.address.postcode}
+                            // value={this.state.address.postcode}
                             onChange={this.changeHandler}
                             type="text"
                             placeholder="eg. EN7 3PX">
@@ -145,7 +145,7 @@ class Clinic extends React.Component {
                         <textarea 
                             name="requirements" 
                             className="form-control"
-                            value={this.state.requirements}
+                            // value={this.state.requirements}
                             onChange={this.changeHandler}
                             type="text"
                             placeholder="eg. no parking spaces available">
@@ -156,8 +156,13 @@ class Clinic extends React.Component {
                         
                         <div>
                         < Timeslot changeHandler={this.changeHandler} timeslots={this.state.timeslots}/>
+                        <div className="container text-center p-5 m-2">
+                            <Link to={{pathname:'/clinic-dashboard'}}>
+                                <button className="passwordButton btn btn-primary btn-block" type='submit'>Submit</button>
+                            </Link>
                         </div>
-                        <Link to={{pathname:'/clinic-dashboard'}}><button className='passwordButton btn btn-primary' type='submit'>Submit</button></Link>
+                        </div>
+                        
                     </div>
                     </div>  
         </div>
@@ -166,4 +171,5 @@ class Clinic extends React.Component {
 }
 
 
-export default connect() (Clinic);
+// export default connect() (Clinic);
+export default Clinic;
