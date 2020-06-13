@@ -9,38 +9,39 @@ import DonorDashboard from './containers/donor_dashboard';
 
 const App = () => {
     return (
-      <div className="Home">
-            <Router>
-              <Switch>
-                  <Route 
-                      path='/'
-                      exact 
-                      component={Login}
-                  />
-                  <Route 
-                      path='/donor-profile'
-                      exact 
-                      component={DonorProfile}
+        <Router>
+            <Switch>
+                <Route 
+                    path='/'
+                    exact 
+                    component={Login}
+                />
+                <Route
+                    
+                    path='/donor-profile'
+                    exact 
+                    component={DonorProfile}
+                />
 
-                  />
-                  <Route
-                      path='/clinic-profile'
-                      exact 
-                      component={ClinicProfile}
-                  />
-                  <Route
-                      path='/donor-dashboard'
-                      exact 
-                      component={DonorDashboard}
-                  />
-                  <Route
-                      path='/clinic-dashboard'
-                      exact 
-                      component={ClinicDashboard}
-                  />
-               </Switch>
-            </Router>
-        </div>
+                <Route
+                    path='/clinic-profile'
+                    exact 
+                    component={ClinicProfile}
+                />
+
+
+                <Route
+                    path='/donor-dashboard'
+                    exact 
+                    component={DonorDashboard}
+                />
+                <Route
+                    path='/clinic-dashboard'
+                    exact 
+                    component={ClinicDashboard}
+                />
+            </Switch>
+        </Router>
     );
 }
 

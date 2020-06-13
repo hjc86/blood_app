@@ -6,13 +6,17 @@ import App from './App';
 import * as serviceWorker from './serviceWorker';
 import { Provider } from 'react-redux'
 import configureStore from './store';
+import { createBrowserHistory } from 'history';
+
+// export const browserHistory = createBrowserHistory();
 
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={configureStore()}>
       <App />
     </Provider>
-  </React.StrictMode>,
+  </React.StrictMode>
+  ,
   document.getElementById('root')
 );
 

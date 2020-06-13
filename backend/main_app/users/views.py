@@ -12,14 +12,21 @@ from rest_framework_simplejwt.views import TokenObtainPairView
 from .serializers import CustomTokenObtainPairSerializer 
 from rest_framework.parsers import JSONParser
 import io
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework.permissions import IsAuthenticated
 
 
 class UsersChange(APIView):
+
+    #permission_classes = (IsAuthenticated,)
     """
     Retrieve, update or delete a user instance.
     """
     
     # there is mixing of logic here it feels like bad design
+
+
     def get_object(self, pk, data):
         
         func_kwargs = {'data': data} if data else {}
@@ -53,9 +60,11 @@ class UsersChange(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def delete(self, request, pk, format=None):
-        user = self.get_object(pk)
+        user=User.objects.get(pk=pk)
+        #user = self.get_object(pk,data=None)
         user.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)
+        deleted_msg=f"user {pk} deleted"
+        return Response({"msg":deleted_msg}, status=status.HTTP_204_NO_CONTENT)
 
 
 class UserCreate(APIView):
@@ -76,7 +85,6 @@ class DonorView(APIView):
     """ create profile """
     def post(self, request, format=None):
         serializer = DonorSerializer(data=request.data)
-
         
         if serializer.is_valid():
             serializer.save()
@@ -132,20 +140,20 @@ class FollowCreate(APIView):
             print(serializer.data)
             following = self.get_object(serializer.data['follower']).following.add(serializer.data['followee'])
             #serializer.save()
-            return Response({"msg": "sucess"}, status=status.HTTP_201_CREATED)
+            return Response({"msg": "success"}, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-    def delete(self, request, format=None):
+    # def delete(self, request, format=None):
     
-        serializer = FollowSerializer(data=request.data)       
+    #     serializer = FollowSerializer(data=request.data)       
         
-        if serializer.is_valid():
-            print(serializer.data)
-            following = self.get_object(serializer.data['follower']).following.remove(serializer.data['followee'])
-            #serializer.save()
-            return Response({"msg": "sucess"}, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-        # return Response(status=status.HTTP_204_NO_CONTENT)
+    #     if serializer.is_valid():
+    #         print(serializer.data)
+    #         following = self.get_object(serializer.data['follower']).following.remove(serializer.data['followee'])
+    #         #serializer.save()
+    #         return Response({"msg": "followee deleted"}, status=status.HTTP_201_CREATED)
+    #     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    #     # return Response(status=status.HTTP_204_NO_CONTENT)
 
 
 
@@ -172,13 +180,13 @@ class FollowChange(APIView):
 
         return Response(dict_variable)
 
-    # def delete(self, request, id, format=None):
+    # def delete(self, request, id, id_followee format=None):
         
     #     serializer = FollowSerializer(data=request.data)       
         
     #     if serializer.is_valid():
     #         print(serializer.data)
-    #         following = self.get_object(id).following.remove(serializer.data['followee'])
+    #         following = self.get_object(id).following.remove(id_followee)#serializer.data['followee'])
     #         serializer.save()
     #         return Response({"msg": "sucess"}, status=status.HTTP_201_CREATED)
     #     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
@@ -186,6 +194,32 @@ class FollowChange(APIView):
 
 
 
+
+class FollowDelete(APIView):
+    """
+    create a new User with empty profile
+    """
+
+
+
+    def delete(self, request, id, id_followee, format=None):
+        try:
+            print(id)
+            following = Donor.objects.get(user_id=id).following.remove(id_followee)#serializer.data['followee'])
+            return Response({"msg": f"followee {id_followee} deleted"}, status=status.HTTP_204_NO_CONTENT)
+
+        except: 
+             return Response({"msg": "could not delete followee"}, status=status.HTTP_400_BAD_REQUEST)
+
+
+     
+
+    # def delete(self, request, , format=None):
+    #     user=User.objects.get(pk=pk)
+    #     #user = self.get_object(pk,data=None)
+    #     user.delete()
+    #     deleted_msg=f"user {pk} deleted"
+    #     return Response({"msg":deleted_msg}, status=status.HTTP_204_NO_CONTENT)
 
 class CustomTokenObtainPairView(TokenObtainPairView):
     # Replace the serializer with your custom

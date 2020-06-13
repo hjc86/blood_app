@@ -16,6 +16,7 @@ class DonorDashboard extends React.Component {
             <DonorCard />
             <BloodInfo />
             <Scheduler />
+
             </div>
 
         )

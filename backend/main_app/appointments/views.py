@@ -32,8 +32,8 @@ class AppointmentsChange(APIView):
         return Response(serializer.data)
 
     def put(self, request, pk, format=None):
-        user = self.get_object(pk)
-        serializer = UserSerializer(user, data=request.data)
+        appointment = self.get_object(pk)
+        serializer = AppointmentSerializer(appointment, data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)
@@ -100,11 +100,11 @@ class AppointmentList(APIView):
         return Response(serializer.data)
 
 
-class AppointmentsOpen(APIview):
-    def get(self, request, pk, format=None):
-        #x.difference_update(y) 
-        base = datetime.datetime.today()
-        date_list = [base - datetime.timedelta(days=x) for x in range(numdays)]
+class AppointmentsOpen(APIView):
+    # def get(self, request, pk, format=None):
+    #     #x.difference_update(y) 
+    #     base = datetime.datetime.today()
+    #     date_list = [base - datetime.timedelta(days=x) for x in range(numdays)]
 
 
         # send appointment slots for clinic
