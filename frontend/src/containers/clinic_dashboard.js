@@ -11,8 +11,8 @@ class ClinicDashboard extends React.Component {
 
         return (
             <div>
-            <NavBar />
-            <ClinicAppointments />
+                <NavBar />
+                <ClinicAppointments />
             </div>
         )
     }

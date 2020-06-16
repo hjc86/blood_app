@@ -1,12 +1,14 @@
 import { combineReducers } from 'redux';
-import simpleReducer from './simpleReducer';
+
 import createAccount from './createAccount';
 import login from './login';
-import update from './update';
+import updateProfile from './updateProfile';
+import follow from './follow';
 
 export default combineReducers({
-  simpleReducer,
+  
   createAccount,
   login,
-  update,
+  updateProfile,
+  follow
 });

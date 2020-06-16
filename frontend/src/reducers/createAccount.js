@@ -1,10 +1,16 @@
-export default (state = {}, action) => {
+const initialState ={
+  status: false
+}
+
+export default (state=initialState, action) => {
   switch (action.type) {
     case 'CREATE_ACCOUNT':
-    return {
-      createAccount: action.payload
+      return {
+        // ...state,
+        status: action.payload.status
+        
+      }
+    default:
+      return state
     }
-  default:
-    return state
-  }
 }

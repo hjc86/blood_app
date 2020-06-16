@@ -6,6 +6,7 @@ export const createAccount = (create) => dispatch => {
         body: JSON.stringify(create)
     }).
     then(res =>{
+      console.log("res-----",res.status)
       dispatch({
         type: 'CREATE_ACCOUNT',
         payload: res

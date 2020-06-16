@@ -1,4 +1,3 @@
-
 export const login = (credentials) =>{
 
   return async dispatch =>{
@@ -25,7 +24,10 @@ export const login = (credentials) =>{
 
     dispatch({
       type: 'LOGIN',
-      payload: {tokenData, profileData}
+      tokenData, 
+      profileData,
+      tokenResponse
+
     })
 
 

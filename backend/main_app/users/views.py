@@ -19,7 +19,7 @@ from rest_framework.permissions import IsAuthenticated
 
 class UsersChange(APIView):
 
-    #permission_classes = (IsAuthenticated,)
+    # permission_classes = (IsAuthenticated,)
     """
     Retrieve, update or delete a user instance.
     """
@@ -138,7 +138,14 @@ class FollowCreate(APIView):
     
         if serializer.is_valid():
             print(serializer.data)
+
+            
+            # self.get_object.get(username=request.username)    
+
             following = self.get_object(serializer.data['follower']).following.add(serializer.data['followee'])
+            
+            
+            
             #serializer.save()
             return Response({"msg": "success"}, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
@@ -246,3 +253,19 @@ class UserDetails(APIView):
     #     print(dict_variable)
 
     #     return Response(dict_variable)
+
+
+class SearchDonor(APIView):
+  #  permission_classes = (IsAuthenticated,)
+    def get_object(self, username):
+        try:
+            return User.objects.filter(username__startswith=username).values('id','username')#get(username=username).values_list('id','username')
+        except User.DoesNotExist:
+            raise Http404
+
+    def get(self, request, username, format=None):
+        donorList = self.get_object(username)
+        
+        return Response(donorList)
+
+

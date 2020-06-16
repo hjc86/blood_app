@@ -2,7 +2,6 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import NavBar from '../components/navbar_home';
-import { simpleAction } from '../action-creators/simpleAction';
 
 import logo from '../img/red-blood-cells.png';
 
@@ -12,18 +11,6 @@ import { Redirect } from 'react-router-dom'
 import { createBrowserHistory } from 'history';
 
 
-const mapStateToProps = state => ({
-
-    createAccountResponse: state.createAccount,
-    loginResponse: state.login
-
-})
-
-const mapDispatchToProps = dispatch => ({
-    simpleAction: () => dispatch(simpleAction()),
-    createAccount: (create) => dispatch(createAccount(create)),
-    login: (credentials) => dispatch(login(credentials))
-})
 class Login extends React.Component {
     constructor(props) {
         super(props);
@@ -31,9 +18,8 @@ class Login extends React.Component {
             "create" : {"username": null, "password": null, "passwordTwo": null, "is_clinic" : null},
             "signIn" : {"username": null, "password": null}
         }
-        this.changeHandler = this.changeHandler.bind(this);
+      
     }
-
 
     
     createHandler = (event) => {
@@ -47,6 +33,7 @@ class Login extends React.Component {
         }
     }
 
+    
     loginHandler = async (event) => {
         if ((this.state.signIn.username && this.state.signIn.password) === (null || "")) {
             return null
@@ -58,10 +45,6 @@ class Login extends React.Component {
     }
 
 
-    simpleAction = (event) => {
-        this.props.simpleAction();
-        console.log(this.props);
-    }
     changeHandler = (event) =>  {
         let state = this.state 
         switch (event.target.name) {
@@ -104,21 +87,12 @@ class Login extends React.Component {
                 break;
         }
     }
-// <<<<<<< jamesdev
-//     render() {
-//         let createButton
-//         if (this.state.create.isClinic === false) {
-//             createButton =
-//             <Link to={{pathname:'/donor-profile'}}><button className='passwordButton btn btn-primary' type='submit'>Create</button></Link>
-//         } else if (this.state.create.isClinic === true) {
-//             createButton =
-//             <Link to={{pathname:'/clinic-profile'}}><button className='passwordButton btn btn-primary' type='submit'>Create</button></Link>
-//         }
-// =======
 
-
-
-
+    // static defaultProps = {
+	// 	avatar: '',
+	// 	first_name: '',
+	// 	last_name: '',
+	// };
 
     render() {
         let createButton
@@ -127,33 +101,29 @@ class Login extends React.Component {
             
             // createButton =
             // <Link to={{pathname:'/donor-profile'}}><button className='passwordButton btn btn-primary' type='submit'>Create</button></Link>
-
-        } else if (this.state.create.is_clinic === true) {
+        } 
+        else if (this.state.create.is_clinic === true) {
             // createButton =
             // <Link to={{pathname:'/clinic-profile'}}><button className='passwordButton btn btn-primary' type='submit'>Create</button></Link>
 
         }
 
+
         let status
-        if (this.props.createAccountResponse.createAccount === undefined) {
-            status = <p></p>
-        } else if (this.props.createAccountResponse.createAccount.status === 201) {
+        console.log("creaet accounte response",this.props.createAccountStatus)
+        if (this.props.createAccountStatus === 201) {
             status = <p>{"Account created successfully"}</p>
-        } else {
-            status = <p>{"Creation failed"}</p>
-        }
-        
-        //let profile
-        if(this.props.loginResponse.token===undefined){
-            console.log("undefined")
-        }
-        else if(Object.values(this.props.loginResponse.token.profileData).includes(null) && (this.props.loginResponse.token.profileData.is_clinic==="False")){
-            console.log("--->",this.props.loginResponse.token.profileData.is_clinic)
-            
+        } 
+
+    
+        console.log("default profile date",this.props.profileData)
+
+        const redirect = Object.values(this.props.profile).includes(null) && (this.props.profile.is_clinic==="False")
+
+        if(redirect){
             return <Redirect to='/donor-profile'/>
         }    
-        else{
-            console.log("--->",this.props.loginResponse.token.profileData.is_clinic)
+        else if(!Object.values(this.props.profile).includes(null)) {
             return <Redirect to='/donor-dashboard'/>
         }
             
@@ -175,7 +145,7 @@ class Login extends React.Component {
                         <h2>Sign In</h2>
                         <p>To an existing account</p>
                         <br />
-                        {/* <label>Username:</label> */}
+                  
                         <input
                             className="form-control"
                             name="signInUsername" 
@@ -186,7 +156,7 @@ class Login extends React.Component {
 
                         </input>
                         <br />
-                        {/* <label>Password:</label> */}
+                  
                         <input 
                             className="form-control"
                             name="signInPassword"
@@ -207,7 +177,7 @@ class Login extends React.Component {
                         <p>It's free to join and easy to use. Continue on to create your Red Cells account and be a part of saving lives through blood donation!</p>
                         <div className="form-group">
                             <div>
-                                {/* <label>Username:</label> */}
+                              
                                 <input 
                                     className="form-control"
                                     name="createUsername" 
@@ -216,7 +186,7 @@ class Login extends React.Component {
                                     placeholder="Insert Username">
                                 </input>
                                 <br />
-                                {/* <label>Password:</label> */}
+                             
                                 <input
                                     className="form-control" 
                                     name="createPassword"
@@ -255,5 +225,21 @@ class Login extends React.Component {
         )
     }
 }
-// export default connect(mapStateToProps, mapDispatchToProps) (Login);
-export default Login;
+
+
+const mapStateToProps = state => ({
+
+    createAccountStatus: state.createAccount.status,
+    loginStatus: state.login.status,
+    profile: state.login.profile
+
+})
+
+const mapDispatchToProps = dispatch => ({
+
+    createAccount: (create) => dispatch(createAccount(create)),
+    login: (credentials) => dispatch(login(credentials))
+})
+
+
+export default connect(mapStateToProps, mapDispatchToProps) (Login);

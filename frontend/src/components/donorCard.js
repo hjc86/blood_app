@@ -7,7 +7,7 @@ import { login } from '../action-creators/login';
 import { Redirect } from 'react-router-dom'
 import { createBrowserHistory } from 'history';
 
-class Followers extends React.Component {
+class DonorCard extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -63,7 +63,7 @@ class Followers extends React.Component {
         return (
             <div className="container-fluid ">
                 <div className="col m-2 justify-content-center">
-{/* 
+
                     <div className="m-5 justify-content-center text-center row">
                         <div className="col  m-5 p-5 justify-content-center">
                             <img src={image} alt="profile picture" style={{width: "90px"}}/>
@@ -73,15 +73,15 @@ class Followers extends React.Component {
                             <label className="display-5">Likes ❤️ : {this.state.like}</label>
                             <p>"I'm a blood donor and I love it!"</p>
                             <p>Last time Donated : 03-01-2020</p>
-                        </div> */}
-                    
+                        </div>
+{/*                     
                     <div className="col-5  m-5 p-5 justify-content-center">
                         <div className="m-3 text-center col justify-content-center">
                             <h2>Followers</h2>
                             <p>Send them some love!</p>
                         </div>
-                    
-                    
+                     */}
+{/*                     
                         <div className="row mt-3 justify-content-center">
                             <form>
                                 <input
@@ -92,7 +92,7 @@ class Followers extends React.Component {
                                     placeholder="search for a username" />
                                 <button className='followerButton btn btn-primary m-3' name='followerbutton' type='submit' onClick={this.addFollow}>Follow</button>
                             </form>
-                        </div>
+                        </div> */}
 
                         <div className="row mt-3 justify-content-center">
                             <div className="card col-7 m-3 p-2">
@@ -115,7 +115,6 @@ class Followers extends React.Component {
                     
                 </div>
             </div>
-
         )
     }
 }
@@ -140,4 +139,4 @@ const mapDispatchToProps = dispatch => ({
 })
 
 
-export default connect(mapStateToProps, mapDispatchToProps)(Followers);
+export default connect(mapStateToProps, mapDispatchToProps)(DonorCard);

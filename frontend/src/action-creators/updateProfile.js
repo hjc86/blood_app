@@ -1,4 +1,4 @@
-export const update = (profile,tokenData) =>{
+export const updateProfile = (profile,tokenData) =>{
     return async dispatch =>{
 
         const updateResponse = await fetch(`http://localhost:8000/user/${tokenData.id}`, {

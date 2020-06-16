@@ -2,8 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import NavBar from '../components/navbar_dashboard';
-import { simpleAction } from '../action-creators/simpleAction';
-import { update } from '../action-creators/update';
+import { updateProfile } from '../action-creators/updateProfile';
 import { createAccount } from '../action-creators/createAccount';
 import { login } from '../action-creators/login';
 import { Redirect } from 'react-router-dom'
@@ -11,32 +10,27 @@ import { Redirect } from 'react-router-dom'
 
 const mapStateToProps = state => ({
     // ...state
-    loginResponse: state.login,
-    updateResponse: state.update
+    profile: state.login.profile,
+    token: state.login.token,
+    updateProfile: state.updateProfile.update
 })
 
 const mapDispatchToProps = dispatch => ({
-    simpleAction: () => dispatch(simpleAction()),
-    update: (credentials,token) => dispatch(update(credentials,token))
+    update: (credentials,token) => dispatch(updateProfile(credentials,token))
 })
-
 
 class Donor extends React.Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            // "firstName": "Steven",
-            // "surname": "Berrisford",
-            // "dateOfBirth": "1996-10-28",
-            // "postcode": "CR3 6LD"
             profile:{
-                "first_name": this.props.loginResponse.token.profileData.first_name,
-                "last_name": this.props.loginResponse.token.profileData.last_name,
-                "date_of_birth": this.props.loginResponse.token.profileData.date_of_birth,
-                "postcode": this.props.loginResponse.token.profileData.postcode 
+                "first_name": this.props.profile.first_name,
+                "last_name": this.props.profile.last_name,
+                "date_of_birth": this.props.profile.date_of_birth,
+                "postcode": this.props.profile.postcode 
             },
-            token: this.props.loginResponse.token.tokenData
+            token: this.props.token
         
         }
     }
@@ -48,53 +42,41 @@ class Donor extends React.Component {
             case "firstName": 
                 state.profile.first_name = event.target.value
                 this.setState(state);
-                //this.setState({profile.first_name: event.targtet.value})
-                
-                // this.setState({);
-                //console.log(state)
                 break;
             case "surname":
                 state.profile.last_name = event.target.value
                 this.setState(state);
-                //console.log(state)
                 break;
             case "dateOfBirth":
                 state.profile.date_of_birth = event.target.value
                 this.setState(state);
-                //console.log(state)
                 break;
             case "postcode":
                 state.profile.postcode = event.target.value
                 this.setState(state);
-                //console.log(state)
                 break;
         }
     }
 
     updateProfile = async (event) => {
         await event.preventDefault()
-    
         console.log("updating profile")
         //if(!Object.values(this.state.profile).includes(null)){
-        await this.props.update(this.state.profile, this.state.token)
+            await this.props.update(this.state.profile, this.state.token)
         //}
-   
-        
     }
-
 
     render() {
 
-        console.log("value",this.props.updateResponse)
-    
-        
-        if(this.props.updateResponse.update != undefined){
+        console.log("value" ,this.state.updateResponse)
+      
+        //if(this.props.updateResponse != undefined){
             
-            if(this.props.updateResponse.update === 200){
+            if(this.props.updateProfile === 200){
                 return  <Redirect to='/donor-dashboard'/> 
             }
 
-        }
+        //}
             
         
         return (
@@ -112,11 +94,7 @@ class Donor extends React.Component {
                         className="form-control"
                         name="firstName"
                         onChange={this.changeHandler}
-
-                        // value={this.state.firstName} 
-
                         value={this.state.profile.first_name} 
-
                         type="text"
                         placeholder="Insert First Name"
                         required>
@@ -125,11 +103,7 @@ class Donor extends React.Component {
                         className="form-control"
                         name="surname"
                         onChange={this.changeHandler}
-
-                        // value={this.state.surname}  
-
-                        value={this.state.profile.last_name}  
-
+                        value={this.state.profile.last_name} 
                         type="text"
                         placeholder="Insert Surname"
                         required>
@@ -140,11 +114,7 @@ class Donor extends React.Component {
                         className="form-control"
                         name="dateOfBirth"
                         onChange={this.changeHandler} 
-
-                        // value={this.state.dateOfBirth}
-
                         value={this.state.profile.date_of_birth}
-
                         type="date"
                         placeholder="eg Date/Month/Year"
                         required>
@@ -155,9 +125,6 @@ class Donor extends React.Component {
                         className="form-control"
                         name="postcode"
                         onChange={this.changeHandler}
-
-                        // value={this.state.postcode} 
-
                         value={this.state.profile.postcode} 
 
                         type="text"
@@ -175,5 +142,8 @@ class Donor extends React.Component {
 }
 
 
-// export default connect(mapStateToProps, mapDispatchToProps) (Donor);
-export default Donor;
+
+
+
+export default connect(mapStateToProps, mapDispatchToProps) (Donor);
+//export default Donor;
