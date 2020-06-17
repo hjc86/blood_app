@@ -108,3 +108,13 @@ class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
         data.update({'id': self.user.id})#, 'is_clinic': self.user.is_clinic})
         # and everything else you want to send in the response
         return data
+
+class FollowingSerializer(serializers.Serializer):
+    followee = serializers.IntegerField()
+    followee_name = serializers.CharField()
+    
+    class Meta:
+        fields=['follower','followee_name']
+    
+    # def create   
+    

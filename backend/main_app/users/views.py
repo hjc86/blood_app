@@ -19,7 +19,7 @@ from rest_framework.permissions import IsAuthenticated
 
 class UsersChange(APIView):
 
-    # permission_classes = (IsAuthenticated,)
+    permission_classes = (IsAuthenticated,)
     """
     Retrieve, update or delete a user instance.
     """
@@ -139,12 +139,9 @@ class FollowCreate(APIView):
         if serializer.is_valid():
             print(serializer.data)
 
-            
             # self.get_object.get(username=request.username)    
 
             following = self.get_object(serializer.data['follower']).following.add(serializer.data['followee'])
-            
-            
             
             #serializer.save()
             return Response({"msg": "success"}, status=status.HTTP_201_CREATED)
@@ -175,16 +172,23 @@ class FollowChange(APIView):
             raise Http404
 
     def get(self, request, id, format=None):
-        following = self.get_object(id).following.all().values_list('user_id')
-        flat_list = [item for sublist in following for item in sublist]
+        # following = self.get_object(id).following.all().values_list('user_id')
+        # print("following", following)
+
+        # flat_list = [item for sublist in following for item in sublist]
       
-        following= User.objects.in_bulk(flat_list)
- 
-        dict_variable = {key:getattr(value, 'username') for (key,value) in following.items()}
-        print(dict_variable)
+        # following= User.objects.in_bulk(flat_list)
+        # following =  self.get_object(id).following.values() #User.objects.select_related('donor').values('username','donor__followers').get(id=request).values()
+        #following = User.objects.select_related('donor').values('username','donor__followers'.values())#.get(id=id).values('username')
+        
+        following= User.objects.select_related('donor').values('username','donor__followers').filter(donor__followers=id).values('username','id')
+        # dict_variable = {key:getattr(value, 'username') for (key,value) in following.items()}
+        print("===========following",following)
+        # print(dict_variable)
+        # serializer = FollowSerializer(data=following)       
+        # return Response(dict_variable)
 
-        return Response(dict_variable)
-
+        return Response(following)
     # def delete(self, request, id, id_followee format=None):
         
     #     serializer = FollowSerializer(data=request.data)       
@@ -202,7 +206,7 @@ class FollowChange(APIView):
 
 class FollowDelete(APIView):
     """
-    create a new User with empty profile
+    remove a donor you follow
     """
 
 
@@ -256,15 +260,27 @@ class UserDetails(APIView):
 
 
 class SearchDonor(APIView):
-  #  permission_classes = (IsAuthenticated,)
-    def get_object(self, username):
+    #permission_classes = (IsAuthenticated,)
+    def get_object(self,user_id,username):
         try:
-            return User.objects.filter(username__startswith=username).values('id','username')#get(username=username).values_list('id','username')
+            #return User.objects.filter(username__startswith=username).values('id','username').followers()  #get(username=username).values_list('id','username')
+            #print("folowing====================",Donor.objects.filter(username__startswith=username)) #get(user_id=24).followers.values())
+            #qs1 = Donor.objects.select_related('user__username').get(id=24)   #all().values('username')#.exclude(followers=24).values()#.filter(user.username__startswith=username)
+            #   qs2 = Donor.objects.get(user_id=24).following.values('user')
+
+            qs1 = User.objects.select_related('donor').values('username','donor__followers').exclude(donor__followers=user_id).filter(username__startswith=username).values('username','id') #.get(id=24)#.filter(username__startswith=username).following.values()
+         
+            print("=======searching ================>",qs1)
+            # print("=============>",qs1.difference(qs2)    
+            #User.objects.select_related(None)
+            
+            return qs1 #Donor.objects.get(user_id=24).following()#serializer.data['followee'])
+        
         except User.DoesNotExist:
             raise Http404
 
-    def get(self, request, username, format=None):
-        donorList = self.get_object(username)
+    def get(self, request,user_id, username, format=None):
+        donorList = self.get_object(user_id,username)
         
         return Response(donorList)
 

@@ -29,7 +29,7 @@ from appointments import views as appointments_views
 urlpatterns = [
     
     path('login/', users_views.CustomTokenObtainPairView.as_view(), name='token_obtain_pair'),
-    
+    path('refresh/', jwt_views.TokenRefreshView.as_view(), name='token_refresh'),
     # path('logout/',users_views.LogoutView.as_view(),name='logout'),
     
     path('user-details/<str:pk>',users_views.UserDetails.as_view(), name='user_details'),
@@ -47,7 +47,7 @@ urlpatterns = [
     path('follow/<str:id>/<str:id_followee>/', users_views.FollowDelete.as_view(), name='follow_Delete'), 
 
 
-    path('search/donor/<str:username>', users_views.SearchDonor.as_view(), name='search_donor'),
+    path('search/donor/<str:user_id>/<str:username>', users_views.SearchDonor.as_view(), name='search_donor'),
     # path('search/clinic/', users_views.SearchDonor.as_view, name='search_clinic')
 ]
 
