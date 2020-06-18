@@ -1,7 +1,7 @@
 const initialState ={
   status: false,
   profile:{
-    is_clinic:false,
+    is_clinic:null,
     first_name: null
   },
   token:{}
@@ -22,7 +22,7 @@ export default (state = initialState, action) => {
       }
 
 
-      
+
       
   default:
     return state

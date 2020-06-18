@@ -15,10 +15,12 @@ class DonorDashboard extends React.Component {
             
             <div>
                 <NavBar />
-                <Followers/>
                 <DonorCard />
-                <BloodInfo />
+              
+                <Followers/>
+              
                 <Scheduler />
+                <BloodInfo />
             </div>
 
         )

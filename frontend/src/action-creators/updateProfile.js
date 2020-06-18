@@ -4,7 +4,7 @@ export const updateProfile = (profile,tokenData) =>{
         const updateResponse = await fetch(`http://localhost:8000/user/${tokenData.id}`, {
             method: 'PUT',
             headers: {
-                'Authorization':`Bearer ${tokenData.access}`,
+                'Authorization':`Bearer ${localStorage.getItem('access')}`,
                 'Content-Type':'application/json', 
             },
             body: JSON.stringify(profile)

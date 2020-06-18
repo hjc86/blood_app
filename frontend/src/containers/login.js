@@ -103,7 +103,7 @@ class Login extends React.Component {
             // <Link to={{pathname:'/donor-profile'}}><button className='passwordButton btn btn-primary' type='submit'>Create</button></Link>
         } 
         else if (this.state.create.is_clinic === true) {
-            // createButton =
+            createButton = <button className='passwordButton btn btn-primary' type='submit' onClick={this.createHandler}>Create</button>
             // <Link to={{pathname:'/clinic-profile'}}><button className='passwordButton btn btn-primary' type='submit'>Create</button></Link>
 
         }
@@ -117,17 +117,27 @@ class Login extends React.Component {
 
     
         console.log("default profile date",this.props.profileData)
+        // const redirect = Object.values(this.props.profile).includes(null) && (this.props.profile.is_clinic==="False")
+        if(this.props.profile.is_clinic === 'True'){
 
-        const redirect = Object.values(this.props.profile).includes(null) && (this.props.profile.is_clinic==="False")
+            if(Object.values(this.props.profile).includes(null)){
+                return <Redirect to='/clinic-profile'/>
+            }    
+            else if(!Object.values(this.props.profile).includes(null)) {
+                return <Redirect to='/clinic-dashboard'/>
+            }
+        }   
 
-        if(redirect){
-            return <Redirect to='/donor-profile'/>
-        }    
-        else if(!Object.values(this.props.profile).includes(null)) {
-            return <Redirect to='/donor-dashboard'/>
-        }
+        else if(this.props.profile.is_clinic==='False'){
+
+            if(Object.values(this.props.profile).includes(null)){
+                return <Redirect to='/donor-profile'/>
+            }    
+            else if(!Object.values(this.props.profile).includes(null)) {
+                return <Redirect to='/donor-dashboard'/>
+            }
             
-
+        }
 
         return (
 
@@ -232,6 +242,7 @@ const mapStateToProps = state => ({
     createAccountStatus: state.createAccount.status,
     loginStatus: state.login.status,
     profile: state.login.profile
+    // token: state.login.token 
 
 })
 

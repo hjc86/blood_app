@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import NavBar from '../components/navbar_dashboard';
 import Timeslot from '../components/timeslots';
+import ClinicScheduler from '../components/clinic-scheduler';
 
 class Clinic extends React.Component {
     constructor(props) {
@@ -87,84 +88,77 @@ class Clinic extends React.Component {
                 <div className="container-fluid">
                     <div className="justify-content-around row mt-5">  
                         <div className="justify-content-center col-4 mt-5">
-                        <form>
-                            <label className="display-4 text-center">Clinic Profile</label>
-                            <p className= "text-center">St.Earl_clinic</p>
-                        <label>Address line 1:</label>
-                        <input 
-                            name="address1"
-                            className="form-control"
-                            // value={this.state.address.address_line_1}
-                            onChange={this.changeHandler}
-                            type="text"
-                            placeholder="eg. 32 Gladstone">
-                        </input>
-                        <br />
-                        <label>Address line 2:</label>
-                        <input 
-                            name="address2"
-                            className="form-control"
-                            // value={this.state.address.address_line_2}
-                            onChange={this.changeHandler} 
-                            type="text"
-                            placeholder="eg. Potter Road">
-                        </input>
-                        <br />
-                        <label>Town/City:</label>
-                        <input 
-                            name="city"
-                            className="form-control"
-                            // value={this.state.address.city}
-                            onChange={this.changeHandler} 
-                            type="text"
-                            placeholder="Enfield">
-                        </input>
-                        <br />
-                        <label>County:</label>
-                        <input 
-                            name="county"
-                            className="form-control"
-                            // value={this.state.address.county}
-                            onChange={this.changeHandler} 
-                            type="text"
-                            placeholder="Middlesex">
-                        </input>
-                        <br />
-                        <label>Postcode:</label>
-                        <input 
-                            name="postcode" 
-                            className="form-control"
-                            // value={this.state.address.postcode}
-                            onChange={this.changeHandler}
-                            type="text"
-                            placeholder="eg. EN7 3PX">
-                        </input>
-                        <br />
-                        <label>Clinic Requirements:</label>
-                        <p>Brief instructions for donors</p>
-                        <textarea 
-                            name="requirements" 
-                            className="form-control"
-                            // value={this.state.requirements}
-                            onChange={this.changeHandler}
-                            type="text"
-                            placeholder="eg. no parking spaces available">
-                        </textarea>
-                        <br />
-                        </form>
+                            <form>
+                                <label className="display-4 text-center">Clinic Profile</label>
+                                <p className= "text-center">St.Earl_clinic</p>
+                                <label>Address line 1:</label>
+                                    <input 
+                                    name="address1"
+                                    className="form-control"
+                                    // value={this.state.address.address_line_1}
+                                    onChange={this.changeHandler}
+                                    type="text"
+                                    placeholder="eg. 32 Gladstone">
+                                    </input>
+                                <br />
+                                <label>Address line 2:</label>
+                                <input 
+                                    name="address2"
+                                    className="form-control"
+                                    // value={this.state.address.address_line_2}
+                                    onChange={this.changeHandler} 
+                                    type="text"
+                                    placeholder="eg. Potter Road">
+                                </input>
+                                <br />
+                                <label>Town/City:</label>
+                                <input 
+                                    name="city"
+                                    className="form-control"
+                                    // value={this.state.address.city}
+                                    onChange={this.changeHandler} 
+                                    type="text"
+                                    placeholder="Enfield">
+                                </input>
+                                <br />
+                                <label>County:</label>
+                                <input 
+                                    name="county"
+                                    className="form-control"
+                                    // value={this.state.address.county}
+                                    onChange={this.changeHandler} 
+                                    type="text"
+                                    placeholder="Middlesex">
+                                </input>
+                                <br />
+                                <label>Postcode:</label>
+                                <input 
+                                    name="postcode" 
+                                    className="form-control"
+                                    // value={this.state.address.postcode}
+                                    onChange={this.changeHandler}
+                                    type="text"
+                                    placeholder="eg. EN7 3PX">
+                                </input>
+                                <br />
+                                <label>Clinic Requirements:</label>
+                                <p>Brief instructions for donors</p>
+                                <textarea 
+                                    name="requirements" 
+                                    className="form-control"
+                                    // value={this.state.requirements}
+                                    onChange={this.changeHandler}
+                                    type="text"
+                                    placeholder="eg. no parking spaces available">
+                                </textarea>
+                                <br />
+                            </form>
                         </div>
-                        
+                        </div>
+                            < ClinicScheduler/>
                         <div>
-                        < Timeslot changeHandler={this.changeHandler} timeslots={this.state.timeslots}/>
-                        <div className="container text-center p-5 m-2">
-                            <Link to={{pathname:'/clinic-dashboard'}}>
-                                <button className="passwordButton btn btn-primary btn-block" type='submit'>Submit</button>
-                            </Link>
-                        </div>
-                        </div>
-                        
                     </div>
-                    </div>  
+                </div>  
         </div>
         )
     }

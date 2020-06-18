@@ -1,6 +1,7 @@
 const initialState ={
   status:false,
-  donors:["test"]
+  donors:[],
+  following:[]
 
 }
 
@@ -8,9 +9,25 @@ const initialState ={
 export default (state = initialState, action) => {
   switch (action.type) {
     case 'SEARCH_DONOR':
-        return {
-          donors: action.donors,
-        }    
+      return {
+        ...state,
+        donors: action.donors
+      }
+    case 'FOLLOW_DONOR':
+      return {
+       
+        status: action.status
+      }        
+    case 'UNFOLLOW_DONOR':
+      return {
+       
+        status: action.status
+      }
+    case 'FOLLOWING':
+      return {
+        ...state,
+        following: action.following
+      }
     default:
       return state
     }
