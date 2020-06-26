@@ -32,35 +32,30 @@ class TimeslotCard extends React.Component {
 
         
         return (
-            <div style={{display: "flex", flexDirection: "row"}}>
-                    <form >
+            <div className="container-fluid col-3 m-1 p-1" style={{backgroundColor: "#dfe6e9"}}>
+                <div className="card m-2">
+                <div className="justify-content-center m-3">
+                    <form className="justify-content-center m-3">
                         <h3 htmlFor={this.props.day}>{this.props.day}</h3>
-                    
-                        <label htmlFor="timeStart">Timeslot start: </label>
+                        <br />
+                        <label htmlFor="timeStart">Timeslot start:</label>
                         <input type="time" id="timeStart" name="timeStart" onChange={(e) => this.changeHandler(e)} required />
-                        
-                        <label htmlFor="timeEnd"> Timeslot end:</label>
+                        < br/>
+                        <label htmlFor="timeEnd">Timeslot end:</label>
                         <input type="time" id="timeStart" name="timeEnd" onChange={(e) => this.changeHandler(e)} required />
                     </form>
                     <button className='addButton btn btn-primary m-2' name="addTimeSlot" type='submit' onClick={(e) => this.props.changeHandler(e, this.props.day, [this.state.timeStart, this.state.timeEnd])}>Add</button>
-           
+                </div>
                 
-                {this.props.timeslots!==undefined?
-                this.props.timeslots.map((timeperiods, index) => {
-                    return (
-                        <div>
-                            {timeperiods.map((period)=> {return (
-                                 <input type="time" value={period} readOnly />
-                                )
-                            })}
-                            <input value="✖" name="removeTimeSlot" onClick={(e) => this.props.changeHandler(e, this.props.day, index)} type="button"/>
-                        </div>
-                        )
-                }
-                ):
-                null}
-                
-        
+                {this.props.timeslots.map((item,index) => 
+                    (
+                    <div className="card-footer" key={index}>
+                        <input type="time" value={item[0]} readOnly />
+                        <input type="time" value={item[1]} readOnly />
+                        <input value="✖" name="removeTimeSlot" onClick={(e) => this.props.changeHandler(e, this.props.day, index)} type="button" />
+                    </div>
+                    ))}
+            </div>
             </div>
             
         )

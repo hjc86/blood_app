@@ -67,7 +67,7 @@ class ClinicSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Clinic
-        fields = ['user_id','name','geolocation','address','requirements','opening_times','is_clinic']
+        fields = ['user_id','name','geolocation','address','requirements','timeslots','is_clinic']
 
     def create(self, validated_data):
 
@@ -76,11 +76,24 @@ class ClinicSerializer(serializers.ModelSerializer):
             geolocation=validated_data['geolocation'],
             address=validated_data['address'],
             requirements = validated_data['requirements'],
-            opening_times= validated_data['opening_times'],
+            timeslots= validated_data['timeslots'],
         )
 
         clinic.save()
         return clinic
+
+
+    def update(self, instance, validated_data):
+    
+        instance.name = validated_data.get('name', instance.name)
+        instance.geolocation = validated_data.get('geolocation', instance.geolocation)
+        instance.address = validated_data.get('address', instance.address)
+        instance.requirements = validated_data.get('requirements', instance.requirements)
+        instance.timeslots = validated_data.get('timeslots', instance.timeslots)
+
+        instance.save()
+
+        return instance       
 
 class FollowSerializer(serializers.Serializer):
     follower = serializers.IntegerField()

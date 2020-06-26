@@ -16,7 +16,7 @@ class Clinic extends React.Component {
                 "postcode": "PA75 5TB"
             },
             "requirements": "I need some stuff in here.",
-            "timeslots": {"Monday": [["10:00","13:00"],["14:00","17:00"]],
+            "time_slots": {"Monday": [["10:00","13:00"],["14:00","17:00"]],
                         "Tuesday": [["09:00","13:00"],["14:00","17:00"]], 
                         "Wednesday": [["09:00","13:00"],["14:00","17:00"]], 
                         "Thursday": [["09:00","13:00"],["14:00","17:00"]], 

@@ -8,8 +8,10 @@ export const createAccount = (create) => dispatch => {
     then(res =>{
       console.log("res-----",res.status)
       dispatch({
-        type: 'CREATE_ACCOUNT',
+        type: 'CREATE_APP_SLOTS',
         payload: res
       })  
     })
 }
+
+

@@ -40,7 +40,7 @@ urlpatterns = [
     path('appointment/<str:pk>',appointments_views.AppointmentsChange.as_view(), name='app_change'),
     path('user_appointments/<str:pk>', appointments_views.AppointmentList.as_view(), name='app_list'),
     
-    # path('available_apointments/', appointments_views.AppointemntsOpen.as_view(), name='app_list'),
+    path('available_appointments/<str:pk>/<str:donor_id>', appointments_views.AppointmentsOpen.as_view(), name='app_list'),
 
     path('follow/', users_views.FollowCreate.as_view(), name='follow_create'), 
     path('follow/<str:id>/', users_views.FollowChange.as_view(), name='follow_Change'), 
@@ -48,6 +48,6 @@ urlpatterns = [
 
 
     path('search/donor/<str:user_id>/<str:username>', users_views.SearchDonor.as_view(), name='search_donor'),
-    # path('search/clinic/', users_views.SearchDonor.as_view, name='search_clinic')
+    path('search/clinic/<str:clinicName>', users_views.SearchClinic.as_view(), name='search_clinic')
 ]
 

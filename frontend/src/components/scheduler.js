@@ -1,119 +1,219 @@
 import React, { Component } from "react";
 import AppointmentPicker from "react-appointment-picker";
-
+import {createAppSlots} from '../action-creators/createAppSlots'
+import {createAppointment} from '../action-creators/createAppointment'
+import {searchClinic} from '../action-creators/searchClinic';
+import { connect } from 'react-redux';
+import ReactDOM from 'react-dom';
+import Modal from 'react-bootstrap/Modal'
 
 class Scheduler extends Component {
+
+  constructor(props){
+    super(props);
+    this.selectedAppointmentsState = React.createRef();
+  }
+ 
   state = {
-    loading: false
+    loading: false,
+    appointment: false,
+    booked: false,
+    clinicName: null,
+    clinicId: null,
+    showAppointments: false
   };
 
-  addAppointment = ({ day, number, time, id }, addCb) => {
+  addAppointmentCallback = ({ day, number, time, id }, addCb) => {
     this.setState(
       {
         loading: true
       },
       async () => {
-        await new Promise(resolve => setTimeout(resolve));
+        //await new Promise(resolve => setTimeout(resolve));
         console.log(
-          `Added appointment ${number}, day ${day}, time ${time}, id ${id}`
+          `Added =======> appointment ${number}, day ${day}, time ${time}, id ${id}`
         );
-        addCb(day, number, time, id);
-        this.setState({ loading: false });
+       
+        await addCb(day, number, time, id);
+        await this.setState({ loading: false, appointment: id});
       }
     );
   };
 
-  removeAppointment = ({ day, number, time, id }, removeCb) => {
+  removeAppointmentCallback = ({ day, number, time, id }, removeCb) => {
     this.setState(
       {
         loading: true
       },
       async () => {
-        await new Promise(resolve => setTimeout(resolve));
+        //await new Promise(resolve => setTimeout(resolve));
         console.log(
           `Removed appointment ${number}, day ${day}, time ${time}, id ${id}`
         );
-        removeCb(day, number);
-        this.setState({ loading: false });
+        await removeCb(day, number);
+        await this.setState({ loading: false, appointment: false });
       }
     );
   };
 
-  render() {
-    const days = [
-      [
-        { id: 1, number: 1, isSelected: true, periods: 1 },
-        { id: 2, number: 2 },
-        null,
-        { id: 3, number: "3", isReserved: true },
-        { id: 4, number: "4" },
-        null,
-        { id: 5, number: 5 },
-        { id: 6, number: 6 },
-        { id: 7, number: 7, isReserved: true}
-      ],
-      [
-        { id: 7, number: 1, isReserved: true, periods: 3 },
-        { id: 8, number: 2, isReserved: true },
-        null,
-        { id: 9, number: "3", isReserved: true },
-        { id: 10, number: "4" },
-        null,
-        { id: 11, number: 5 },
-        { id: 12, number: 6 }
-      ],
-      [
-        { id: 13, number: 1 },
-        { id: 14, number: 2 },
-        null,
-        { id: 15, number: 3, isReserved: true },
-        { id: 16, number: "4" },
-        null,
-        { id: 17, number: 5 },
-        { id: 18, number: 6 }
-      ],
-      [
-        { id: 19, number: 1 },
-        { id: 20, number: 2 },
-        null,
-        { id: 21, number: 3 },
-        { id: 22, number: "4" },
-        null,
-        { id: 23, number: 5 },
-        { id: 24, number: 6 }
-      ],
-      [
-        { id: 25, number: 1, isReserved: true },
-        { id: 26, number: 2 },
-        null,
-        { id: 27, number: "3", isReserved: true },
-        { id: 28, number: "4" },
-        null,
-        { id: 29, number: 5 },
-        { id: 30, number: 6, isReserved: true }
-      ]
-    ];
+  submitBooking = async (clinicId,timeSlot) =>{
+    await this.props.createAppointment(clinicId,timeSlot)
+  }
 
+  populateAppointments = async () => {
+
+    await this.props.createAppSlots(this.state.clinicId, this.state.clinicName)
+    //console.log("====>",this.props.slots)
+  }
+
+  componentDidMount = () => {
+    this.populateAppointments()
+  }
+
+  // componentDidUpdate = () => {
+  //   this.populateAppointments()
+  // }
+  
+
+
+  unselectButton = () =>{
+   
+    // console.log(this.selectedAppointmentsState.current)
+    if(this.selectedAppointmentsState.current !== null){
+      this.selectedAppointmentsState.current.setState({selectedAppointments:{}, size:0});
+      this.setState()
+    }
+    // let appState= await this.refs.apps.state//.getElementsByClassName("appointment appointment--selected") 
+    // console.log("before", appState)
+    // await this.setState({selectedAppointments:{}})
+    // console.log(appState)
+  }
+
+
+  changeHandler = (event) =>  {
+    let state = this.state 
+    switch (event.target.name) {
+        case "clinicName": 
+            event.preventDefault()
+            state.clinicName = event.target.value
+            this.setState(state);
+            this.props.searchClinic(state.clinicName)
+            console.log("search text",state.clinicName)
+            break;
+    }
+  }
+
+  setShowAppointments = async (bool) =>{
+    await this.setState({showAppointments: bool})
+  }
+
+  // search = async () =>{
+  //   await this.props.searchClinic(this.state.clinicName)
+
+  // }
+
+  // componentDidMount = async() =>{
+  //   await  this.props.getFollowing()
+  // }
+
+
+  render() {
+  
     const { loading } = this.state;
 
     return (
       <div className="container-fluid text-center">
         <h1>Booking</h1>
-        <div className="container mr-5 col-8 p-3 mb-4">
-        <AppointmentPicker
-          addAppointment={this.addAppointment}
-          removeAppointment={this.removeAppointment}
-          // initialDay={new Date("2020-06-01")}
-          days={days}
-          maxReservableAppointments={1}
-          // alpha
-          visible
-          selectedByDefault
-         />
-         </div>
+        
+        <div className="container-fluid ">
+          <div className="row">
+            
+            <div className="col">
+                
+                <h2>Search Clinics</h2>
+
+                <form>
+                    <input
+                        className="m-3 col-xs-4"
+                        name="clinicName"
+                        onChange={this.changeHandler}
+                        type="text"
+                        placeholder="search for a clinic" />
+                </form>
+            
+                {this.props.clinics===(undefined)? 
+                    "no search results"
+                    :
+                    this.props.clinics.map((clinic, index) => (
+                      <p>{clinic.clinic__name} <button className='followerButton btn btn-primary m-3' name='followerbutton' type='submit' 
+                          onClick={async()=>{await this.setState({clinicId: clinic.id, clinicName: clinic.clinic__name}); await this.populateAppointments(); await this.unselectButton(); await this.setShowAppointments(true); } }> 
+                          Select</button></p>
+                     
+                    ))
+                }
+            </div>
+       
+
+            
+          </div>
+        </div>
+  
+
+
+        
+        {this.props.slots=== false ?
+        "Loading slots":
+        <Modal
+          size="lg"
+          show={this.state.showAppointments}
+          onHide={() => this.setShowAppointments(false)}
+          aria-labelledby="example-modal-sizes-title-lg"
+        > 
+          {this.state.clinicName}
+          <AppointmentPicker
+              addAppointmentCallback={this.addAppointmentCallback}
+              removeAppointmentCallback={this.removeAppointmentCallback}
+              initialDay={new Date(this.props.slots[0][0]['id'])}
+              //initialDay={new Date('2020-06-23')}
+              days={this.props.slots}
+              maxReservableAppointments={1}
+              // alpha={true}
+              unitTime= {36000_0_0}
+              visible
+              ref = {this.selectedAppointmentsState}
+              // selectedByDefault
+            />
+              {`you have booked ${this.state.appointment}`}
+        <br></br>
+        <button className='passwordButton btn btn-primary' type='submit' 
+                onClick={async () => {await this.submitBooking(this.state.clinicId, this.state.appointment); await this.populateAppointments(); await this.unselectButton();}}>
+                Submit booking</button>
+        </Modal>
+     
+        }
+        
+    
       </div>
-    );
+      
+      
+      );
   }
 }
 
-export default Scheduler;
+const mapStateToProps = state => ({
+  // ...state
+  profile: state.login.profile,
+  token: state.login.token,
+  slots: state.createAppSlots.slots,
+  clinics: state.searchClinic.clinics
+})
+
+const mapDispatchToProps = dispatch => ({
+  createAppSlots: (clinicId) => dispatch(createAppSlots(clinicId)),
+  createAppointment: (clinicId, timeSlot) => dispatch(createAppointment(clinicId, timeSlot)),
+  searchClinic: (clinicName) => dispatch(searchClinic(clinicName)),
+})
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(Scheduler);
+//export default Scheduler;

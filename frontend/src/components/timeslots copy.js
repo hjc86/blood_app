@@ -12,10 +12,12 @@ class Timeslot extends React.Component {
     
     render() {
         return (
-            <div style={{display: "flex", flexDirection: "column"}}>
+            <div className="container">
+                <div className="justify-content-center row">
                 {Object.keys(this.state.timeslots).map((item,index) =>
                 (< TimeslotCard key={index} day={item} timeslots={this.state.timeslots[item]} changeHandler = {this.props.changeHandler}/>)
                 )}
+                </div>
             </div>
             
         )

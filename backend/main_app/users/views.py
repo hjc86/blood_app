@@ -52,6 +52,8 @@ class UsersChange(APIView):
         return Response(serializer.data)
   
     def put(self, request, pk, format=None):
+        
+        print(request.data)
         serializer = self.get_object(pk, request.data)
         
         if serializer.is_valid():
@@ -285,3 +287,28 @@ class SearchDonor(APIView):
         return Response(donorList)
 
 
+class SearchClinic(APIView):
+    #permission_classes = (IsAuthenticated,)
+    def get_object(self,clinicName):
+        try:
+            #return User.objects.filter(username__startswith=username).values('id','username').followers()  #get(username=username).values_list('id','username')
+            #print("folowing====================",Donor.objects.filter(username__startswith=username)) #get(user_id=24).followers.values())
+            #qs1 = Donor.objects.select_related('user__username').get(id=24)   #all().values('username')#.exclude(followers=24).values()#.filter(user.username__startswith=username)
+            #   qs2 = Donor.objects.get(user_id=24).following.values('user')
+
+            #qs1 = User.objects.select_related('clinic').values('username','clinic__name').filter(name__startswith=clinicName).values('name','id') #.get(id=24)#.filter(username__startswith=username).following.values()
+            qs1 = User.objects.select_related('clinic').values('clinic__name').filter(clinic__name__startswith=clinicName).values('clinic__name','id') #.get(id=24)#.filter(username__startswith=username).following.values()
+         
+            print("=======searching ================>",qs1)
+            # print("=============>",qs1.difference(qs2)    
+            #User.objects.select_related(None)
+            
+            return qs1 #Donor.objects.get(user_id=24).following()#serializer.data['followee'])
+        
+        except User.DoesNotExist:
+            raise Http404
+
+    def get(self, request, clinicName, format=None):
+        clinicList = self.get_object(clinicName)
+        
+        return Response(clinicList)

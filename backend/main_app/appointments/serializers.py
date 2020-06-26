@@ -1,7 +1,7 @@
 from users.models import User ,Donor, Clinic
 from appointments.models import Appointment
 from rest_framework import serializers
-
+import pytz
 
 class AppointmentSerializer(serializers.ModelSerializer):
     # donor= serializers.RelatedField(source='Donor', read_only=True)
@@ -11,6 +11,17 @@ class AppointmentSerializer(serializers.ModelSerializer):
         model = Appointment
         fields = ['donor_id','clinic_id','appointment_time','attended']
 
+    # def utc_to_local(self,utc_dt):
+    #     local_tz = pytz.timezone('Europe/London')
+    #     local_dt = utc_dt.replace(tzinfo=pytz.utc).astimezone(local_tz)
+    #     return local_tz.normalize(local_dt) # .normalize might be unnecessary
+    
+    
+    def local_to_utc(self,utc_dt):
+        local_tz = pytz.timezone('Europe/London')
+        local_dt = utc_dt.replace(tzinfo=local_tz).astimezone(pytz.utc)
+        return local_tz.normalize(local_dt) # .normalize might be unnecessary
+    
     def create(self, validated_data):
 
         appointment = Appointment(
