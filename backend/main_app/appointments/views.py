@@ -12,7 +12,7 @@ from rest_framework.permissions import IsAuthenticated
 
 from datetime import datetime, timedelta, date
 import calendar
-#from pytz import timezone
+
 import pytz
 
 # Create your views here.
@@ -103,63 +103,8 @@ class AppointmentList(APIView):
         print(serializer.data)
         return Response(serializer.data)
 
-
-# get todays date
-# find the day in the opentimes object
-# terate through each day for 14 days
-# flattend the structre so we ahve a ste of dates
-# get the slots in the format we want
-# find all the slots in the appointemnst table that are after todays date
-# find the set difference between the opening times and the 
-
-# retur this to frontend as range of date that can be picked
-
-# def get_daily_slots(start, end, slot, date):
-#     # combine start time to respective day
-#     dt = datetime.combine(date, datetime.strptime(start,"%H:%M").time())
-#     slots = [dt]
-#     # increment current time by slot till the end time
-#     while (dt.time() < datetime.strptime(end,"%H:%M").time()):
-#         dt = dt + timedelta(minutes=slot)
-#         slots.append(dt)
-#     return slots
-
-
-# # Some Dummy values 
-# start_time = '9:00'
-# end_time = '15:00'
-# slot_time = 60
-# number_of_days = 2
-# start_date = datetime.now().date()
-
-
-
-# for i in range(number_of_days):
-#     #get the calender day
-#     date_required = datetime.now().date() + timedelta(days=i)
-    
-#     #find day in timeslots
-#     # for each time range in that day creat time slots:
-#         # append together or list of list
-
-#     # end
-
-
-#     date_required = datetime.now().date() + timedelta(days=i)
-#     daily_slots=get_daily_slots(start=start_time, end=end_time, slot=slot_time, date=date_required)
-#     print([date_time.strftime("%m/%d/%Y, %H:%M") for date_time in daily_slots])
-#     #print([calendar.day_name[date_time.weekday()] for date_time in daily_slots ])
-
-
-
 class AppointmentsOpen(APIView):
-   
-    #weekday = calendar.day_name[todays_date.weekday()]
-    #todays_date = datetime.now().date()
-            
-    #print(weekday)
 
-   
     def get_daily_slots(self, start, end, slot, date):
         # combine start time to respective day
         dt = datetime.combine(date, datetime.strptime(start,"%H:%M").time())
@@ -173,11 +118,9 @@ class AppointmentsOpen(APIView):
 
     def create_available_slots(self, opening_times,start_date, number_of_days ):
         
-        
         clinic_timeslots = opening_times['clinic__timeslots']
         #print(clinic_timeslots)
         
-
         slots=[]
         for i in range(number_of_days):
             #get the calender day
@@ -231,16 +174,11 @@ class AppointmentsOpen(APIView):
                 continue#print(weekday,": ","not open or not set")
    
         return slots   
-        
 
-        
-        #  "2002-02-12T19:00:00Z",
-        # date_required = datetime.now().date() + timedelta(days=i)
-        # daily_slots=get_daily_slots(start=start_time, end=end_time, slot=slot_time, date=date_required)
-        # print([date_time.strftime("%m/%d/%Y, %H:%M") for date_time in daily_slots])
-        # #print([calendar.day_name[date_time.weekday()] for date_time in daily_slots ])
+
     def utc_to_local(self,utc_dt):
-        local_tz = pytz.timezone('Europe/London')
+        #local_tz = pytz.timezone('Europe/London')
+        local_tz=tzinfo=pytz.utc
         local_dt = utc_dt.replace(tzinfo=pytz.utc).astimezone(local_tz)
         return local_tz.normalize(local_dt) # .normalize might be unnecessary
 
@@ -272,7 +210,7 @@ class AppointmentsOpen(APIView):
                 days=4
 
                 theoretical_slots = self.create_slots(opening_times, datetime.now().date(), days)
-              
+                print(theoretical_slots)
                
                 possible_slots = self.create_available_slots(opening_times, datetime.now().date(),days)
               
@@ -281,12 +219,16 @@ class AppointmentsOpen(APIView):
                 
             
                 closed_slots = list(set(theoretical_slots) - set(possible_slots))
-                closed_slots_flag = [(closed_slot.replace(tzinfo=None), True) for closed_slot in closed_slots]
-                booked_slots_flag = [(booked_slot.replace(tzinfo=None), True) for booked_slot in booked_slots]
+               
+                # closed_slots_flag = [(closed_slot.replace(tzinfo=None), True) for closed_slot in closed_slots]
+                # booked_slots_flag = [(booked_slot.replace(tzinfo=None), True) for booked_slot in booked_slots]
 
-            
-                available_slots_pre = set(possible_slots) - set([dt.replace(tzinfo=None) for dt in list(booked_slots)])
-                available_slots = available_slots_pre - set([dt.replace(tzinfo=None) for dt in closed_slots])   
+                closed_slots_flag = [(self.utc_to_local(closed_slot), True) for closed_slot in closed_slots]
+                booked_slots_flag = [(self.utc_to_local(booked_slot), True) for booked_slot in booked_slots]
+
+
+                available_slots_pre = set([self.utc_to_local(dt) for dt in list(possible_slots)]) - set([self.utc_to_local(dt) for dt in list(booked_slots)])
+                available_slots = available_slots_pre - set([self.utc_to_local(dt) for dt in closed_slots])   
 
                 available_slots_sorted = sorted(list(available_slots))
          
@@ -295,11 +237,15 @@ class AppointmentsOpen(APIView):
                 
 
                 all_slots=booked_slots_flag + available_slots_flag + closed_slots_flag
+                for s in all_slots:
+                    print(s)
                 all_slots_sorted = sorted(all_slots, key=lambda x:x[0])    
                 
                 #print(all_slots_sorted)
 
-                future_appointments = [app for app in all_slots_sorted if app[0]> datetime.now() - timedelta(days=1)]
+                #future_appointments = [app for app in all_slots_sorted if app[0]> datetime.utcnow().replace(tzinfo=pytz.timezone('utc')) - timedelta(days=1)]
+                future_appointments = [app for app in all_slots_sorted if app[0] > datetime(2020, 6, 25, 8, 0, tzinfo=pytz.timezone('utc'))]
+                #future_appointments = [app for app in all_slots_sorted if app[0]> datetime.now(tzinfo=pytz.timezone('Europe/London')) - timedelta(days=1)]
                 #future_appointments = [app for app in all_slots_sorted if app[0]>=datetime.now()] 
                 
                 days = {}

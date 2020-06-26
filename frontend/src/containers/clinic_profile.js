@@ -76,7 +76,7 @@ class Clinic extends React.Component {
                 this.setState(state);
                 console.log(start, end)
                 break;    
-            case "address1": 
+            case "name": 
                 state.profile.name = event.target.value
                 this.setState(state);
                 console.log(state)

@@ -173,8 +173,8 @@ class Scheduler extends Component {
           <AppointmentPicker
               addAppointmentCallback={this.addAppointmentCallback}
               removeAppointmentCallback={this.removeAppointmentCallback}
-              initialDay={new Date(this.props.slots[0][0]['id'])}
-              //initialDay={new Date('2020-06-23')}
+              //initialDay={new Date(Date.parse(this.props.slots[0][0]['id']))}
+              initialDay={new Date('2020-06-23 09:00')}
               days={this.props.slots}
               maxReservableAppointments={1}
               // alpha={true}
