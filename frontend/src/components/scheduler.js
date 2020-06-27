@@ -65,6 +65,10 @@ class Scheduler extends Component {
     await this.props.changeAppointment(appId,timeSlot)
   }
 
+  deleteBooking = async (appId,timeSlot) =>{
+    await this.props.changeAppointment(appId,timeSlot)
+  }
+
   populateAppointments = async () => {
 
     await this.props.createAppSlots(this.state.clinicId, this.state.clinicName)
@@ -210,13 +214,19 @@ class Scheduler extends Component {
         <br></br>
 
         {!this.props.slots.app_id?       
-        <button className='passwordButton btn btn-primary' type='submit' 
+        <button className='passwordButton btn btn-success' type='submit' 
                 onClick={async () => {await this.submitBooking(this.state.clinicId, this.state.appointment); await this.populateAppointments(); await this.unselectButton();}}>
                 Submit booking </button>:
         <button className='passwordButton btn btn-warning' type='submit' 
-                onClick={async () => {await this.submitBooking(this.state.clinicId, this.state.appointment); await this.populateAppointments(); await this.unselectButton();}}>
+                onClick={async () => {await this.changeBooking(this.props.slots.app_id, this.state.appointment); await this.populateAppointments(); await this.unselectButton();}}>
                 Change booking</button>       
         }
+        <br></br>
+        <button className='cancelButton btn btn-primary m-3' type='button' 
+            onClick={async () => {await this.deleteBooking(this.props.slots.app_id, this.state.appointment); await this.populateAppointments(); await this.unselectButton();}}>
+            Cancel Booking</button>       
+
+
         </Modal>
      
         }
