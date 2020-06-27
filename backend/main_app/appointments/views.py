@@ -63,19 +63,8 @@ class AppointmentCreate(APIView):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-    # def get(self, request, pk, format=None):
-    #     appointment = self.get_object(pk)
-    #     serializer = AppointmentSerializer(appointment)
-    #     return Response(serializer.data)
-
     
 class AppointmentList(APIView):
-    # def get_object(self, pk):
-    #     try:
-    #         return Appointment.objects.get(pk=pk)
-    #     except Appointment.DoesNotExist:
-    #         raise Http404
 
     def get_object(self, pk, data):
         func_kwargs = {'data': data} if data else {}
@@ -144,7 +133,6 @@ class AppointmentsOpen(APIView):
         
         clinic_timeslots = opening_times['clinic__timeslots']
  
-
         def flatten(container):
             for i in container:
                 if isinstance(i, (list,tuple)):
@@ -173,14 +161,14 @@ class AppointmentsOpen(APIView):
             except:
                 continue#print(weekday,": ","not open or not set")
    
-        return slots   
+        return slots, flat_list[0]   
 
 
     def utc_to_local(self,utc_dt):
         #local_tz = pytz.timezone('Europe/London')
         local_tz=tzinfo=pytz.utc
-        local_dt = utc_dt.replace(tzinfo=pytz.utc).astimezone(local_tz)
-        return local_tz.normalize(local_dt) # .normalize might be unnecessary
+        local_dt = utc_dt.replace(tzinfo=None)#replace(tzinfo=pytz.utc)#.astimezone(local_tz)
+        return utc_dt.replace(tzinfo=None)#local_tz.normalize(local_dt) # .normalize might be unnecessary
 
     def get_object(self, pk, donor_id, data):
         func_kwargs = {'data': data} if data else {}
@@ -193,12 +181,16 @@ class AppointmentsOpen(APIView):
                 # if so set the slot in the array to be sent with the isSelected: true
 
                 try:
-                    donor_appointment = Appointment.objects.all().filter(donor_id=donor_id).values_list('appointment_time',flat=True)
-                    #print(donor_appointment)
-                    donor_appointment = self.utc_to_local(donor_appointment[0]) #.replace(tzinfo=timezone('Europe/London'))
-                  
-                   # print(donor_appointment)
+                    
+                    
+                    donor_appointment = Appointment.objects.all().filter(donor_id=donor_id,clinic_id=pk).values_list('appointment_time','id')#,flat=True)
+
+                    print("xxxxxxxxxxxxxxxxx:", donor_appointment)
+                    #donor_appointment = self.utc_to_local(donor_appointment[0]) #.replace(tzinfo=timezone('Europe/London'))
+                    donor_appointment, app_id = donor_appointment[0]
+                    print(donor_appointment,app_id)
                 except:
+                    app_id = False
                     donor_appointment = 'null'
                 
                 print("donor appointment=======================>:", donor_appointment)
@@ -209,8 +201,8 @@ class AppointmentsOpen(APIView):
                 
                 days=4
 
-                theoretical_slots = self.create_slots(opening_times, datetime.now().date(), days)
-                print(theoretical_slots)
+                theoretical_slots, min_hour = self.create_slots(opening_times, datetime.now().date(), days)
+                #print(theoretical_slots)
                
                 possible_slots = self.create_available_slots(opening_times, datetime.now().date(),days)
               
@@ -237,21 +229,21 @@ class AppointmentsOpen(APIView):
                 
 
                 all_slots=booked_slots_flag + available_slots_flag + closed_slots_flag
-                for s in all_slots:
-                    print(s)
+                # for s in all_slots:
+                #     print(s)
                 all_slots_sorted = sorted(all_slots, key=lambda x:x[0])    
                 
                 #print(all_slots_sorted)
 
-                #future_appointments = [app for app in all_slots_sorted if app[0]> datetime.utcnow().replace(tzinfo=pytz.timezone('utc')) - timedelta(days=1)]
-                future_appointments = [app for app in all_slots_sorted if app[0] > datetime(2020, 6, 25, 8, 0, tzinfo=pytz.timezone('utc'))]
-                #future_appointments = [app for app in all_slots_sorted if app[0]> datetime.now(tzinfo=pytz.timezone('Europe/London')) - timedelta(days=1)]
-                #future_appointments = [app for app in all_slots_sorted if app[0]>=datetime.now()] 
+                # find way to automatically get todays date with the time of the first appointent slot for the day in the clinic timetable
+                future_appointments = [app for app in all_slots_sorted if app[0] > datetime(2020,6,26,9,0)]
+              
+       
                 
                 days = {}
            
                 for day in future_appointments:
-                    print(day)
+                    #print(day)
                     days.setdefault(day[0].toordinal(),[]).append(day)
        
                 
@@ -265,7 +257,6 @@ class AppointmentsOpen(APIView):
                 slots_by_day_1=[]
                 for day in slots_by_day:
                     if day!=['null']:
-                        # slots_by_day_1.append([{"id":date[0], "number":i, "isReserved":day[i-1][1]} for i,date in enumerate(day,1)])
                         slots_by_day_1.append([{"id":date[0], "number":i, "isReserved":day[i-1][1]} for i,date in enumerate(day,1)])
                     
                     else:
@@ -273,28 +264,27 @@ class AppointmentsOpen(APIView):
 
 
                 slots_by_day_2=[]
-                isSelected= dict({'isSelected': True})
+            
                 for day in slots_by_day_1:
-                    #print(day[0]['id'])
-                    #slots_by_day_2.append([(slot.update(isSelected=True)) if (slot['id']==donor_appointment) else slot for slot in day])
-                    slots_by_day_2.append([{'id':slot['id'],'number':slot['number'], 'isSelected':True } if (slot['id']==donor_appointment) else slot for slot in day])
+            
+                    slots_by_day_2.append([{'id':slot['id'], 'number':slot['number'], 'isSelected':True } if (slot['id']==donor_appointment) else slot for slot in day])
 
-                    #{'id':slot['id'], 'number':slot['number'], 'isReserved':slot['isReserved'],   
-                #slots_by_day_1 = [for slot in {, "isSelected": True}]
+
                 for day in slots_by_day_2:
                     print("=============================")
                     print(day)
 
-                serializer = slots_by_day_2#available_slots #clinic_apps #AppointmentsSerializer(clinic_apps, many=True, **func_kwargs)
+                #serializer = slots_by_day_2
+                time_split=min_hour.split(':')
+                print(time_split)
+                min_time=datetime.now().replace(hour=int(time_split[0]), minute=int(time_split[1]), second=0,microsecond=0)- timedelta(days=1)
 
- 
+                serializer = {'appointments':slots_by_day_2, 'min_time': min_time, 'app_id': app_id}
 
             else:
                 donor_apps = Appointment.objects.all().filter(donor_id=pk)
-                #print("donor_apps===========",donor_apps)
-                #open_apps =[]
                 serializer = AppointmentsSerializer(donor_apps, many=True, **func_kwargs)
-            #print(open_apps)    
+        
             return serializer
 
         except User.DoesNotExist:
@@ -307,5 +297,5 @@ class AppointmentsOpen(APIView):
         #serializer = [date_time.strftime("%Y-%d-%mT%H:%M:00Z") for date_time in serializer]
         ##serializer = AppointmentSerializer(appointments)
         #print(serializer.data)
+        #return Response(serializer)
         return Response(serializer)
-
