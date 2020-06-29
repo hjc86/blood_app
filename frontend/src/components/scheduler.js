@@ -10,7 +10,7 @@ import ReactDOM from 'react-dom';
 import Modal from 'react-bootstrap/Modal'
 
 class Scheduler extends Component {
-
+  
   constructor(props){
     super(props);
     this.selectedAppointmentsState = React.createRef();
@@ -18,13 +18,13 @@ class Scheduler extends Component {
  
   state = {
     loading: false,
-    appointment: false,
-    booked: false,
+    selectedAppointment: false,
+    hasBooking: false,
+    hasSelected: true,
+    isChanging: false,
     clinicName: null,
     clinicId: null,
     showAppointments: false,
-    selected: false
-
   };
 
   addAppointmentCallback = ({ day, number, time, id }, addCb) => {
@@ -39,7 +39,7 @@ class Scheduler extends Component {
         );
        
         await addCb(day, number, time, id);
-        await this.setState({ loading: false, appointment: id, selected: true});
+        await this.setState({ loading: false, selectedAppointment: id, hasSelected: true});
       }
     );
   };
@@ -55,7 +55,7 @@ class Scheduler extends Component {
           `Removed appointment ${number}, day ${day}, time ${time}, id ${id}`
         );
         await removeCb(day, number);
-        await this.setState({ loading: false, appointment: false , selected: false});
+        await this.setState({ loading: false, selectedAppointment: false , hasSelected: false});
       }
     );
   };
@@ -73,45 +73,18 @@ class Scheduler extends Component {
   }
 
   populateAppointments = async () => {
-
     await this.props.createAppSlots(this.state.clinicId, this.state.clinicName)
-    //console.log("====>",this.props.slots)
   }
 
-  componentDidMount = () => {
-    this.populateAppointments()
+  unselectButton = async () =>{
+    // if(this.selectedAppointmentsState.current !== null){
+     await this.selectedAppointmentsState.current.setState({selectedAppointments:{}, size:0});
+     await this.setState({hasSelected:false})
+   //}
+
   }
 
-  // componentDidUpdate = () => {
-  //   this.populateAppointments()
-  // }
-  
-
-
-  unselectButton = () =>{
-   
-    // console.log(this.selectedAppointmentsState.current)
-    if(this.selectedAppointmentsState.current !== null){
-      //console.log("not selected")
-    // } && this.state.showAppointments === false){
-     // this.selectedAppointmentsState.current.setState({selectedAppointments:{}, size:0});
-    // })
-      //this.selectedAppointmentsState.current.setState({selectedAppointments:{}, size:0});
-      //console.log( this.selectedAppointmentsState.current)
-      //this.setState()
-    }
-    else{
-
-      console.log("selected")
-    }
-    // let appState= await this.refs.apps.state//.getElementsByClassName("appointment appointment--selected") 
-    // console.log("before", appState)
-    // await this.setState({selectedAppointments:{}})
-    // console.log(appState)
-  }
-
-
-  changeHandler = (event) =>  {
+  searchChangeHandler = (event) =>  {
     let state = this.state 
     switch (event.target.name) {
         case "clinicName": 
@@ -126,31 +99,73 @@ class Scheduler extends Component {
 
   setShowAppointments = async (bool) =>{
     await this.setState({showAppointments: bool})
-    // if(this.state.showAppointments === false){
-    //   await this.selectedAppointmentsState.current.setState({selectedAppointments:{}, size:0});
-    //   console.log("shoudl have reset")
-    // }
+    if(!bool){
+      this.setState({hasSelected: false, isChanging: false,})  
+    }
   }
 
-  // search = async () =>{
-  //   await this.props.searchClinic(this.state.clinicName)
-
-  // }
-
-  // componentDidMount = async() =>{
-  //   await  this.props.getFollowing()
-  // }
 
 
-  render() {
+
+
+  // if we have an appointment: show cancel or change, higlight app slot green 
+  // on click change: set isChanging to true,  show submit button
+  // on click cancel: http to sever to delete app, pop to show appointment canceld
+  // on close of modal: reset all the states
   
+  render() {
     const { loading } = this.state;
 
+    const isClickable=()=>{
+        return(this.state.isChanging? {pointerEvents:"auto"} : {pointerEvents:"none"} )
+    }
+  
+    const bookingOptions = () =>{
+      
 
 
+      if((this.state.hasSelected === true && this.props.slots.app_id ===false) || (this.state.isChanging === true && this.state.hasSelected === true)){
+        return(<button className='passwordButton btn btn-success' type='button' 
+          onClick={async () => {await this.submitBooking(this.state.clinicId, this.state.selectedAppointment); await this.populateAppointments(); await this.unselectButton();}}>
+          Submit booking </button>
+        ) 
+      }
+      else if(this.props.slots.app_id !== false ){ //if there is app id means alread have an apointment
+        return(
+          <React.Fragment>
+            <button className='cancelButton btn btn-primary m-3' type='button' 
+              onClick={async () => {await this.deleteBooking(this.props.slots.app_id, this.state.selectedAppointment); await this.populateAppointments(); await this.unselectButton();}}>
+              Cancel Appointment
+            </button>
+            <button className='passwordButton btn btn-warning' type='button' 
+              // onClick={async () => {await this.changeBooking(this.props.slots.app_id, this.state.appointment); await this.populateAppointments(); await this.unselectButton();}}>
+              onClick={async () =>{ await this.setState({isChanging: true}); await this.unselectButton()}}>
+              Change Appointment
+            </button>       
+          </React.Fragment>  
+        )
+      }
+      else{
+        return(
+          null
+        )
+      }
+    
+    }
 
 
-
+    const searchResults =() => { 
+      return(
+        this.props.clinics===(undefined)? 
+        null
+        :
+        this.props.clinics.map((clinic, index) => (
+        <p>{clinic.clinic__name} <button className='followerButton btn btn-primary m-3' name='followerbutton' type='submit' 
+            onClick={async()=>{await this.setState({clinicId: clinic.id, clinicName: clinic.clinic__name}); await this.populateAppointments(); await this.setShowAppointments(true)}}>
+            Select</button></p>
+      ))
+      )
+    }
 
     return (
       <div className="container-fluid text-center">
@@ -158,129 +173,67 @@ class Scheduler extends Component {
         
         <div className="container-fluid ">
           <div className="row">
-            
             <div className="col">
-                
                 <h2>Search Clinics</h2>
 
                 <form>
                     <input
                         className="m-3 col-xs-4"
                         name="clinicName"
-                        onChange={this.changeHandler}
+                        onChange={this.searchChangeHandler}
                         type="text"
                         placeholder="search for a clinic" />
                 </form>
-            
-                {this.props.clinics===(undefined)? 
-                    "no search results"
-                    :
-                    this.props.clinics.map((clinic, index) => (
-                      <p>{clinic.clinic__name} <button className='followerButton btn btn-primary m-3' name='followerbutton' type='submit' 
-                          onClick={async()=>{await this.setState({clinicId: clinic.id, clinicName: clinic.clinic__name}); await this.populateAppointments(); await this.setShowAppointments(true); await this.unselectButton()} }> 
-                          Select</button></p>
-                     
-                    ))
-                }
-            </div>
-       
 
-            
+                {searchResults()}
+
+            </div>
           </div>
         </div>
-  
 
-
-        
-        {this.props.slots=== false ?
-        "Loading slots":
         <Modal
           size="lg"
           show={this.state.showAppointments}
-          onHide={() => this.setShowAppointments(false)}
+          onHide={() =>this.setShowAppointments(false)}
           backdrop="static"
           aria-labelledby="example-modal-sizes-title-lg"
         > 
-        <Modal.Header closeButton></Modal.Header>
-          {this.state.clinicName}
-          <AppointmentPicker
-              addAppointmentCallback={this.addAppointmentCallback}
-              removeAppointmentCallback={this.removeAppointmentCallback}
-              //initialDay={new Date(Date.parse(this.props.slots[0][0]['id']))}
-              //initialDay={new Date(Date.parse(this.props.slots[0][0]['id']).toISOString())} 
-              //initialDay={new Date(Date.parse(this.props.min_time))}//{new Date('2020-06-27 09:00')}
-              initialDay={new Date(this.props.slots.min_time)}//{new Date('2020-06-27 09:00')}
-              
-              days={this.props.slots.appointments}
-              maxReservableAppointments={1}
-              // alpha={true}
-              unitTime= {36000_0_0}
-              visible= {true}
-              ref = {this.selectedAppointmentsState}
-              selectedByDefault
-              loading={loading}
-              continuous={true}
+          <Modal.Header closeButton>
+            {this.state.clinicName}
+            <br></br>  
+            app is selected: {this.state.hasSelected ? "selected": "none selected"}
+            <br></br>
+            currently sleetcd datetime slot: {this.state.selectedAppointment}
+            <br></br>
+           
+          </Modal.Header>
+
+          <Modal.Body style={isClickable()}>
+            <AppointmentPicker 
+                addAppointmentCallback={this.addAppointmentCallback}
+                removeAppointmentCallback={this.removeAppointmentCallback}
+                initialDay={new Date(this.props.slots.min_time)}//{new Date('2020-06-27 09:00')}
+                days={this.props.slots.appointments}
+                maxReservableAppointments={1}
+                // alpha={true}
+                unitTime= {36000_0_0}
+                visible= {true}
+                ref = {this.selectedAppointmentsState}
+                selectedByDefault
+                loading={loading}
             />
-              {/* {`you have booked ${this.state.appointment}`}
-               */}
-              <br/>
-              {/* {new Date(this.props.slots.min_time).toString()} */}
-              <br/>
-        <br></br>
+          </Modal.Body>
+       
+          <Modal.Footer>
 
-        <React.Fragment>  
- 
-        
-        {this.state.selected === true ?
-        <button className='passwordButton btn btn-success' type='submit' 
-        onClick={async () => {await this.submitBooking(this.state.clinicId, this.state.appointment); await this.populateAppointments(); await this.unselectButton();}}>
-        Submit booking </button>:
+            {bookingOptions()}
 
-
-        // || !this.props.slots.app_id === true?
-
-        null     
-        }
-
-        {/* {!this.props.slots.app_id?       
-        <button className='passwordButton btn btn-success' type='submit' 
-                onClick={async () => {await this.submitBooking(this.state.clinicId, this.state.appointment); await this.populateAppointments(); await this.unselectButton();}}>
-                Submit booking </button>:
-        <button className='passwordButton btn btn-warning' type='submit' 
-                onClick={async () => {await this.changeBooking(this.props.slots.app_id, this.state.appointment); await this.populateAppointments(); await this.unselectButton();}}>
-                Change booking</button>       
-        }
-        <br></br>
-        
-        
-        {this.props.slots.app_id?     
-        <button className='cancelButton btn btn-primary m-3' type='button' 
-                onClick={async () => {await this.deleteBooking(this.props.slots.app_id, this.state.appointment); await this.populateAppointments(); await this.unselectButton();}}>
-                Cancel Booking</button>:
-          null       
-        }
-               <br></br>
-        
-        {this.state.selected?
-        "app selected":
-        "app not seleted"      
-        }
-           */}
-
-        Click on an availble time and then click confirm to chnage booking
-
-        </React.Fragment> 
-
-
+          </Modal.Footer>  
         </Modal>
-     
-        }
-        
-    
+      
       </div>
       
-      
-      );
+    );
   }
 }
 
