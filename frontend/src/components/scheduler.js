@@ -3,6 +3,7 @@ import AppointmentPicker from "react-appointment-picker";
 import {createAppSlots} from '../action-creators/createAppSlots'
 import {createAppointment} from '../action-creators/createAppointment'
 import {changeAppointment} from '../action-creators/changeAppointment'
+import {deleteAppointment} from '../action-creators/deleteAppointment'
 import {searchClinic} from '../action-creators/searchClinic';
 import { connect } from 'react-redux';
 import ReactDOM from 'react-dom';
@@ -21,7 +22,9 @@ class Scheduler extends Component {
     booked: false,
     clinicName: null,
     clinicId: null,
-    showAppointments: false
+    showAppointments: false,
+    selected: false
+
   };
 
   addAppointmentCallback = ({ day, number, time, id }, addCb) => {
@@ -36,7 +39,7 @@ class Scheduler extends Component {
         );
        
         await addCb(day, number, time, id);
-        await this.setState({ loading: false, appointment: id});
+        await this.setState({ loading: false, appointment: id, selected: true});
       }
     );
   };
@@ -52,7 +55,7 @@ class Scheduler extends Component {
           `Removed appointment ${number}, day ${day}, time ${time}, id ${id}`
         );
         await removeCb(day, number);
-        await this.setState({ loading: false, appointment: false });
+        await this.setState({ loading: false, appointment: false , selected: false});
       }
     );
   };
@@ -66,7 +69,7 @@ class Scheduler extends Component {
   }
 
   deleteBooking = async (appId,timeSlot) =>{
-    await this.props.changeAppointment(appId,timeSlot)
+    await this.props.deleteAppointment(appId,timeSlot)
   }
 
   populateAppointments = async () => {
@@ -89,13 +92,17 @@ class Scheduler extends Component {
    
     // console.log(this.selectedAppointmentsState.current)
     if(this.selectedAppointmentsState.current !== null){
-
+      //console.log("not selected")
     // } && this.state.showAppointments === false){
      // this.selectedAppointmentsState.current.setState({selectedAppointments:{}, size:0});
     // })
       //this.selectedAppointmentsState.current.setState({selectedAppointments:{}, size:0});
-      console.log( this.selectedAppointmentsState.current)
+      //console.log( this.selectedAppointmentsState.current)
       //this.setState()
+    }
+    else{
+
+      console.log("selected")
     }
     // let appState= await this.refs.apps.state//.getElementsByClassName("appointment appointment--selected") 
     // console.log("before", appState)
@@ -138,6 +145,11 @@ class Scheduler extends Component {
   render() {
   
     const { loading } = this.state;
+
+
+
+
+
 
 
     return (
@@ -186,8 +198,10 @@ class Scheduler extends Component {
           size="lg"
           show={this.state.showAppointments}
           onHide={() => this.setShowAppointments(false)}
+          backdrop="static"
           aria-labelledby="example-modal-sizes-title-lg"
         > 
+        <Modal.Header closeButton></Modal.Header>
           {this.state.clinicName}
           <AppointmentPicker
               addAppointmentCallback={this.addAppointmentCallback}
@@ -201,10 +215,11 @@ class Scheduler extends Component {
               maxReservableAppointments={1}
               // alpha={true}
               unitTime= {36000_0_0}
-              visible
+              visible= {true}
               ref = {this.selectedAppointmentsState}
               selectedByDefault
               loading={loading}
+              continuous={true}
             />
               {/* {`you have booked ${this.state.appointment}`}
                */}
@@ -213,7 +228,21 @@ class Scheduler extends Component {
               <br/>
         <br></br>
 
-        {!this.props.slots.app_id?       
+        <React.Fragment>  
+ 
+        
+        {this.state.selected === true ?
+        <button className='passwordButton btn btn-success' type='submit' 
+        onClick={async () => {await this.submitBooking(this.state.clinicId, this.state.appointment); await this.populateAppointments(); await this.unselectButton();}}>
+        Submit booking </button>:
+
+
+        // || !this.props.slots.app_id === true?
+
+        null     
+        }
+
+        {/* {!this.props.slots.app_id?       
         <button className='passwordButton btn btn-success' type='submit' 
                 onClick={async () => {await this.submitBooking(this.state.clinicId, this.state.appointment); await this.populateAppointments(); await this.unselectButton();}}>
                 Submit booking </button>:
@@ -222,9 +251,25 @@ class Scheduler extends Component {
                 Change booking</button>       
         }
         <br></br>
+        
+        
+        {this.props.slots.app_id?     
         <button className='cancelButton btn btn-primary m-3' type='button' 
-            onClick={async () => {await this.deleteBooking(this.props.slots.app_id, this.state.appointment); await this.populateAppointments(); await this.unselectButton();}}>
-            Cancel Booking</button>       
+                onClick={async () => {await this.deleteBooking(this.props.slots.app_id, this.state.appointment); await this.populateAppointments(); await this.unselectButton();}}>
+                Cancel Booking</button>:
+          null       
+        }
+               <br></br>
+        
+        {this.state.selected?
+        "app selected":
+        "app not seleted"      
+        }
+           */}
+
+        Click on an availble time and then click confirm to chnage booking
+
+        </React.Fragment> 
 
 
         </Modal>
@@ -251,6 +296,7 @@ const mapDispatchToProps = dispatch => ({
   createAppSlots: (clinicId) => dispatch(createAppSlots(clinicId)),
   createAppointment: (clinicId, timeSlot) => dispatch(createAppointment(clinicId, timeSlot)),
   changeAppointment: (appId, timeSlot) => dispatch(changeAppointment(appId,timeSlot)),
+  deleteAppointment: (appId, timeSlot) => dispatch(deleteAppointment(appId,timeSlot)),
   searchClinic: (clinicName) => dispatch(searchClinic(clinicName)),
 })
 

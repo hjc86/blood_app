@@ -8,6 +8,7 @@ import createAppSlots from './createAppSlots';
 import createAppointment from './createAppointment';
 import changeAppointment from './changeAppointment';
 import searchClinic from './searchClinic';
+import deleteAppointment from './deleteAppointment';
 // import following from './follow';
 
 export default combineReducers({
@@ -20,4 +21,5 @@ export default combineReducers({
   createAppointment,
   changeAppointment,
   searchClinic,
+  deleteAppointment
 });
