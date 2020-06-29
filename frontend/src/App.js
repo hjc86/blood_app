@@ -1,26 +1,48 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { Link, BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+import Login from './containers/login';
+import DonorProfile from './containers/donor_profile';
+import ClinicProfile from './containers/clinic_profile';
+import ClinicDashboard from './containers/clinic_dashboard';
+import DonorDashboard from './containers/donor_dashboard';
+
+const App = () => {
+    return (
+        <Router>
+            <Switch>
+                <Route 
+                    path='/'
+                    exact 
+                    component={Login}
+                />
+                <Route
+                    
+                    path='/donor-profile'
+                    exact 
+                    component={DonorProfile}
+                />
+
+                <Route
+                    path='/clinic-profile'
+                    exact 
+                    component={ClinicProfile}
+                />
+
+
+                <Route
+                    path='/donor-dashboard'
+                    exact 
+                    component={DonorDashboard}
+                />
+                <Route
+                    path='/clinic-dashboard'
+                    exact 
+                    component={ClinicDashboard}
+                />
+            </Switch>
+        </Router>
+    );
 }
 
 export default App;
