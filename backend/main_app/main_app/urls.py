@@ -36,7 +36,7 @@ urlpatterns = [
     path('user/', users_views.UserCreate.as_view(), name='user_create'),
     path('user/<str:pk>', users_views.UsersChange.as_view(), name='user_change'),
 
-    path('appointment/',appointments_views.AppointmentCreate.as_view(), name='app_create'),
+    path('appointment/', appointments_views.AppointmentCreate.as_view(), name='app_create'),
     path('appointment/<str:pk>',appointments_views.AppointmentsChange.as_view(), name='app_change'),
     path('user_appointments/<str:pk>', appointments_views.AppointmentList.as_view(), name='app_list'),
     
@@ -46,8 +46,23 @@ urlpatterns = [
     path('follow/<str:id>/', users_views.FollowChange.as_view(), name='follow_Change'), 
     path('follow/<str:id>/<str:id_followee>/', users_views.FollowDelete.as_view(), name='follow_Delete'), 
 
-
     path('search/donor/<str:user_id>/<str:username>', users_views.SearchDonor.as_view(), name='search_donor'),
     path('search/clinic/<str:clinicName>', users_views.SearchClinic.as_view(), name='search_clinic')
 ]
 
+
+#  'users/<str:pk>/appointments' POST
+#  'users/<str:pk>/followers' 
+#  'users/<str:pk>/followees'
+#  'users/<str:pk>/appointments'
+n, inputs = [int(n) for n in input().split(" ")]
+list = [0]*(n+1)
+for _ in range(inputs):
+    x, y, incr = [int(n) for n in input().split(" ")]
+    list[x-1] += incr
+    if((y)<=len(list)): list[y] -= incr;
+max = x = 0
+for i in list:
+   x=x+i;
+   if(max<x): max=x;
+print(max)

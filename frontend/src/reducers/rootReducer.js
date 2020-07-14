@@ -9,7 +9,8 @@ import createAppointment from './createAppointment';
 import changeAppointment from './changeAppointment';
 import searchClinic from './searchClinic';
 import deleteAppointment from './deleteAppointment';
-// import following from './follow';
+import getAppointments from './getAppointments';
+
 
 export default combineReducers({
   
@@ -21,5 +22,6 @@ export default combineReducers({
   createAppointment,
   changeAppointment,
   searchClinic,
-  deleteAppointment
+  deleteAppointment,
+  getAppointments
 });
