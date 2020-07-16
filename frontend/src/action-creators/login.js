@@ -11,7 +11,7 @@ export const login = (credentials) =>{
 
     const tokenData = await tokenResponse.json()
 
-    console.log("login token",localStorage.getItem('access'))
+    console.log("login token: ",localStorage.getItem('access'))
     if(!localStorage.getItem('access')){
       localStorage.setItem('id',tokenData.id)
       localStorage.setItem('refresh',tokenData.refresh)
