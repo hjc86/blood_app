@@ -1,6 +1,6 @@
 export const createAccount = (create) => dispatch => {
     console.log(create)
-    fetch("http://localhost:8000/user/", {
+    fetch("http://localhost:8000/users/", {
         method: 'post',
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify(create)

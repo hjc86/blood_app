@@ -15,11 +15,12 @@ import io
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
+from rest_framework import generics
 
+class UserDetails(APIView):
 
-class UsersChange(APIView):
-
-    permission_classes = (IsAuthenticated,)
+    # permission_classes = (IsAuthenticated,)
+    #http_method_names = ['get','post']
     """
     Retrieve, update or delete a user instance.
     """
@@ -44,11 +45,24 @@ class UsersChange(APIView):
         except User.DoesNotExist:
             raise Http404
 
-    def get(self, request, pk, format=None):
-        serializer=self.get_object(pk,data=None)
-        
+    def get(self,request):
 
-        return Response(serializer.data)
+        """
+        Optionally restricts the returned purchases to a given user,
+        by filtering against a `username` query parameter in the URL.
+        """
+        test = request.query_params.get('test', None)
+        if test is not None:
+            print("test query",test)
+        # # queryset = Purchase.objects.all()
+        # username = self.request.query_params.get('username', None)
+        # if username is not None:
+        #     queryset = queryset.filter(purchaser__username=username)
+        # return queryset
+        return Response(test)
+    # def get(self, request, pk, format=None):
+    #     serializer=self.get_object(pk,data=None)
+    #     return Response(serializer.data)
   
     def put(self, request, pk, format=None):
         
@@ -67,6 +81,14 @@ class UsersChange(APIView):
         deleted_msg=f"user {pk} deleted"
         return Response({"msg":deleted_msg}, status=status.HTTP_204_NO_CONTENT)
 
+
+    # def post(self, request, format=None):
+    #     serializer = UserSerializer(data=request.data)
+        
+    #     if serializer.is_valid():
+    #         serializer.save()
+    #         return Response(serializer.data, status=status.HTTP_201_CREATED)
+    #     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class UserCreate(APIView):
     """
@@ -235,12 +257,8 @@ class CustomTokenObtainPairView(TokenObtainPairView):
     # Replace the serializer with your custom
     serializer_class = CustomTokenObtainPairSerializer
 
-class UserDetails(APIView):
-
-
-
-    
-    # pass
+# class UserDetails(APIView):
+#     pass
 
     # def get_object(self, request):
     #     try:
