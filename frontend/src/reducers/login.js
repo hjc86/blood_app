@@ -5,8 +5,6 @@ const initialState ={
     first_name: null
   },
   token:{}
-
-
 }
 
 export default (state = initialState, action) => {
@@ -19,12 +17,8 @@ export default (state = initialState, action) => {
         token: action.tokenData,
         profile: action.profileData,
         status: action.tokenResponse.status
-      }
-
-
-
-      
-  default:
-    return state
+      }   
+    default:
+      return state
   }
 }

@@ -236,7 +236,7 @@ class AppointmentsOpen(APIView):
                 #print(all_slots_sorted)
 
                 # find way to automatically get todays date with the time of the first appointent slot for the day in the clinic timetable
-                future_appointments = [app for app in all_slots_sorted if app[0] > datetime(2020,6,26,9,0)]
+                future_appointments = [app for app in all_slots_sorted if app[0] > datetime(2020,7,15,9,0)]
               
        
                 
@@ -271,13 +271,14 @@ class AppointmentsOpen(APIView):
 
 
                 for day in slots_by_day_2:
+                    for slot in day:
+                        print(slot)
                     print("=============================")
-                    print(day)
-
+                    
                 #serializer = slots_by_day_2
                 time_split=min_hour.split(':')
                 print(time_split)
-                min_time=datetime.now().replace(hour=int(time_split[0]), minute=int(time_split[1]), second=0,microsecond=0)- timedelta(days=1)
+                min_time=datetime.now().replace(hour=int(time_split[0]), minute=int(time_split[1]), second=0,microsecond=0)#- timedelta(days=1)
 
                 serializer = {'appointments':slots_by_day_2, 'min_time': min_time, 'app_id': app_id}
 

@@ -23,9 +23,8 @@ class UsersChange(APIView):
     """
     Retrieve, update or delete a user instance.
     """
-    
-    # there is mixing of logic here it feels like bad design
 
+    # there is mixing of logic here it feels like bad design
 
     def get_object(self, pk, data):
         
@@ -237,7 +236,11 @@ class CustomTokenObtainPairView(TokenObtainPairView):
     serializer_class = CustomTokenObtainPairSerializer
 
 class UserDetails(APIView):
-    pass
+
+
+
+    
+    # pass
 
     # def get_object(self, request):
     #     try:

@@ -9,9 +9,6 @@ export const login = (credentials) =>{
         body: JSON.stringify(credentials)
     })
 
- 
-   
-
     const tokenData = await tokenResponse.json()
 
     console.log("login token",localStorage.getItem('access'))
@@ -21,7 +18,7 @@ export const login = (credentials) =>{
       localStorage.setItem('access',tokenData.access)
     }
 
-    const profileResponse = await fetch (`http://localhost:8000/user/${tokenData.id}`, {
+    const profileResponse = await fetch (`http://localhost:8000/users/${tokenData.id}`, {
       method: 'GET',
       headers: {
         'Authorization':`Bearer ${tokenData.access}`,

@@ -10,6 +10,13 @@ import ReactDOM from 'react-dom';
 import Modal from 'react-bootstrap/Modal'
 
 class Scheduler extends Component {
+
+  /*
+  
+  need way to toggle selection of a timeslot with condtitions
+
+
+  */
   
   constructor(props){
     super(props);
@@ -79,9 +86,12 @@ class Scheduler extends Component {
 
   unselectButton = async () =>{
      await this.selectedAppointmentsState.current.setState({selectedAppointments:{}, size:0});
-
   }
 
+  selectButton = async () =>{
+    await this.selectedAppointmentsState.current.setState({selectedAppointments:this.state.selectedAppointment, size:1});
+ }
+ 
   setClickableAppSlots = async (bool) =>{
     if(bool){
       this.setState({clickableAppSlots:{pointerEvents:"auto"}})
@@ -129,25 +139,24 @@ class Scheduler extends Component {
     }
   }
 
-
-  
   render() {
     const { loading } = this.state;
 
+
+
     const bookingOptions = () =>{
       
-
       if(typeof(this.props.slots.app_id)==="number" && this.state.isChanging!==true){ // if app made
         return(<React.Fragment>
-                <button className='passwordButton btn btn-warning' type='button' 
-                  // onClick={async () => {await this.changeBooking(this.props.slots.app_id, this.state.appointment); await this.populateAppointments(); await this.unselectButton();}}>
-                  onClick={async () =>{ await this.setClickableAppSlots(true); await this.setState({isChanging:true}); await this.unselectButton();}}>
-                  Change Appointment
-                </button> 
-                <button className='cancelButton btn btn-primary m-3' type='button' 
-                onClick={async () => {await this.deleteBooking(this.props.slots.app_id, this.state.selectedAppointment); await this.unselectButton();}}>
-                Cancel Appointment
-                </button>
+                  <button className='passwordButton btn btn-warning' type='button' 
+                    // onClick={async () => {await this.changeBooking(this.props.slots.app_id, this.state.appointment); await this.populateAppointments(); await this.unselectButton();}}>
+                    onClick={async () =>{ await this.setClickableAppSlots(true); await this.setState({isChanging:true}); await this.unselectButton();}}>
+                    Change Appointment
+                  </button> 
+                  <button className='cancelButton btn btn-primary m-3' type='button' 
+                    onClick={async () => {await this.deleteBooking(this.props.slots.app_id, this.state.selectedAppointment); await this.unselectButton();}}>
+                    Cancel Appointment
+                  </button>
                 </React.Fragment>
         )
       }
@@ -158,6 +167,7 @@ class Scheduler extends Component {
           Submit booking </button>
         ) 
       }
+
       else{
         return(null)
       }    
@@ -213,7 +223,7 @@ class Scheduler extends Component {
             <br></br>  
             app is selected: {this.state.hasSelected ? "selected": "none selected"}
             <br></br>
-            currently sleetcd datetime slot: {this.state.selectedAppointment}
+            currently selected datetime slot: {this.state.selectedAppointment}
             <br></br>
            
           </Modal.Header>
@@ -222,7 +232,7 @@ class Scheduler extends Component {
             <AppointmentPicker 
                 addAppointmentCallback={this.addAppointmentCallback}
                 removeAppointmentCallback={this.removeAppointmentCallback}
-                initialDay={new Date(this.props.slots.min_time)}//{new Date('2020-06-27 09:00')}
+                initialDay={new Date(this.props.slots.min_time)}//{new Date('2020-07-16 09:00')} 
                 days={this.props.slots.appointments}
                 maxReservableAppointments={1}
                 // alpha={true}
@@ -241,11 +251,11 @@ class Scheduler extends Component {
           </Modal.Footer>  
         </Modal>
       
-        {this.props.appointments.map((appointment, index) => (
+        {/* {this.props.appointments.map((appointment, index) => (
         <p>{appointment.time} {} <button className='followerButton btn btn-primary m-3' name='followerbutton' type='submit' 
             onClick={async()=>{await this.setState({clinicId: clinic.id, clinicName: clinic.clinic__name}); await this.populateAppointments(); await this.setShowAppointments(true)}}>
             Select</button></p>
-        ))}
+        ))} */}
 
       </div>
       
@@ -269,8 +279,8 @@ const mapDispatchToProps = dispatch => ({
   createAppointment: (clinicId, timeSlot) => dispatch(createAppointment(clinicId, timeSlot)),
   changeAppointment: (appId, timeSlot) => dispatch(changeAppointment(appId,timeSlot)),
   deleteAppointment: (appId, timeSlot) => dispatch(deleteAppointment(appId,timeSlot)),
-  searchClinic: (clinicName) => dispatch(searchClinic(clinicName)),
-  getAppointments: (donorId) => dispatch(getAppointments(donorId))
+  searchClinic: (clinicName) => dispatch(searchClinic(clinicName))
+  // getAppointments: (donorId) => dispatch(getAppointments(donorId))
 })
 
 
